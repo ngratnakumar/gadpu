@@ -1,0 +1,1 @@
+@reboot cd /home/gadpu/rkSTAGE3;/bin/bash stage3.sh &
