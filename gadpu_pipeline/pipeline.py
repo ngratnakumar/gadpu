@@ -18,40 +18,40 @@ class Pipeline:
         :return: None, does the LTACOMB
         """
 	
-	print("Started Stage1: ")
+    print("Started Stage1: ")
 	
-	spamutils = SpamUtils()
+    spamutils = SpamUtils()
         
-	data = gdata[0]
-        path = gdata[1]
-        
-        gsb_obs = []
-        ghb_obs = []
+    data = gdata[0]
+    path = gdata[1]
 
-        for each_obs in data:
-            proposal_id = data[each_obs]['proposal_id']
-            file_path = data[each_obs]['file_path']
-            backend_type = data[each_obs]['backend_type']
+    gsb_obs = []
+    ghb_obs = []
 
-            #print(each_obs, file_path)
-            project_path = path+"/".join(file_path.split('/')[-3:])
-		
-            #print(project_path)
+    for each_obs in data:
+        proposal_id = data[each_obs]['proposal_id']
+        file_path = data[each_obs]['file_path']
+        backend_type = data[each_obs]['backend_type']
 
-            files_list = glob.glob(project_path+'/*.lt*')
-            comb_list = []
-            
-            print("Checking GHB and GSB listings: "+proposal_id)
+        #print(each_obs, file_path)
+        project_path = path+"/".join(file_path.split('/')[-3:])
 
-            for each_file in files_list:
-                lta = each_file
-                ltb = lta.replace('lta', 'ltb')
+        #print(project_path)
 
-                if ltb is each_file:
-                    ghb_obs.append(each_obs)
-                else:
-                    if '_gsb.lta' in each_file:
-                        gsb_obs.append(each_obs)
+        files_list = glob.glob(project_path+'/*.lt*')
+        comb_list = []
+
+        print("Checking GHB and GSB listings: "+proposal_id)
+
+        for each_file in files_list:
+            lta = each_file
+            ltb = lta.replace('lta', 'ltb')
+
+            if ltb is each_file:
+                ghb_obs.append(each_obs)
+            else:
+                if '_gsb.lta' in each_file:
+                    gsb_obs.append(each_obs)
 
         gsb_obs = list(set(gsb_obs))
         ghb_obs = list(set(ghb_obs))
@@ -81,7 +81,7 @@ class Pipeline:
         :return None, generates uncalibrated UVFITS:
         """
 	
-	spamutils = SpamUtils()
+    spamutils = SpamUtils()
 
         gsb_data, ghb_data, obs_data, cycle_path = data
         print(gsb_data, ghb_data)
@@ -94,12 +94,12 @@ class Pipeline:
                 lta = files_list[0].split('/')[-1]
                 uvfits = lta+'.UVFITS'
                 os.chdir(project_path)
-		check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
-		print(check_uvfits_exisits)
-		if not check_uvfits_exisits:
-	                spamutils.run_gvfits(lta,uvfits)
-		else:	
-			print("UVFITS already exists!")
+            check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
+            print(check_uvfits_exisits)
+            if not check_uvfits_exisits:
+                spamutils.run_gvfits(lta,uvfits)
+            else:
+                print("UVFITS already exists!")
 			
 
         for each_ghb in ghb_data:
@@ -111,36 +111,36 @@ class Pipeline:
             if 'gsb' not in lta:
                 os.chdir(project_path)
                 check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
-		print(check_uvfits_exisits)
+                print(check_uvfits_exisits)
                 if not check_uvfits_exisits:
-			spamutils.run_gvfits(lta, uvfits)
-		else:	
-			print("UVFITS already exists!")
+                    spamutils.run_gvfits(lta, uvfits)
+        else:
+            print("UVFITS already exists!")
 
             ltb_list = glob.glob(project_path+"/*ltb*")
             if len(ltb_list) == 1:
                 ltb = ltb_list[0]
                 uvfits = ltb+'.UVFITS'
-		gsb_uvfits = glob.glob(project_path+'/*gsb*.UVFITS')
+                gsb_uvfits = glob.glob(project_path+'/*gsb*.UVFITS')
                 os.chdir(project_path)
                 check_uvfits_exisits = glob.glob(project_path+'/*B.UVFITS')
-		print(check_uvfits_exisits)
-		if not gsb_uvfits:
+                print(check_uvfits_exisits)
+                if not gsb_uvfits:
                     if not check_uvfits_exisits:
-                	spamutils.run_gvfits(ltb, project_path)
-		    else:	
-			print("UVFITS already exists! -- "+str(check_uvfits_exisits)+" | "+str(gsb_uvfits))
+                        pamutils.run_gvfits(ltb, project_path)
+            else:
+                print("UVFITS already exists! -- "+str(check_uvfits_exisits)+" | "+str(gsb_uvfits))
 
     def stage3(self):
-	uvfits_list = glob.glob('/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS')
-	for each_uvfits in uvfits_list:
-		spamutils = SpamUtils()
-		spam.set_aips_userid(11)
-		project_code = os.path.dirname(each_uvfits)
-		copy_uvfits = os.system('cp '+each_uvfits+' fits/')
-		uvfits_file = each_uvfits.split('/')[-1]
-		spamutils.run_precalibrate_targets(each_uvfits) 
-	 	spam.exit()
+        uvfits_list = glob.glob('/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS')
+        for each_uvfits in uvfits_list:
+            spamutils = SpamUtils()
+            spam.set_aips_userid(11)
+            project_code = os.path.dirname(each_uvfits)
+            copy_uvfits = os.system('cp '+each_uvfits+' fits/')
+            uvfits_file = each_uvfits.split('/')[-1]
+            spamutils.run_precalibrate_targets(each_uvfits)
+        spam.exit()
 
 
     def stage4(self):

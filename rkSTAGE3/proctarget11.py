@@ -10,6 +10,7 @@ import time
 from random import randint
 from time import sleep
 import random
+import re
 
 
 def __main__():
@@ -118,27 +119,15 @@ def __main__():
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
         success_update_data = {
             "set": {
-                "status": "success",
+                "status": "checking",
                 "end_time": current_date_timestamp,
-                "comments": "files generated"
+                "comments": "processing done, checking"
             },
             "where": {
                 "imaging_id": imaging_id
             }
         }
         db_model.update_table(success_update_data, "imaginginput")
-        db_model.update_table(
-            {
-                "set": {
-                    "status": "success"
-                },
-                "where":
-                    {
-                        "thread_id": thread_id
-                    }
-            }, "computethread")
-
-        print("spam.process_tagret " + uvfits_file)
     except Exception, e:
         process_target_log.write("Error: " + str(e))
         # If this process_target is a failure call
@@ -206,52 +195,55 @@ def __main__():
     spam_log = glob.glob(datfil_dir + "spam*.log")
     # if spam_log is non-empty list, proceed
     print spam_log
-    if spam_log:
-        # for every spam*.log file in the datfile file
-        for each_spam_log in spam_log:
-            original_stdout = sys.stdout
-            original_stderr = sys.stderr
-            failed = os.popen('grep "processing of field" ' + each_spam_log + ' | grep "failed" | wc -l').read()
-            if int(failed.strip()) > 0:
-                failed_msg = os.popen('fgrep "Error:" '+each_spam_log+'').read()
-                failed_update_data = {
-                    "set": {
-                        "status": "failed",
-                        "end_time": current_date_timestamp,
-                        "comments": failed_msg
-                    },
-                    "where": {
-                        "imaging_id": imaging_id
-                    }
-                }
-                db_model.update_table(failed_update_data, "imaginginput")
-                db_model.update_table(
-                    {
+    try:
+        if spam_log:
+            # for every spam*.log file in the datfile file
+            for each_spam_log in spam_log:
+                original_stdout = sys.stdout
+                original_stderr = sys.stderr
+                failed = os.popen('grep "processing of field" ' + each_spam_log + ' | grep "failed" | wc -l').read()
+                if int(failed.strip()) > 0:
+                    failed_msg = os.popen('fgrep "Error:" '+each_spam_log+'').read()
+                    failed_update_data = {
                         "set": {
                             "status": "failed",
+                            "end_time": current_date_timestamp,
                             "comments": failed_msg
                         },
-                        "where":
-                            {
-                                "thread_id": thread_id
-                            }
-                    }, "computethread")
-            else:
-                process_status = True
-            print each_spam_log
-            # getting summary of the log file
-            summ_file = each_spam_log.replace(".log", ".summary")
-            print summ_file
-            summary_filename = open(summ_file, 'a+')
-            # making the spam*.summary file and write the
-            # summarize_spam_log output
-            summary_filename.write('\n\n******SUMMARY LOG******\n\n')
-            sys.stdout = summary_filename
-            sys.stderr = summary_filename
-            spam.summarize_spam_log(each_spam_log)
-            sys.stdout = original_stdout
-            sys.stderr = original_stderr
-            summary_filename.flush()
+                        "where": {
+                            "imaging_id": imaging_id
+                        }
+                    }
+                    db_model.update_table(failed_update_data, "imaginginput")
+                    db_model.update_table(
+                        {
+                            "set": {
+                                "status": "failed",
+                                "comments": failed_msg
+                            },
+                            "where":
+                                {
+                                    "thread_id": thread_id
+                                }
+                        }, "computethread")
+                else:
+                    process_status = True
+                print each_spam_log
+                # getting summary of the log file
+                summ_file = each_spam_log.replace(".log", ".summary")
+                print summ_file
+                summary_filename = open(summ_file, 'a+')
+                # making the spam*.summary file and write the
+                # summarize_spam_log output
+                summary_filename.write('\n\n******SUMMARY LOG******\n\n')
+                sys.stdout = summary_filename
+                sys.stderr = summary_filename
+                spam.summarize_spam_log(each_spam_log)
+                sys.stdout = original_stdout
+                sys.stderr = original_stderr
+                summary_filename.flush()
+    except Exception as ex:
+        print(ex)
     # Once the summary file is created inside the fits/
     # Moving all the files from datfil/ to fits/
     # Moving all the processed files from fits/ to FITS_IMAGE@BASE_DIR

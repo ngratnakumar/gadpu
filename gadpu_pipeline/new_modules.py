@@ -1,6 +1,6 @@
 import DBUtils
 import os
-# import spam
+import spam
 import glob
 
 def initialize(cycle_id):
@@ -54,14 +54,25 @@ def initialize(cycle_id):
 
 
 def run_gvfits(file):
-    try:
-        spam.convert_lta_to_uvfits(file, file+'.UVFITS')
-        print("spam.convert_lta_to_uvfits("+file, file+"'.UVFITS')")
-        dir_name = os.path.dirname(file)
-        # os.popen('mv fits/* '+dir_name+'/')
-    except Exception as ex:
-        print("******************  "+str(file))
-        print(ex)
+    dir_name = os.path.dirname(file)
+    base_name = os.path.basename(file)
+    if not glob.glob('fits/'+base_name+'.UVFITS'):
+        try:
+            print("Working Directory:"+ str(os.getcwd()))
+            print("Runnning GVFITS for "+dir_name)
+            print("Processing: "+base_name)
+            print("Copying "+base_name+" from "+dir_name+" to fits/")
+            os.popen('cp ' + file + ' fits/')
+            print(" ****** SPAM process started **** ")
+            spam.convert_lta_to_uvfits('fits/'+base_name, 'fits/'+base_name+'.UVFITS')
+            print(" ****** SPAM process ended **** ")
+            print("Removing the file : fits/"+base_name)
+            os.popen('rm -rf fits/'+base_name)
+            print("moving the processed UVFITS files")
+            os.popen('mv fits/*.UVFITS '+dir_name+'/')
+        except Exception as ex:
+            print("  ******************  "+str(file))
+            print(ex)
 
 
 def run_precalibrate_targets(filename):

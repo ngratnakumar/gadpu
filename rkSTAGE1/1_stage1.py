@@ -134,17 +134,19 @@ def filterData():
                 src = LTA_DIR + DELIST_THIS_DIR
                 dest = INVALID_DIR
                 logging.info("INVALID " + src + " moving to " + dest)
-                moveFiles(src, dest)
+                # moveFiles(src, dest)
     print(str(FILTERED_LTA_LIST))
     logging.info(str(FILTERED_LTA_LIST))
     return FILTERED_LTA_LIST
 
 
 def __main__():
+    print(len(filterData()))
     if not checkPreviousRunFlag():
-        checkLTACOMB(filterData())
-        cmd = ['touch', SCRIPT_PRE_RUN_FLAG_FILE]
-        runCommand(cmd, None)
+        pass
+        # checkLTACOMB(filterData())
+        # cmd = ['touch', SCRIPT_PRE_RUN_FLAG_FILE]
+        # runCommand(cmd, None)
     else:
         logging.info(SCRIPT_PRE_RUN_FLAG_FILE + " === Exists! === \n *** Aborting...\n")
 
