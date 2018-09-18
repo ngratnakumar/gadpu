@@ -161,8 +161,12 @@ class Pipeline:
                     "gmrt.proposal p inner join das.observation o on p.proposal_id = o.proj_code " \
                     "inner join das.scangroup g on g.observation_no = o.observation_no " \
                     "inner join das.scans s on s.scangroup_id = g.scangroup_id " \
-                    "inner join gmrt.sourceobservationtype so on p.proposal_id = so.proposal_id where p.cycle_id ='" + CYCLE_ID + "' and so.obs_type not like 'pulsar' " \
-                                                     "and s.sky_freq1=s.sky_freq2 and s.sky_freq1 < 900000000 " \
+                    "inner join gmrt.sourceobservationtype so on p.proposal_id = so.proposal_id " \
+                                            "where p.cycle_id ='" + CYCLE_ID + "' " \
+                                                     "and so.obs_type not like 'pulsar%' " \ 
+                                                     "and so.obs_type not like 'phased array'" \
+                                                     "and s.sky_freq1=s.sky_freq2 " \
+                                                     "and s.sky_freq1 < 900000000 " \
                                                      "and s.chan_width >= 62500 " \
                                                      "and o.proj_code not like '16_279' " \
                                                      "and o.proj_code not like '17_072' " \
