@@ -17,7 +17,7 @@ DBHOST = '192.168.118.48'
 DBUSER = 'postgres'
 DBNAME = 'napsgoadb'
 
-CYCLE_ID = '25'
+CYCLE_ID = '18'
 
 CYCLE_NAME = 'CYCLE' + CYCLE_ID
 

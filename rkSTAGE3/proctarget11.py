@@ -252,6 +252,17 @@ def __main__():
     # actual removing the THREAD directory is done after the
     # Move all the fits/ to FITS_IMAGE@BASE_DIR
     print "Moving datfil/ to fits/"
+    moving_update_data = {
+        "set": {
+            "status": "moving",
+            "end_time": current_date_timestamp,
+            "comments": "Moving to NAS"
+        },
+        "where": {
+            "imaging_id": imaging_id
+        }
+    }
+    db_model.update_table(moving_update_data, "imaginginput")
     movedata = os.system('mv ' + datfil_dir + '* ' + fits_dir)
     if process_status:
         update_datproducts(curr_dir, project_id, imaging_id, db_model)
@@ -265,6 +276,16 @@ def __main__():
     # Removing the current THREAD directory
 
     removethread = os.system('rm -rf ' + thread_dir)
+    done_update_data = {
+        "set": {
+            "status": "success",
+            "end_time": current_date_timestamp,
+            "comments": "processed - files generated"
+        },
+        "where": {
+            "imaging_id": imaging_id
+        }
+    }
     # exiting the SPAM process and cleaning the cache memory
     spam.exit()
 

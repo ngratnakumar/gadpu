@@ -21,7 +21,7 @@ def check_haslam_flag(project):
     # Reference: /export/spam/python/spam/gmrt.py:846,42
 
     '''
-    cmd = "fgrep '13.' " + UVFITS_DATA + "*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
+    cmd = "fgrep '14.' " + UVFITS_DATA + "*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
     output = subprocess.check_output(cmd, shell=True)
     obs_list = output.split('\n')
     obs_list.remove('')
@@ -29,8 +29,8 @@ def check_haslam_flag(project):
         return any(project in string for string in obs_list)
 
 
-proj = "24_047_5AUG13"
-print check_haslam_flag(proj)
+# proj = "24_047_5AUG13"
+# print check_haslam_flag(proj)
 # for is_haslam_flagged in check_haslam_flag():
 #     if project in is_haslam_flagged:
 #         print project

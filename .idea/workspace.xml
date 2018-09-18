@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f55c0e3b-a104-4141-9e28-77bfa58517ff" name="Default Changelist" comment="">
+    <list default="true" id="f55c0e3b-a104-4141-9e28-77bfa58517ff" name="Default Changelist" comment="modified the proctarget11.py the spam.process_target() is status is success by default to checking.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gadpu_pipeline/SpamUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/gadpu_pipeline/SpamUtils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gadpu_pipeline/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/gadpu_pipeline/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gadpu_pipeline/delme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gadpu_pipeline/new_modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/gadpu_pipeline/new_modules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gadpu_pipeline/pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/gadpu_pipeline/pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rkSTAGE1/1_stage1.py" beforeDir="false" afterPath="$PROJECT_DIR$/rkSTAGE1/1_stage1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rkSTAGE1/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/rkSTAGE1/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rkSTAGE2/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/rkSTAGE2/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rkSTAGE2/haslam.py" beforeDir="false" afterPath="$PROJECT_DIR$/rkSTAGE2/haslam.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rkSTAGE2/precalib11.py" beforeDir="false" afterPath="$PROJECT_DIR$/rkSTAGE2/precalib11.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rkSTAGE2/runStage2.py" beforeDir="false" afterPath="$PROJECT_DIR$/rkSTAGE2/runStage2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rkSTAGE3/proctarget11.py" beforeDir="false" afterPath="$PROJECT_DIR$/rkSTAGE3/proctarget11.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,27 +29,28 @@
           <entry key="delme" value="1" />
           <entry key="ini" value="1" />
           <entry key="log" value="1" />
-          <entry key="py" value="12" />
+          <entry key="py" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="delme" value="15" />
           <entry key="dummy" value="4" />
-          <entry key="py" value="3196" />
+          <entry key="py" value="3297" />
           <entry key="test_modules" value="1" />
+          <entry key="txt" value="145" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="19" />
-          <entry key="Python" value="3197" />
+          <entry key="PLAIN_TEXT" value="164" />
+          <entry key="Python" value="3298" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="4" />
-          <entry key="Python" value="12" />
+          <entry key="Python" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -69,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rkSTAGE2/precalib11.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="66" selection-start-line="66" selection-end-line="66" />
+            <state relative-caret-position="166">
+              <caret line="140" column="61" selection-start-line="140" selection-start-column="61" selection-end-line="140" selection-end-column="61" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -82,10 +80,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rkSTAGE1/config.py">
+        <entry file="file://$PROJECT_DIR$/rkSTAGE2/haslam.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="345">
+              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rkSTAGE2/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -116,13 +126,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rkSTAGE3/proctarget11.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="117" column="41" lean-forward="true" selection-start-line="117" selection-start-column="41" selection-end-line="117" selection-end-column="41" />
+            <state relative-caret-position="195">
+              <caret line="124" column="14" selection-start-line="124" selection-start-column="14" selection-end-line="124" selection-end-column="14" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rkSTAGE2/runStage2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -138,11 +160,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gadpu_pipeline/database.ini">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gadpu_pipeline/SpamUtils.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="271">
@@ -150,15 +167,6 @@
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gadpu_pipeline/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="25" column="53" selection-start-line="25" selection-start-column="53" selection-end-line="25" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -186,6 +194,10 @@
         <option value="$PROJECT_DIR$/gadpu_pipeline/delme" />
         <option value="$PROJECT_DIR$/gadpu_pipeline/new_modules.py" />
         <option value="$PROJECT_DIR$/rkSTAGE3/proctarget11.py" />
+        <option value="$PROJECT_DIR$/rkSTAGE2/runStage2.py" />
+        <option value="$PROJECT_DIR$/rkSTAGE2/haslam.py" />
+        <option value="$PROJECT_DIR$/rkSTAGE2/config.py" />
+        <option value="$PROJECT_DIR$/rkSTAGE2/precalib11.py" />
       </list>
     </option>
   </component>
@@ -352,6 +364,14 @@
       <option name="presentableId" value="Default" />
       <updated>1536730780430</updated>
     </task>
+    <task id="LOCAL-00001" summary="modified the proctarget11.py the spam.process_target() is status is success by default to checking.">
+      <created>1537181226004</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1537181226004</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -396,6 +416,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="modified the proctarget11.py the spam.process_target() is status is success by default to checking." />
+    <option name="LAST_COMMIT_MESSAGE" value="modified the proctarget11.py the spam.process_target() is status is success by default to checking." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rkSTAGE1/2_stage1.py">
@@ -473,16 +497,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rkSTAGE2/precalib11.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="66" selection-start-line="66" selection-end-line="66" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gadpu_pipeline/pipeline.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -496,8 +510,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rkSTAGE3/proctarget11.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="117" column="41" lean-forward="true" selection-start-line="117" selection-start-column="41" selection-end-line="117" selection-end-column="41" />
+        <state relative-caret-position="195">
+          <caret line="124" column="14" selection-start-line="124" selection-start-column="14" selection-end-line="124" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rkSTAGE2/runStage2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rkSTAGE2/haslam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rkSTAGE2/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rkSTAGE2/precalib11.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="140" column="61" selection-start-line="140" selection-start-column="61" selection-end-line="140" selection-end-column="61" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

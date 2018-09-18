@@ -11,7 +11,7 @@ from random import shuffle
 hostname = socket.gethostname()
 spam.set_aips_userid(11)
 
-UVFITS_DATA = '/GARUDATA/IMAGING19/CYCLE19/'
+UVFITS_DATA = '/GARUDATA/IMAGING18/CYCLE18/'
 PRECAL_PROCESSING = 'precalibration.processing'
 PRECAL_SUCCESS = 'precalibration.success'
 PRECAL_FAILED = 'precalibration.failed'
@@ -94,7 +94,7 @@ def run_spam_precalibration_stage(UVFITS_BASE_DIR, DIR, UVFITS):
         else:
             print(PROJECT_CODE + " Flagging apply_tsys=True")
             try:
-                spam.pre_calibrate_targets(UVFITS_FILE_NAME, keep_channel_one = True)
+                spam.pre_calibrate_targets(UVFITS_FILE_NAME)
                 set_flag(UVFITS_BASE_DIR, PRECAL_SUCCESS)
             except Exception as e:
                 failed_log = open('failed_log.txt', 'a+')
@@ -138,7 +138,7 @@ def delete_dir(ddir):
 
 
 def __main__():
-    UVFITS_FILE_LIST = glob.glob("/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS")
+    UVFITS_FILE_LIST = glob.glob("/GARUDATA/IMAGING18/CYCLE18/*/*/*.UVFITS")
     print UVFITS_DATA
     shuffle(UVFITS_FILE_LIST)
     if not UVFITS_FILE_LIST:

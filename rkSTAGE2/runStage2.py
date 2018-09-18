@@ -7,7 +7,7 @@ hostname = socket.gethostname()
 
 thread_no = sys.argv[1]
 #path = "/GARUDATA/IMAGING25/CYCLE25/*/precalibration.*"
-path = "ls -ltrh /GARUDATA/IMAGING19/CYCLE19/CYCLE19/*/*/PRECALIB/*UVFITS/precalibration.*"
+path = "ls -ltrh /GARUDATA/IMAGING18/CYCLE18/*/*/PRECALIB/*UVFITS/precalibration.*"
 while 1:
     tobeProcessed = len(glob.glob(path))
     if tobeProcessed >= 213:
