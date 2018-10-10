@@ -25,6 +25,7 @@ class Config:
 
     def naps_config(self, filename='/home/ratnakumar/gadpu/gadpu_pipeline/database.ini', section='napsgoadb'):
         # create a parser
+        print("Inside the naps_config")
         parser = ConfigParser.ConfigParser()
         # read config file
         parser.read(filename)

@@ -1,6 +1,8 @@
 import psycopg2
 import config
 import time
+from config import Config
+
 
 class DBUtils:
 
@@ -14,7 +16,7 @@ class DBUtils:
         error = None
         try:
             # read database configuration
-            params = Config.config()
+            params = Config().config()
             # connect to the PostgreSQL database
             conn = psycopg2.connect(**params)
             # create a new cursor
