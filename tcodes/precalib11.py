@@ -13,7 +13,7 @@ from random import shuffle
 hostname = socket.gethostname()
 spam.set_aips_userid(11)
 
-UVFITS_DATA = '/GARUDATA/IMAGING18/CYCLE18/'
+UVFITS_DATA = '/GARUDATA/IMAGING19/CYCLE19/'
 PRECAL_PROCESSING = 'precalibration.processing'
 PRECAL_SUCCESS = 'precalibration.success'
 PRECAL_FAILED = 'precalibration.failed'
@@ -140,8 +140,16 @@ def delete_dir(ddir):
 
 
 def __main__():
-    UVFITS_FILE_LIST = glob.glob("/GARUDATA/IMAGING18/CYCLE18/*/*/*.UVFITS")
-    print UVFITS_DATA
+    UVFITS_FILE_LIST = glob.glob("/GARUDATA/IMAGING19/CYCLE19/*/*/PRECALIB/failed_log.txt")
+    #print UVFITS_FILE_LIST
+    #print len(UVFITS_FILE_LIST)
+    FAILED_UVFITS_LIST = []
+    for each_failed in UVFITS_FILE_LIST:
+        uvfits_file = glob.glob(os.path.dirname(each_failed)+'/19*.UVFITS')
+        if len(uvfits_file) == 1:
+            FAILED_UVFITS_LIST.append(uvfits_file[0])
+        #print(uvfits_file)
+    UVFITS_FILE_LIST = FAILED_UVFITS_LIST
     shuffle(UVFITS_FILE_LIST)
     if not UVFITS_FILE_LIST:
         print "UVFITS_FILE_LIST is empty"
@@ -166,18 +174,6 @@ def __main__():
             spam.exit()
 
 
-
 if __name__ == '__main__':
-    time.sleep(int(random.random()*300))
     __main__()
-
-
-
-
-
-
-
-
-
-
 

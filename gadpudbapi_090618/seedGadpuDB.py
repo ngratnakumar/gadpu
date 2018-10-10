@@ -12,6 +12,7 @@ currentTimeInSec = time.time()
 
 
 class FileUtilities:
+
     def __init__(self):
         pass
 
@@ -20,8 +21,9 @@ class FileUtilities:
         return ((os.path.getsize(file_path))/1024)/1024
 
 
+
 def seeding_controller(cycle_id):
-    #seed_projectobsno(cycle_id)
+    seed_projectobsno(cycle_id)
     #seed_calibrationinput()
     seed_imaginginput()
     #test_stage3()
@@ -105,9 +107,9 @@ def seed_projectobsno(cycle_id):
                 lta_details["start_time"] = current_date_timestamp
                 lta_details["proposal_dir"] = eachDir.split('/')[-1]
                 lta_details["pipeline_id"] = 1
-                lta_details["comments"] = "cycle19"
+                lta_details["comments"] = "cycle18"
                 lta_details["counter"] = 0
-		lta_details["ltacomb_file"] = lta_file
+                lta_details["ltacomb_file"] = lta_file
 
                 projectobsno_data = {}
                 for key in tableSchema.projectobsnoData.iterkeys():
@@ -119,19 +121,19 @@ def seed_projectobsno(cycle_id):
                     if key in lta_details.iterkeys():
                         ltadetails_data[key] = lta_details[key]
                 #print ltadetails_data
-		print("ltadetails_data")
-		print(ltadetails_data)
+                print("ltadetails_data")
+                print(ltadetails_data)
 
                 project_id = db_model.insert_into_table("projectobsno", projectobsno_data, tableSchema.projectobsnoId)
                 ltadetails_data["project_id"] = project_id
 
                 lta_id = db_model.insert_into_table("ltadetails", ltadetails_data, tableSchema.ltadetailsId)
                 print lta_id
-		print("projectobsno")
-		print(projectobsno_data)
+                print("projectobsno")
+                print(projectobsno_data)
             except Exception as e:
                 print e
-		
+
 
 
 def seed_ltadetails():
@@ -147,47 +149,29 @@ def seed_calibrationinput():
     column_keys.append("lta_id")
     lta_result = db_model.select_test_table("ltadetails", column_keys, None, None)
     for lta_row in lta_result:
-	project_id = lta_row["project_id"]
+        project_id = lta_row["project_id"]
         calibrationinput_data["project_id"] = project_id
         calibrationinput_data["lta_id"] = lta_row["lta_id"]
-        #where_con = {"comments": "cycle19"}
-        where_con = {"project_id": project_id, "comments": "cycle19"}
+        where_con = {"project_id": project_id, "comments": "cycle 18"}
         column_keys = [k for k in tableSchema.projectobsnoData.viewkeys()]
         column_keys.append("project_id")
         proj_result = db_model.select_from_table("projectobsno", column_keys, where_con, None)
-	if proj_result:
-		proj_result = proj_result[0]
-		uvfits_file_list = glob.glob(proj_result["file_path"]+"/*.UVFITS")
-		if uvfits_file_list:
-			current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
-			uvfits_file_path = uvfits_file_list[0]
-			uvfits_file = uvfits_file_list[0].split('/')[-1]
-			calibrationinput_data["uvfits_file"] = uvfits_file
-			calibrationinput_data["uvfits_size"] = utils.calculate_file_size(uvfits_file_path)
-			calibrationinput_data["status"] = "unprocessed"
-			calibrationinput_data["start_time"] = current_date_timestamp
-			calibrationinput_data["comments"] = "cycle19"
-			calibrationinput_result = db_model.insert_into_table("calibrationinput", calibrationinput_data, tableSchema.calibrationinputId)
-			print calibrationinput_data
-	"""
-	for each_proj in proj_result:
-		#print(each_proj)
-		#print(proj_result)
-		#print(proj_result["file_path"])
-        	uvfits_file_list = glob.glob(each_proj["file_path"]+"/*.UVFITS")
-	        if uvfits_file_list:
-			current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
-			uvfits_file_path = uvfits_file_list[0]
-			uvfits_file = uvfits_file_list[0].split('/')[-1]
-			calibrationinput_data["uvfits_file"] = uvfits_file
-			calibrationinput_data["uvfits_size"] = utils.calculate_file_size(uvfits_file_path)
-			calibrationinput_data["status"] = "unprocessed"
-			calibrationinput_data["start_time"] = current_date_timestamp
-			calibrationinput_data["comments"] = "cycle19"
-		#calibrationinput_result = db_model.insert_into_table(
-		#	"calibrationinput", calibrationinput_data, tableSchema.calibrationinputId)
-		print calibrationinput_data
-	"""
+        if proj_result:
+            proj_result = proj_result[0]
+            #print(proj_result)
+            uvfits_file_list = glob.glob(proj_result["file_path"]+"/*.UVFITS")
+            if uvfits_file_list:
+                current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
+                uvfits_file_path = uvfits_file_list[0]
+                uvfits_file = uvfits_file_list[0].split('/')[-1]
+                calibrationinput_data["uvfits_file"] = uvfits_file
+                calibrationinput_data["uvfits_size"] = utils.calculate_file_size(uvfits_file_path)
+                calibrationinput_data["status"] = "unprocessed"
+                calibrationinput_data["start_time"] = current_date_timestamp
+                calibrationinput_data["comments"] = "cycle18"
+                calibrationinput_result = db_model.insert_into_table("calibrationinput", calibrationinput_data, tableSchema.calibrationinputId)
+                print calibrationinput_data
+
 
 def seed_imaginginput():
     utils = FileUtilities()
@@ -196,43 +180,47 @@ def seed_imaginginput():
     column_keys.append("project_id")
     column_keys.append("calibration_id")
     calibration_result = db_model.select_test_table("calibrationinput", column_keys, None, None)
+    print(len(calibration_result))
     for calibration_row in calibration_result:
         project_id = calibration_row["project_id"]
         calibration_id = calibration_row["calibration_id"]
         column_keys = [k for k in tableSchema.projectobsnoData.viewkeys()]
-        where_con = {"project_id": project_id, "comments": "cycle19"}
+        where_con = {"project_id": project_id, "comments": "cycle 18"}
         projectobsno_result = db_model.select_from_table("projectobsno", column_keys, where_con, None)
-	#print(projectobsno_result)
-	if projectobsno_result:
-		projectobsno_result = projectobsno_result[0]
-		base_path = projectobsno_result["file_path"]
-	        proposal_dir = projectobsno_result["proposal_dir"]
-	        precalibrated_base_path = base_path+"/PRECALIB/"
-		calibrated_fits_list = glob.glob(precalibrated_base_path+"*.UVFITS")
-	        imaginginput_data = {}
-	        #print(len(calibrated_fits_list))
-		for each_fits in calibrated_fits_list:
-	            #print each_fits
-	            current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
-	            imaginginput_data["calibration_id"] = calibration_id
-	            imaginginput_data["project_id"] = project_id
-	            fits_file = each_fits.split('/')[-1]
-	            imaginginput_data["calibrated_fits_file"] = fits_file
-	            imaginginput_data["status"] = "unprocessed"
-	            imaginginput_data["file_size"] = utils.calculate_file_size(each_fits)
-	            imaginginput_data["start_time"] = current_date_timestamp
-	            imaginginput_data["comments"] = "cycle19"
-	            try:
-			if 'lta' not in fits_file:
-				imaging_id = db_model.insert_into_table("imaginginput", imaginginput_data, tableSchema.imaginginputId)
-		                print imaging_id
-	            except Exception as e:
-	                print e
+        # print(projectobsno_result)
+        if projectobsno_result:
+            projectobsno_result = projectobsno_result[0]
+            base_path = projectobsno_result["file_path"]
+            proposal_dir = projectobsno_result["proposal_dir"]
+            precalibrated_base_path = base_path+"/PRECALIB/"
+            calibrated_fits_list = glob.glob(precalibrated_base_path+"*.UVFITS")
+            imaginginput_data = {}
+            # print(len(calibrated_fits_list))
+            for each_fits in calibrated_fits_list:
+                # print each_fits
+                current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
+                imaginginput_data["calibration_id"] = calibration_id
+                imaginginput_data["project_id"] = project_id
+                fits_file = each_fits.split('/')[-1]
+                imaginginput_data["calibrated_fits_file"] = fits_file
+                imaginginput_data["status"] = "unprocessed"
+                imaginginput_data["file_size"] = utils.calculate_file_size(each_fits)
+                imaginginput_data["start_time"] = current_date_timestamp
+                imaginginput_data["comments"] = "cycle18"
+                try:
+                    if 'lta' not in fits_file:
+                        print(imaginginput_data)
+                        imaging_id = db_model.insert_into_table("imaginginput", imaginginput_data, tableSchema.imaginginputId)
+                        print("imaging_id")
+                except Exception as e:
+                    print e
 
-def seed_dataproducts():
+
+def seed_dataproducts(self):
     return "NULL"
 
 
 if __name__ == '__main__':
-    CYCLE_ID = "19"
+    print("Start Seeding")
+    CYCLE_ID = "18"
     seeding_controller(CYCLE_ID)

@@ -136,6 +136,7 @@ class ProjectModel():
                 conn.close()
         return result
 
+
     def select_from_table(self, tableName, columnKeys, whereData, returnFieldsCount):
         valList =[]
         whrVal =[]
