@@ -67,53 +67,17 @@ class Pipeline:
             # print(isghb, lta, ltb, gsb)
 
             if isghb:
+                fileutils.copy_files(lta, project_path)
+                fileutils.copy_files(ltb, project_path)
                 fileutils.insert_details([lta, ltb], project_path, isghb, cycle_id, status)
             else:
                 if gsb:
+                    fileutils.copy_files(gsb, project_path)
                     fileutils.insert_details(gsb, project_path, isghb, cycle_id, status)
                 if lta:
+                    fileutils.copy_files(lta, project_path)
                     fileutils.insert_details(lta, project_path, isghb, cycle_id, status)
 
-
-
-
-            """  
-            files_list = glob.glob(project_path+'/*.lt*')
-            comb_list = []
-
-            print("Checking GHB and GSB listings: "+proposal_id)
-
-            for each_file in files_list:
-                lta = each_file
-                ltb = lta.replace('lta', 'ltb')
-
-                if ltb is each_file:
-                    ghb_obs.append(each_obs)
-                else:
-                    if '_gsb.lta' in each_file:
-                        gsb_obs.append(each_obs)
-
-            gsb_obs = list(set(gsb_obs))
-            ghb_obs = list(set(ghb_obs))
-            print(len(gsb_obs), len(ghb_obs))
-
-            print("Running LTACOMB: ")
-
-            for each_gsb in gsb_obs:
-                file_path = data[each_gsb]['file_path']
-                project_path = path+"/".join(file_path.split('/')[-3:])
-                gsb_files = glob.glob(project_path+"/*_gsb*")
-                gsb_files.sort()
-                #print(gsb_files)
-                if len(gsb_files) > 1:
-                    print("Running LTACOMB")
-                    #spamutils.run_ltacomb(gsb_files, project_path)
-                else:
-                    print("LTACOMB not required for "+ str(gsb_files))
-                    pass
-            self.stage2((gsb_obs, ghb_obs, data, path))
-        """
-        pass
 
     def stage2(self, data):
         """
@@ -138,7 +102,7 @@ class Pipeline:
             check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
             print(check_uvfits_exisits)
             if not check_uvfits_exisits:
-                spamutils.run_gvfits(lta,uvfits)
+                spamutils.run_gvfits(lta, uvfits)
             else:
                 print("UVFITS already exists!")
 			
