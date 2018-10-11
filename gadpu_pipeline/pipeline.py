@@ -80,7 +80,7 @@ class Pipeline:
                     fileutils.insert_details(lta, project_path, isghb, cycle_id, status)
 
 
-    def stage2(self, data):
+    def stage2(self):
         """
         Generating Uncalibrated UVFITS using GVFITS
         :param gsb_observations, ghb_observations, observations_list:
@@ -104,7 +104,10 @@ class Pipeline:
         for each_lta in lta_details:
             print(each_lta)
             project_id = each_lta["project_id"]
+            #project_id = each_lta[0]
             lta_file = each_lta["ltacomb_file"]
+            #lta_file = each_lta[1]
+            #lta_id = each_lta[2]
             lta_id = each_lta["lta_id"]
             columnKeys = {"file_path"}
             whereKeys = {"project_id": project_id}
@@ -262,7 +265,7 @@ class Pipeline:
         return (gadpudata, CYCLE_PATH)
 
     def __init__(self):
-        self.stage1(self.__prerequisites())
-        # self.stage3()
+        #self.stage1(self.__prerequisites())
+        self.stage2()
 
 Pipeline()

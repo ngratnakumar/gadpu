@@ -36,14 +36,18 @@ class SpamUtils:
         base_path = os.path.dirname(filename)
         lta_file = os.path.basename(filename)
         uvfits_file = os.path.basename(destination)
-
+	print("Running GVFITS")
         fileutils = FileUtils()
         fileutils.copy_files(filename, 'fits/')
         status = "gvfits processing for "+filename
         try:
-            spam.convert_lta_to_uvfits(lta_file, uvfits_file)
+            print("Before spam")
+            spam.convert_lta_to_uvfits("fits/"+lta_file)
+            print("After spam")
             fileutils.move_files('fits/*.UVFITS*', base_path)
+            os.system('rm fits/'+lta_file)
         except Exception as ex:
+            print(ex)
             status = ex
         return status   
 

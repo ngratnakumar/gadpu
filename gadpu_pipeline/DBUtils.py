@@ -54,7 +54,7 @@ class DBUtils:
         updated_rows = ""
         try:
             # read database configuration
-            params = Config.config()
+            params = Config().config()
             # connect to the PostgreSQL database
             conn = psycopg2.connect(**params)
             # create a new cursor
@@ -143,7 +143,7 @@ class DBUtils:
         result = []
         try:
             # read database configuration
-            params = Config.config()
+            params = Config().config()
             # connect to the PostgreSQL database
             conn = psycopg2.connect(**params)
             # create a new cursor
@@ -181,7 +181,7 @@ class DBUtils:
         result = []
         try:
             # read database configuration
-            params = Config.config()
+            params = Config().config()
             # connect to the PostgreSQL database
             conn = psycopg2.connect(**params)
             # create a new cursor
