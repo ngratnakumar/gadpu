@@ -118,11 +118,18 @@ class FileUtils:
                 # print(ltadetails_data)
 
                 columnKeys = {"project_id"}
-                whereKeys = {"proposal_dir": lta_details["proposal_dir"]}
+                whereKeys = {"proposal_dir": "18_068_11MAY10"}
+
 
                 project_id = dbutils.select_test_table("projectobsno", columnKeys, whereKeys, 0)
 
                 print project_id
+
+                if project_id:
+                    print("Using -- "+str(project_id))
+                else:
+                    print("Insert new recored")
+
 
                 #
                 # project_id = dbutils.insert_into_table("projectobsno", projectobsno_data, tableSchema.projectobsnoId)
