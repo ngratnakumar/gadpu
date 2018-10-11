@@ -126,7 +126,8 @@ class FileUtils:
                 print project_id
 
                 if project_id:
-                    print("Using -- "+str(project_id))
+                    print("Using -- ")
+                    print(project_id[0])
                 else:
                     print("Insert new recored")
 
