@@ -103,6 +103,7 @@ class FileUtils:
                 lta_details["isghb"] = isghb
                 lta_details["cycle_id"] = cycle_id
 
+
                 projectobsno_data = {}
                 for key in tableSchema.projectobsnoData.iterkeys():
                     if key in lta_details.iterkeys():
@@ -113,16 +114,24 @@ class FileUtils:
                     if key in lta_details.iterkeys():
                         ltadetails_data[key] = lta_details[key]
                 #print ltadetails_data
-                print("ltadetails_data")
-                print(ltadetails_data)
+                # print("ltadetails_data")
+                # print(ltadetails_data)
 
-                project_id = dbutils.insert_into_table("projectobsno", projectobsno_data, tableSchema.projectobsnoId)
-                ltadetails_data["project_id"] = project_id
+                columnKeys = {"project_id"}
+                whereKeys = {"proposal_dir": lta_details["proposal_dir"]}
 
-                lta_id = dbutils.insert_into_table("ltadetails", ltadetails_data, tableSchema.ltadetailsId)
-                print lta_id
-                print("projectobsno")
-                print(projectobsno_data)
+                project_id = dbutils.select_test_table("projectobsno", columnKeys, whereKeys, 0)
+
+                print project_id
+
+                #
+                # project_id = dbutils.insert_into_table("projectobsno", projectobsno_data, tableSchema.projectobsnoId)
+                # ltadetails_data["project_id"] = project_id
+                #
+                # lta_id = dbutils.insert_into_table("ltadetails", ltadetails_data, tableSchema.ltadetailsId)
+                # print lta_id
+                # print("projectobsno")
+                # print(projectobsno_data)
             except Exception as e:
                 print e
 
