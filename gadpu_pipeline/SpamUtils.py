@@ -1,5 +1,5 @@
 import os
-# import spam
+import spam
 import glob
 
 from FileUtils import FileUtils
@@ -33,20 +33,19 @@ class SpamUtils:
         return str(self.status)
 
     def run_gvfits(self, filename, destination):
-        # copying_lta_file = os.system('cp '+filename+' .')
-        # print(filename)
-        # ne_name = filename.split('/')[-1]
-        # spam.set_aips_userid(11)
-        # try:
-        #     spam.convert_lta_to_uvfits(ne_name)
-        #     #os.system('mv fits/*.UVFITS '+destination+'/')
-	    #     print(destination)
-        # except Exception as ex:
-        #     print(ex)
-        pass
-        # os.system('rm '+ne_name)
-        # os.system('mv fits/*.UVFITS '+destination+'/')
+        base_path = os.path.dirname(filename)
+        lta_file = os.path.basename(filename)
+        uvfits_file = os.path.basename(destination)
 
+        fileutils = FileUtils()
+        fileutils.copy_files(filename, 'fits/')
+        status = "gvfits processing for "+filename
+        try:
+            spam.convert_lta_to_uvfits(lta_file, uvfits_file)
+            fileutils.move_files('fits/*.UVFITS*', base_path)
+        except Exception as ex:
+            status = ex
+        return status   
 
     def run_precalibrate_targets(self, filename):
         print("spam.precalibrate_targets")
