@@ -85,56 +85,69 @@ class Pipeline:
         :param gsb_observations, ghb_observations, observations_list:
         :return None, generates uncalibrated UVFITS:
         """
-	
+
+        dbutils = DBUtils()
         spamutils = SpamUtils()
 
-        gsb_data, ghb_data, obs_data, cycle_path = data
-        print(gsb_data, ghb_data)
+        columnKeys = {"project_id", "file_path"}
+        whereKeys = {"cycle_id": 17}
 
-        for each_gsb in gsb_data:
-            file_path = obs_data[each_gsb]["file_path"]
-            project_path = cycle_path+"/".join(file_path.split('/')[-3:])
-            files_list = glob.glob(project_path+"/*gsb*")
-            if len(files_list) == 1:
-                lta = files_list[0].split('/')[-1]
-                uvfits = lta+'.UVFITS'
-                os.chdir(project_path)
-            check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
-            print(check_uvfits_exisits)
-            if not check_uvfits_exisits:
-                spamutils.run_gvfits(lta, uvfits)
-            else:
-                print("UVFITS already exists!")
-			
-        for each_ghb in ghb_data:
-            file_path = obs_data[each_ghb]["file_path"]
-            project_path = cycle_path+"/".join(file_path.split('/')[-3:])
+        project_ids = dbutils.select_from_table("projectobsno", columnKeys, whereKeys, None)
 
-            lta_list = glob.glob(project_path+"/*lta*")
-            lta = lta_list[0]
-            uvfits = lta+'.UVFITS'
-            if 'gsb' not in lta:
-                os.chdir(project_path)
-                check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
-                print(check_uvfits_exisits)
-                if not check_uvfits_exisits:
-                    spamutils.run_gvfits(lta, uvfits)
-            else:
-                print("UVFITS already exists!")
+        for each_project_id in project_ids:
+            project_id = each_project_id["project_id"]
+            columnKeys = {"ltacomb_file", }
+            lta_details = dbutils.select_from_table("ltadetails", columnKeys, whereKeys, None)
 
-            ltb_list = glob.glob(project_path+"/*ltb*")
-            if len(ltb_list) == 1:
-                ltb = ltb_list[0]
-                uvfits = ltb+'.UVFITS'
-                gsb_uvfits = glob.glob(project_path+'/*gsb*.UVFITS')
-                os.chdir(project_path)
-                check_uvfits_exisits = glob.glob(project_path+'/*B.UVFITS')
-                print(check_uvfits_exisits)
-                if not gsb_uvfits:
-                    if not check_uvfits_exisits:
-                        spamutils.run_gvfits(ltb, project_path)
-            else:
-                print("UVFITS already exists! -- "+str(check_uvfits_exisits))
+
+
+        # gsb_data, ghb_data, obs_data, cycle_path = data
+        # print(gsb_data, ghb_data)
+        #
+        # for each_gsb in gsb_data:
+        #     file_path = obs_data[each_gsb]["file_path"]
+        #     project_path = cycle_path+"/".join(file_path.split('/')[-3:])
+        #     files_list = glob.glob(project_path+"/*gsb*")
+        #     if len(files_list) == 1:
+        #         lta = files_list[0].split('/')[-1]
+        #         uvfits = lta+'.UVFITS'
+        #         os.chdir(project_path)
+        #     check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
+        #     print(check_uvfits_exisits)
+        #     if not check_uvfits_exisits:
+        #         spamutils.run_gvfits(lta, uvfits)
+        #     else:
+        #         print("UVFITS already exists!")
+		#
+        # for each_ghb in ghb_data:
+        #     file_path = obs_data[each_ghb]["file_path"]
+        #     project_path = cycle_path+"/".join(file_path.split('/')[-3:])
+        #
+        #     lta_list = glob.glob(project_path+"/*lta*")
+        #     lta = lta_list[0]
+        #     uvfits = lta+'.UVFITS'
+        #     if 'gsb' not in lta:
+        #         os.chdir(project_path)
+        #         check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
+        #         print(check_uvfits_exisits)
+        #         if not check_uvfits_exisits:
+        #             spamutils.run_gvfits(lta, uvfits)
+        #     else:
+        #         print("UVFITS already exists!")
+        #
+        #     ltb_list = glob.glob(project_path+"/*ltb*")
+        #     if len(ltb_list) == 1:
+        #         ltb = ltb_list[0]
+        #         uvfits = ltb+'.UVFITS'
+        #         gsb_uvfits = glob.glob(project_path+'/*gsb*.UVFITS')
+        #         os.chdir(project_path)
+        #         check_uvfits_exisits = glob.glob(project_path+'/*B.UVFITS')
+        #         print(check_uvfits_exisits)
+        #         if not gsb_uvfits:
+        #             if not check_uvfits_exisits:
+        #                 spamutils.run_gvfits(ltb, project_path)
+        #     else:
+        #         print("UVFITS already exists! -- "+str(check_uvfits_exisits))
 
     def stage3(self):
         uvfits_list = glob.glob('/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS')

@@ -118,28 +118,21 @@ class FileUtils:
                 # print(ltadetails_data)
 
                 columnKeys = {"project_id"}
-                whereKeys = {"proposal_dir": "18_068_11MAY10"}
-
+                whereKeys = {"proposal_dir": lta_details["proposal_dir"], "cycle_id": cycle_id}
 
                 project_id = dbutils.select_test_table("projectobsno", columnKeys, whereKeys, 0)
 
-                print project_id
-
                 if project_id:
-                    print("Using -- ")
-                    print(project_id[0])
+                    project_id = project_id[0]
                 else:
-                    print("Insert new recored")
+                    project_id = dbutils.insert_into_table("projectobsno", projectobsno_data, tableSchema.projectobsnoId)
 
+                ltadetails_data["project_id"] = project_id
 
-                #
-                # project_id = dbutils.insert_into_table("projectobsno", projectobsno_data, tableSchema.projectobsnoId)
-                # ltadetails_data["project_id"] = project_id
-                #
-                # lta_id = dbutils.insert_into_table("ltadetails", ltadetails_data, tableSchema.ltadetailsId)
-                # print lta_id
-                # print("projectobsno")
-                # print(projectobsno_data)
+                lta_id = dbutils.insert_into_table("ltadetails", ltadetails_data, tableSchema.ltadetailsId)
+                print lta_id
+                print("projectobsno")
+                print(projectobsno_data)
             except Exception as e:
                 print e
 
