@@ -46,8 +46,7 @@ class SpamUtils:
         pass
         # os.system('rm '+ne_name)
         # os.system('mv fits/*.UVFITS '+destination+'/')
-        # spam.exit()
-	
+
 
     def run_precalibrate_targets(self, filename):
         print("spam.precalibrate_targets")

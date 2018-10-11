@@ -1,7 +1,8 @@
 from FileUtils import FileUtils
 from DBUtils import DBUtils
 from SpamUtils import SpamUtils
-
+import time
+import datetime
 import glob
 import os
 # import spam
@@ -88,16 +89,72 @@ class Pipeline:
 
         dbutils = DBUtils()
         spamutils = SpamUtils()
+        fileutils = FileUtils()
 
-        columnKeys = {"project_id", "file_path"}
-        whereKeys = {"cycle_id": 17}
+        currentTimeInSec = time.time()
+        current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
 
-        project_ids = dbutils.select_from_table("projectobsno", columnKeys, whereKeys, None)
+        columnKeys = {"project_id", "ltacomb_file", "lta_id"}
+        whereKeys = {"comments": "cycle17"}
 
-        for each_project_id in project_ids:
-            project_id = each_project_id["project_id"]
-            columnKeys = {"ltacomb_file", }
-            lta_details = dbutils.select_from_table("ltadetails", columnKeys, whereKeys, None)
+        lta_details = dbutils.select_from_table("ltadetails", columnKeys, whereKeys, None)
+
+        print(lta_details)
+
+        for each_lta in lta_details:
+            print(each_lta)
+            project_id = each_lta["project_id"]
+            lta_file = each_lta["ltacomb_file"]
+            lta_id = each_lta["lta_id"]
+            columnKeys = {"file_path"}
+            whereKeys = {"project_id": project_id}
+            lta_path_details = dbutils.select_test_table("projectobsno", columnKeys, whereKeys, 0)
+            print(lta_path_details)
+            base_path = lta_path_details[0]
+            print(base_path)
+            uvfits_file = lta_file+'.UVFITS'
+            base_lta = base_path+'/'+lta_file
+            if os.path.exists(base_lta):
+                base_uvfits = base_path+'/'+uvfits_file
+                gvfits_status = spamutils.run_gvfits(base_lta, base_uvfits)
+                if os.path.exists(base_uvfits):
+                    status = "success"
+                else:
+                    status = "failed"
+
+                calibration_data = {
+                   "project_id": project_id,
+                    "lta_id": lta_id,
+                    "uvfits_file": uvfits_file,
+                    "status": status,
+                    "comments": gvfits_status,
+                    "uvfits_size": fileutils.calculalate_file_sizse_in_MB(base_uvfits),
+                    "start_time": current_date_timestamp
+                }
+
+                dbutils.insert_into_table("calibrationinput", calibration_data, "calibration_id")
+
+            else:
+                project_update_data = {
+                    "set": {
+                        "status": "failed",
+                        "comments": "ltacomb failed"
+                    },
+                    "where": {
+                        "project_id": project_id
+                    }
+                }
+                lta_details_update_data = {
+                    "set": {
+                        "status": "failed",
+                        "comments": "ltacomb failed"
+                    },
+                    "where": {
+                        "lta_id": lta_id
+                    }
+                }
+                dbutils.update_table(project_update_data, "projectobsno")
+                dbutils.update_table(lta_details_update_data, "ltadetails")
 
 
 
