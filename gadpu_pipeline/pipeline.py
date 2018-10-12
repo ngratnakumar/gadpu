@@ -160,64 +160,22 @@ class Pipeline:
                 dbutils.update_table(lta_details_update_data, "ltadetails")
 
 
-
-        # gsb_data, ghb_data, obs_data, cycle_path = data
-        # print(gsb_data, ghb_data)
-        #
-        # for each_gsb in gsb_data:
-        #     file_path = obs_data[each_gsb]["file_path"]
-        #     project_path = cycle_path+"/".join(file_path.split('/')[-3:])
-        #     files_list = glob.glob(project_path+"/*gsb*")
-        #     if len(files_list) == 1:
-        #         lta = files_list[0].split('/')[-1]
-        #         uvfits = lta+'.UVFITS'
-        #         os.chdir(project_path)
-        #     check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
-        #     print(check_uvfits_exisits)
-        #     if not check_uvfits_exisits:
-        #         spamutils.run_gvfits(lta, uvfits)
-        #     else:
-        #         print("UVFITS already exists!")
-		#
-        # for each_ghb in ghb_data:
-        #     file_path = obs_data[each_ghb]["file_path"]
-        #     project_path = cycle_path+"/".join(file_path.split('/')[-3:])
-        #
-        #     lta_list = glob.glob(project_path+"/*lta*")
-        #     lta = lta_list[0]
-        #     uvfits = lta+'.UVFITS'
-        #     if 'gsb' not in lta:
-        #         os.chdir(project_path)
-        #         check_uvfits_exisits = glob.glob(project_path+'/*.UVFITS')
-        #         print(check_uvfits_exisits)
-        #         if not check_uvfits_exisits:
-        #             spamutils.run_gvfits(lta, uvfits)
-        #     else:
-        #         print("UVFITS already exists!")
-        #
-        #     ltb_list = glob.glob(project_path+"/*ltb*")
-        #     if len(ltb_list) == 1:
-        #         ltb = ltb_list[0]
-        #         uvfits = ltb+'.UVFITS'
-        #         gsb_uvfits = glob.glob(project_path+'/*gsb*.UVFITS')
-        #         os.chdir(project_path)
-        #         check_uvfits_exisits = glob.glob(project_path+'/*B.UVFITS')
-        #         print(check_uvfits_exisits)
-        #         if not gsb_uvfits:
-        #             if not check_uvfits_exisits:
-        #                 spamutils.run_gvfits(ltb, project_path)
-        #     else:
-        #         print("UVFITS already exists! -- "+str(check_uvfits_exisits))
-
     def stage3(self):
-        uvfits_list = glob.glob('/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS')
-        for each_uvfits in uvfits_list:
-            spamutils = SpamUtils()
-            # spam.set_aips_userid(11)
-            # project_code = os.path.dirname(each_uvfits)
-            # copy_uvfits = os.system('cp '+each_uvfits+' fits/')
-            # uvfits_file = each_uvfits.split('/')[-1]
-            spamutils.run_precalibrate_targets(each_uvfits)
+        dbutils = DBUtils()
+
+        columnKeys = {"calibration_id", "project_id", "uvfits_file"}
+        whereData = {"comments": "c17"}
+        uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
+
+        print(uncalibrated_uvfits)
+        # uvfits_list = glob.glob('/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS')
+        # for each_uvfits in uvfits_list:
+        #     spamutils = SpamUtils()
+        #     # spam.set_aips_userid(11)
+        #     # project_code = os.path.dirname(each_uvfits)
+        #     # copy_uvfits = os.system('cp '+each_uvfits+' fits/')
+        #     # uvfits_file = each_uvfits.split('/')[-1]
+        #     spamutils.run_precalibrate_targets(each_uvfits)
 
 
     def stage4(self):
