@@ -164,10 +164,21 @@ class Pipeline:
         dbutils = DBUtils()
 
         columnKeys = {"calibration_id", "project_id", "uvfits_file"}
-        whereData = {"comments": "c17"}
+        whereData = {"comments": "c17", "status": "success"}
         uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
 
-        print(uncalibrated_uvfits)
+        calibration_id = uncalibrated_uvfits[0]
+        project_id = uncalibrated_uvfits[1]
+        uvfits_file = uncalibrated_uvfits[2]
+
+        columnKeys = {"file_path"}
+        whereData = {"project_id": project_id}
+        project_details = dbutils.select_from_table("projectobsno", columnKeys,whereData, 0)
+
+        base_path = project_details[0]
+
+        print(calibration_id, project_id, uvfits_file, base_path)
+
         # uvfits_list = glob.glob('/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS')
         # for each_uvfits in uvfits_list:
         #     spamutils = SpamUtils()
