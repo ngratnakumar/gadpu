@@ -224,6 +224,6 @@ class Pipeline:
 
     def __init__(self):
         #self.stage1(self.__prerequisites())
-        self.stage2()
+        self.stage3()
 
 Pipeline()
