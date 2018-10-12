@@ -173,9 +173,43 @@ class Pipeline:
 
         columnKeys = {"file_path"}
         whereData = {"project_id": project_id}
-        project_details = dbutils.select_from_table("projectobsno", columnKeys,whereData, 0)
+        project_details = dbutils.select_from_table("projectobsno", columnKeys, whereData, 0)
 
         base_path = project_details[0]
+
+        """
+        TODO: 
+        
+            1 Update the projectobsno's project_id status to 'processing'
+            and comments to 'running precalibrate_target'
+            
+            2 Update the calibrationinput's calibration_id status to 'processing'
+            
+            3 Start precalibrate_target
+            
+            4 depending on the process status, update projectobsno and calibrationinput
+               
+        """
+
+        projectobsno_update_data = {
+            "set": {
+                "status": "processing",
+                "comments": "running precalibrate_target"
+            },
+            "where": {
+                "project_id": project_id
+            }
+        }
+
+        calibration_update_data = {
+            "set": {"status": "processing"},
+            "where": {"project_id": project_id}
+        }
+
+        dbutils.update_table(projectobsno_update_data, "projectobsno")
+        dbutils.update_table(calibration_update_data, "calibrationinput")
+
+        
 
         print(calibration_id, project_id, uvfits_file, base_path)
 
