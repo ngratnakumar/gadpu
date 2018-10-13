@@ -162,6 +162,7 @@ class Pipeline:
 
     def stage3(self):
         dbutils = DBUtils()
+        fileutils = FileUtils()
 
         columnKeys = {"calibration_id", "project_id", "uvfits_file"}
         whereData = {"comments": "c17", "status": "success"}
@@ -191,10 +192,64 @@ class Pipeline:
                
         """
 
+        current_time_in_sec = time.time()
+        current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
+
         projectobsno_update_data = {
             "set": {
                 "status": "processing",
-                "comments": "running precalibrate_target"
+                "comments": "running precalibrate_target, calibration_id = "+calibration_id,
+                "start_time": current_date_timestamp
+            },
+            "where": {
+                "project_id": project_id,
+                "status": "unprocessed"
+            }
+        }
+
+        calibration_update_data = {
+            "set": {
+                "status": "processing",
+                "start_time": current_date_timestamp
+            },
+            "where": {
+                "calibration_id": calibration_id,
+                "status": "success"
+            }
+        }
+
+        dbutils.update_table(projectobsno_update_data, "projectobsno")
+        dbutils.update_table(calibration_update_data, "calibrationinput")
+
+        UVFITS_FILE_NAME = uvfits_file
+        UVFITS_BASE_DIR = base_path
+        is_fits_dir = os.getcwd().split('/')
+        SPAM_WORKING_DIR = os.getcwd()
+        SPAM_THREAD_DIR = ""
+        for num in range(1, 4):
+            SPAM_THREAD_DIR += "/" + is_fits_dir[num]
+        if 'fits' not in is_fits_dir:
+            SPAM_THREAD_DIR = os.getcwd()
+            SPAM_WORKING_DIR = os.getcwd() + "/fits/"
+        fileutils.copy_files(UVFITS_BASE_DIR+'/'+UVFITS_FILE_NAME, SPAM_WORKING_DIR)
+        print "Copying done ==> Moving to pre_cal_target"
+        fileutils.run_spam_precalibration_stage(UVFITS_BASE_DIR, SPAM_WORKING_DIR, UVFITS_FILE_NAME)
+
+        current_time_in_sec = time.time()
+        current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
+
+        check_status_file = glob.glob(base_path+"/failed_log.txt")
+
+        if check_status_file:
+            status = "failed"
+        else:
+            status = "success"
+
+        projectobsno_update_data = {
+            "set": {
+                "status": status,
+                "comments": "precalibrate_target done, calibration_id = "+calibration_id,
+                "end_time": current_date_timestamp
             },
             "where": {
                 "project_id": project_id
@@ -202,26 +257,17 @@ class Pipeline:
         }
 
         calibration_update_data = {
-            "set": {"status": "processing"},
-            "where": {"project_id": project_id}
+            "set": {
+                "status": status,
+                "end_time": current_date_timestamp
+            },
+            "where": {
+                "calibration_id": calibration_id
+            }
         }
 
         dbutils.update_table(projectobsno_update_data, "projectobsno")
         dbutils.update_table(calibration_update_data, "calibrationinput")
-
-        
-
-        print(calibration_id, project_id, uvfits_file, base_path)
-
-        # uvfits_list = glob.glob('/GARUDATA/IMAGING19/CYCLE19/*/*/*.UVFITS')
-        # for each_uvfits in uvfits_list:
-        #     spamutils = SpamUtils()
-        #     # spam.set_aips_userid(11)
-        #     # project_code = os.path.dirname(each_uvfits)
-        #     # copy_uvfits = os.system('cp '+each_uvfits+' fits/')
-        #     # uvfits_file = each_uvfits.split('/')[-1]
-        #     spamutils.run_precalibrate_targets(each_uvfits)
-
 
     def stage4(self):
         pass

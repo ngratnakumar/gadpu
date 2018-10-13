@@ -6,6 +6,9 @@ import time
 import datetime
 from config import Config
 import tableSch as tableSchema
+import subprocess
+import sys
+import spam
 
 currentTimeInSec = time.time()
 
@@ -138,3 +141,71 @@ class FileUtils:
 
     def insert_calibrationinput(self):
         pass
+
+
+    def check_haslam_flag(self, project):
+        '''
+        # Definition: check_haslam_flag() - takes PROPOSAL_CODE_DATE
+        # Returns: Boolean
+        # Description: This function checks for the all obslog files and
+        gets the is ALC set to OFF.
+            If th ALC at 13. in obslog if FLAGGED as OFF, then we set apply_tsys to
+        spam.pre_calibrate_targets(apply_tsys=False), apply_tsys is True by default
+        # Code: spam.pre_calibrate_targets(UVFITS_FILE_NAME, apply_tsys=False)
+        -----------------------------------------------------------------------------------
+        $fgrep '13.' /GARUDATA/IMAGING24/CYCLE24/*/*.obslog | grep 'OFF' | cut -d ':' -f 1
+        -----------------------------------------------------------------------------------
+        # Reference: /export/spam/python/spam/gmrt.py:846,42
+
+        '''
+
+        UVFITS_DATA = "/data1/CYCLE17/"
+
+        # cmd = "fgrep '13.' " + UVFITS_DATA + "*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
+        cmd = "fgrep '14.' " + UVFITS_DATA + "*/*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
+        output = subprocess.check_output(cmd, shell=True)
+        obs_list = output.split('\n')
+        obs_list.remove('')
+        for is_haslam_flagged in obs_list:
+            return any(project in string for string in obs_list)
+
+
+    def run_spam_precalibration_stage(self, UVFITS_BASE_DIR, DIR, UVFITS_FILE_NAME):
+        print "Running SPAM pre_calibrate_targets on " + DIR
+        os.chdir(DIR)
+        print(DIR)
+        # UVFITS_FILE_NAME = glob.glob(DIR + "/*.UVFITS")
+        print(UVFITS_FILE_NAME)
+        if UVFITS_FILE_NAME:
+            original_stdout = sys.stdout
+            original_stderr = sys.stderr
+            precal_log = open('precal_stdout.log', 'a+')
+            precal_log.write('\n\n******PRECALIBRATION STARTED******\n\n')
+            sys.stdout = precal_log
+            sys.stderr = precal_log
+            PROJECT_CODE = UVFITS_BASE_DIR.split('/')[-1]
+            print PROJECT_CODE
+            if self.check_haslam_flag(PROJECT_CODE):
+                print(PROJECT_CODE + " Flagging apply_tsys=False")
+                try:
+                    spam.pre_calibrate_targets(UVFITS_FILE_NAME, apply_tsys=False, keep_channel_one=True)
+                except Exception as e:
+                    failed_log = open('failed_log.txt', 'a+')
+                    failed_log.write("Failed Error: " + str(e))
+                    failed_log.flush()
+            else:
+                print(PROJECT_CODE + " Flagging apply_tsys=True")
+                try:
+                    spam.pre_calibrate_targets(UVFITS_FILE_NAME)
+                except Exception as e:
+                    failed_log = open('failed_log.txt', 'a+')
+                    failed_log.write("Failed Error: " + str(e))
+                    failed_log.flush()
+            PROCCEED_FILE_LIST = glob.glob(DIR + "/*")
+            sys.stdout = original_stdout
+            sys.stderr = original_stderr
+            precal_log.flush()
+            if PROCCEED_FILE_LIST:
+                for EACH_FILE in PROCCEED_FILE_LIST:
+                    self.move_files(EACH_FILE, UVFITS_BASE_DIR + "/PRECALIB")
+
