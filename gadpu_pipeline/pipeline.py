@@ -164,22 +164,22 @@ class Pipeline:
         dbutils = DBUtils()
         fileutils = FileUtils()
 
-        columnKeys = {"calibration_id", "project_id", "uvfits_file", "observation_no"}
+        columnKeys = {"calibration_id", "project_id", "uvfits_file"}
         whereData = {"comments": "c17", "status": "success"}
         uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
 
         calibration_id = uncalibrated_uvfits[0]
         project_id = uncalibrated_uvfits[1]
         uvfits_file = uncalibrated_uvfits[2]
-        observation_no = uncalibrated_uvfits[3]
 
-        columnKeys = {"file_path"}
+        columnKeys = {"file_path", "observation_no"}
         whereData = {"project_id": project_id, "cycle_id": 17}
         project_details = dbutils.select_from_table("projectobsno", columnKeys, whereData, 0)
 
-        base_path = project_details[0]
-
-        """
+        base_path = project_details[1]
+        observation_no = project_details[0]
+        
+	"""
         TODO: 
         
             1 Update the projectobsno's project_id status to 'processing'
@@ -200,7 +200,6 @@ class Pipeline:
             "set": {
                 "status": "processing",
                 "comments": "running precalibrate_target, calibration_id = "+str(calibration_id),
-                "start_time": current_date_timestamp
             },
             "where": {
                 "project_id": project_id,
@@ -232,9 +231,13 @@ class Pipeline:
         if 'fits' not in is_fits_dir:
             SPAM_THREAD_DIR = os.getcwd()
             SPAM_WORKING_DIR = os.getcwd() + "/fits/"
-        fileutils.copy_files(UVFITS_BASE_DIR+'/'+UVFITS_FILE_NAME, SPAM_WORKING_DIR)
-        print "Copying done ==> Moving to pre_cal_target"
-        fileutils.run_spam_precalibration_stage(UVFITS_BASE_DIR, SPAM_WORKING_DIR, UVFITS_FILE_NAME, OBSNO)
+	print(SPAM_WORKING_DIR,SPAM_THREAD_DIR, UVFITS_BASE_DIR, UVFITS_FILE_NAME)
+	UVFITS_FILE_PATH = UVFITS_BASE_DIR+"/"+UVFITS_FILE_NAME
+	print(UVFITS_FILE_PATH)
+	print(SPAM_WORKING_DIR)
+        fileutils.copy_files(UVFITS_FILE_PATH, SPAM_WORKING_DIR)
+        print("Copying done ==> Moving to pre_cal_target")
+        fileutils.run_spam_precalibration_stage(UVFITS_BASE_DIR, SPAM_WORKING_DIR, UVFITS_FILE_NAME, observation_no)
 
         current_time_in_sec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
@@ -250,7 +253,6 @@ class Pipeline:
             "set": {
                 "status": status,
                 "comments": "precalibrate_target done, calibration_id = "+str(calibration_id),
-                "end_time": current_date_timestamp
             },
             "where": {
                 "project_id": project_id
