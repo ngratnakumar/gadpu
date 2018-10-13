@@ -162,7 +162,8 @@ class FileUtils:
         UVFITS_DATA = "/data1/CYCLE17/"
 
         # cmd = "fgrep '13.' " + UVFITS_DATA + "*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
-        cmd = "fgrep '14.' " + UVFITS_DATA + "*/*/"+obsno+".obslog | grep 'OFF' | cut -d ':' -f 1"
+        # cmd = "fgrep '14.' " + UVFITS_DATA + "*/*/"+str(obsno)+".obslog | grep 'OFF' | cut -d ':' -f 1"
+        cmd = "cat /GARUDATA/C17_ACL.list"
         output = subprocess.check_output(cmd, shell=True)
         obs_list = output.split('\n')
         obs_list.remove('')
@@ -184,7 +185,8 @@ class FileUtils:
             sys.stdout = precal_log
             sys.stderr = precal_log
             PROJECT_CODE = UVFITS_BASE_DIR.split('/')[-1]
-            print PROJECT_CODE
+            print(PROJECT_CODE, OBSNO)
+            print(UVFITS_FILE_NAME)
             if self.check_haslam_flag(PROJECT_CODE, OBSNO):
                 print(PROJECT_CODE + " Flagging apply_tsys=False")
                 try:

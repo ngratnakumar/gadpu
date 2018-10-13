@@ -7,8 +7,8 @@ import glob
 import os
 # import spam
 
-class Pipeline:
 
+class Pipeline:
 
     def stage1(self, gdata):
         """
@@ -26,7 +26,6 @@ class Pipeline:
 
         data = gdata[0]
         path = gdata[1]
-
 
         for each_obs in data:
             proposal_id = data[each_obs]['proposal_id']
@@ -78,7 +77,6 @@ class Pipeline:
                 if lta:
                     fileutils.copy_files(lta, project_path)
                     fileutils.insert_details(lta, project_path, isghb, cycle_id, status)
-
 
     def stage2(self):
         """
@@ -159,7 +157,6 @@ class Pipeline:
                 dbutils.update_table(project_update_data, "projectobsno")
                 dbutils.update_table(lta_details_update_data, "ltadetails")
 
-
     def stage3(self):
         dbutils = DBUtils()
         fileutils = FileUtils()
@@ -179,7 +176,7 @@ class Pipeline:
         base_path = project_details[1]
         observation_no = project_details[0]
         
-	"""
+        """
         TODO: 
         
             1 Update the projectobsno's project_id status to 'processing'
@@ -192,7 +189,6 @@ class Pipeline:
             4 depending on the process status, update projectobsno and calibrationinput
                
         """
-
         current_time_in_sec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
 
@@ -231,10 +227,10 @@ class Pipeline:
         if 'fits' not in is_fits_dir:
             SPAM_THREAD_DIR = os.getcwd()
             SPAM_WORKING_DIR = os.getcwd() + "/fits/"
-	print(SPAM_WORKING_DIR,SPAM_THREAD_DIR, UVFITS_BASE_DIR, UVFITS_FILE_NAME)
-	UVFITS_FILE_PATH = UVFITS_BASE_DIR+"/"+UVFITS_FILE_NAME
-	print(UVFITS_FILE_PATH)
-	print(SPAM_WORKING_DIR)
+        print(SPAM_WORKING_DIR, SPAM_THREAD_DIR, UVFITS_BASE_DIR, UVFITS_FILE_NAME)
+        UVFITS_FILE_PATH = UVFITS_BASE_DIR+"/"+UVFITS_FILE_NAME
+        print(UVFITS_FILE_PATH)
+        print(SPAM_WORKING_DIR)
         fileutils.copy_files(UVFITS_FILE_PATH, SPAM_WORKING_DIR)
         print("Copying done ==> Moving to pre_cal_target")
         fileutils.run_spam_precalibration_stage(UVFITS_BASE_DIR, SPAM_WORKING_DIR, UVFITS_FILE_NAME, observation_no)
