@@ -143,7 +143,7 @@ class FileUtils:
         pass
 
 
-    def check_haslam_flag(self, project):
+    def check_haslam_flag(self, project, obsno):
         '''
         # Definition: check_haslam_flag() - takes PROPOSAL_CODE_DATE
         # Returns: Boolean
@@ -162,7 +162,7 @@ class FileUtils:
         UVFITS_DATA = "/data1/CYCLE17/"
 
         # cmd = "fgrep '13.' " + UVFITS_DATA + "*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
-        cmd = "fgrep '14.' " + UVFITS_DATA + "*/*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
+        cmd = "fgrep '14.' " + UVFITS_DATA + "*/*/"+obsno+".obslog | grep 'OFF' | cut -d ':' -f 1"
         output = subprocess.check_output(cmd, shell=True)
         obs_list = output.split('\n')
         obs_list.remove('')
@@ -170,7 +170,7 @@ class FileUtils:
             return any(project in string for string in obs_list)
 
 
-    def run_spam_precalibration_stage(self, UVFITS_BASE_DIR, DIR, UVFITS_FILE_NAME):
+    def run_spam_precalibration_stage(self, UVFITS_BASE_DIR, DIR, UVFITS_FILE_NAME, OBSNO):
         print "Running SPAM pre_calibrate_targets on " + DIR
         os.chdir(DIR)
         print(DIR)
@@ -185,7 +185,7 @@ class FileUtils:
             sys.stderr = precal_log
             PROJECT_CODE = UVFITS_BASE_DIR.split('/')[-1]
             print PROJECT_CODE
-            if self.check_haslam_flag(PROJECT_CODE):
+            if self.check_haslam_flag(PROJECT_CODE, OBSNO):
                 print(PROJECT_CODE + " Flagging apply_tsys=False")
                 try:
                     spam.pre_calibrate_targets(UVFITS_FILE_NAME, apply_tsys=False, keep_channel_one=True)
