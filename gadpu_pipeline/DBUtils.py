@@ -232,6 +232,33 @@ class DBUtils:
                 conn.close()
         return result
 
+    def select_scangroup_query(self, sql):
+        nconfig = config.Config()
+        conn = None
+        selected_rows = None
+        result = []
+        try:
+            # read database configuration
+            params = nconfig.naps_config()
+            # connect to the PostgreSQL database
+            conn = psycopg2.connect(**params)
+            # create a new cursor
+            cur = conn.cursor()
+            # execute the UPDATE statement
+            cur.execute(sql)
+            # get the updated row counts
+            result = cur.fetchone()
+            # commit the changes to the database
+            conn.commit()
+            # close communication with the database
+            cur.close()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+            result = error
+        finally:
+            if conn is not None:
+                conn.close()
+        return result
 
     def get_all_observations_list(self):
         pass
