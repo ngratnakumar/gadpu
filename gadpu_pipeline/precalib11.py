@@ -236,6 +236,19 @@ def __main__():
         dbutils.update_table(projectobsno_update_data, "projectobsno")
         dbutils.update_table(calibration_update_data, "calibrationinput")
 
+        if status == 'success':
+            calibrated_uvfits_list = glob.glob(base_path+'/PRECALIB/*.UVFITS')
+            if calibrated_uvfits_list:
+                for each_uvfits in calibrated_uvfits_list:
+                    imaging_data = {
+                        "project_id": project_id,
+                        "calibration_id": calibration_id,
+                        "calibrated_fits_file": each_uvfits,
+                        "status": "unprocessed",
+                        "comments": "c17"
+                    }
+                    dbutils.insert_into_table("imaginginput", imaging_data, "imaging_id")
+
         delete_dir(SPAM_THREAD_DIR)
         spam.exit()
 
