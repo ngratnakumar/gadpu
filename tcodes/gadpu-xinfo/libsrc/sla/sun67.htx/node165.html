@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>SLA_RCC - Barycentric Coordinate Time</TITLE>
+<META NAME="description" CONTENT="SLA_RCC - Barycentric Coordinate Time">
+<META NAME="keywords" CONTENT="sun67">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="sun67.css">
+<LINK REL="next" HREF="node166.html">
+<LINK REL="previous" HREF="node164.html">
+<LINK REL="up" HREF="node13.html">
+<LINK REL="next" HREF="node166.html">
+</HEAD>
+<BODY >
+<BR> <HR>
+<A NAME="tex2html2082" HREF="node166.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2080" HREF="node13.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2074" HREF="node164.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>   <A HREF="sun67.html#stardoccontents"><IMG  ALIGN="BOTTOM" BORDER="0"
+ SRC="contents_motif.gif"></A>
+<BR>
+<B> Next:</B> <A NAME="tex2html2083" HREF="node166.html">SLA_RDPLAN - Apparent of Planet</A>
+<BR>
+<B>Up:</B> <A NAME="tex2html2081" HREF="node13.html">SUBPROGRAM SPECIFICATIONS</A>
+<BR>
+<B> Previous:</B> <A NAME="tex2html2075" HREF="node164.html">SLA_RANORM - Put Angle into Range</A>
+<BR> <HR> <P>
+<P><!--End of Navigation Panel-->
+<H2><A NAME="SECTION0004152000000000000000">SLA_RCC - Barycentric Coordinate Time</A>
+<A NAME="xref_SLA_RCC">&#160;</A><A NAME="SLA_RCC">&#160;</A>
+</H2>
+       <DL>
+<DT><STRONG>CALL:</STRONG>
+<DD><TT>D&nbsp;=&nbsp;sla_RCC (TDB, UT1, WL, U, V)</TT>
+<DT><STRONG>ACTION:</STRONG>
+<DD>The relativistic clock correction:
+         the difference between <I>proper time</I> at
+         a point on the Earth and
+         <I>coordinate time</I> in the solar
+         system barycentric space-time frame of reference.
+         The proper time is Terrestrial Time, TT;
+         the coordinate time is an implementation of Barycentric
+         Dynamical Time, TDB.
+<P>       </DL>
+<P>     <DL>
+<DT><STRONG>GIVEN:</STRONG>
+<DD>
+<BR>
+<TABLE CELLPADDING=3>
+<TR VALIGN="TOP"><TD ALIGN="LEFT"><EM>TDB</EM></TD>
+<TH ALIGN="LEFT"><B>D</B></TH>
+<TD ALIGN="LEFT" NOWRAP>TDB (MJD: JD-2400000.5)</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT"><EM>UT1</EM></TD>
+<TD ALIGN="LEFT"><B>D</B></TD>
+<TD ALIGN="LEFT" NOWRAP>universal time (fraction of one day)</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT"><EM>WL</EM></TD>
+<TD ALIGN="LEFT"><B>D</B></TD>
+<TD ALIGN="LEFT" NOWRAP>clock longitude (radians west)</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT"><EM>U</EM></TD>
+<TD ALIGN="LEFT"><B>D</B></TD>
+<TD ALIGN="LEFT" NOWRAP>clock distance from Earth spin axis (km)</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT"><EM>V</EM></TD>
+<TD ALIGN="LEFT"><B>D</B></TD>
+<TD ALIGN="LEFT" NOWRAP>clock distance north of Earth equatorial plane (km)</TD>
+</TR>
+</TABLE></DL>
+<P>     <DL>
+<DT><STRONG>RETURNED:</STRONG>
+<DD>
+<BR>
+<TABLE CELLPADDING=3>
+<TR VALIGN="TOP"><TD ALIGN="LEFT"><EM>sla_RCC</EM></TD>
+<TH ALIGN="LEFT"><B>D</B></TH>
+<TD ALIGN="LEFT" NOWRAP>TDB-TT (sec; Note 1)</TD>
+</TR>
+</TABLE></DL>
+<P>      <DL>
+<DT><STRONG>NOTES:</STRONG>
+<DD><DL COMPACT>
+<DT>1.
+<DD>TDB is coordinate time in the solar system barycentre frame
+of reference, in units chosen to eliminate the scale difference
+with respect to terrestrial time.  TT is the proper
+        time for clocks at mean sea level on the Earth.
+  <DT>2.
+<DD>The number returned by sla_RCC comprises
+        a main (annual) sinusoidal term of amplitude
+        approximately 1.66ms, plus lunar and planetary terms up to about
+        20<IMG WIDTH="12" HEIGHT="25" ALIGN="MIDDLE" BORDER="0"
+ SRC="img146.gif"
+ ALT="$\mu$">s, and diurnal terms up to 2<IMG WIDTH="12" HEIGHT="25" ALIGN="MIDDLE" BORDER="0"
+ SRC="img146.gif"
+ ALT="$\mu$">s.  The
+        variation arises from the transverse Doppler effect and the
+        gravitational red-shift as the observer varies in speed and
+        moves through different gravitational potentials.
+  <DT>3.
+<DD>The argument TDB is, strictly, the barycentric coordinate time;
+        however, the terrestrial time (TT) can in practice be used without
+        significant loss of accuracy.
+  <DT>4.
+<DD>The geocentric model is that of Fairhead &amp; Bretagnon (1990), in
+        its full form.  It was supplied by Fairhead (private communication)
+        as a Fortran subroutine.  A number of coding changes were made to
+        this subroutine in order
+        match the calling sequence of previous versions of the present
+        routine, to comply with Starlink programming standards and to
+        avoid compilation problems on certain machines.  The
+        numerical results are essentially unaffected by the
+        changes.
+  <DT>5.
+<DD>The topocentric model is from Moyer (1981) and Murray (1983).
+        It is an approximation to the expression
+        
+<P ALIGN="CENTER"><IMG WIDTH="88" HEIGHT="39"
+ SRC="img147.gif"
+ ALT="\begin{displaymath}
+\frac{{\bf v}_e \cdot ( {\bf x} - {\bf x}_e )}{c^2}\end{displaymath}"></P>
+where <IMG WIDTH="19" HEIGHT="25" ALIGN="MIDDLE" BORDER="0"
+ SRC="img148.gif"
+ ALT="${\bf v}_e$"> is the barycentric velocity of
+        the Earth, <IMG WIDTH="12" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img149.gif"
+ ALT="${\bf x}$"> and <IMG WIDTH="19" HEIGHT="25" ALIGN="MIDDLE" BORDER="0"
+ SRC="img150.gif"
+ ALT="${\bf x}_e$"> are the barycentric positions
+        of the observer and the Earth respectively, and
+        c is the speed of light.
+        It can be disabled, if necessary, by setting the arguments
+        U and V to zero.
+  <DT>6.
+<DD>During the interval 1950-2050, the absolute accuracy
+        is better than <IMG WIDTH="23" HEIGHT="25" ALIGN="MIDDLE" BORDER="0"
+ SRC="img151.gif"
+ ALT="$\pm3$">&nbsp;nanoseconds
+        relative to direct numerical integrations using the JPL DE200/LE200
+        solar system ephemeris.
+  <DT>7.
+<DD>The IAU 1976 definition of TDB was that it must differ from TT only by
+        periodic terms.  Though practical, this is an imprecise definition
+        which ignores the existence of very long-period and secular effects
+        in the dynamics of the solar system.  As a consequence, different
+        implementations of TDB will, in general, differ in zero-point and
+        will drift linearly relative to one other.  In 1991 the IAU introduced
+        new timescales designed to overcome these objections:  geocentric coordinate
+        time, TCG, and barycentric coordinate time, TCB.  In principle, therefore,
+        TDB is obsolete.  However, sla_RCC
+        can be used to implement the periodic part of TCB-TCG.
+ </DL></DL>
+<P>     <DL>
+<DT><STRONG>REFERENCES:</STRONG>
+<DD><DL COMPACT>
+<DT>1.
+<DD>Fairhead,L., &amp; Bretagnon,P., <I>Astron.Astrophys.,</I>
+<B>229</B>, 240-247 (1990).
+<DT>2.
+<DD>Moyer,T.D., <I>Cel.Mech.,</I> <B>23</B>, 33 (1981).
+  <DT>3.
+<DD>Murray,C.A., <I>Vectorial Astrometry,</I> Adam Hilger (1983).
+  <DT>4.
+<DD>Seidelmann,P.K. <I>et al,</I> <I>Explanatory Supplement to the
+        Astronomical Almanac,</I> Chapter 2, University Science Books
+        (1992).
+  <DT>5.
+<DD>Simon,J.L., Bretagnon,P., Chapront,J., Chapront-Touze,M.,
+        Francou,G. &amp; Laskar,J., <I>Astron.Astrophys.,</I>
+        <B>282</B>, 663-683 (1994).
+ </DL></DL>
+<BR> <HR>
+<A NAME="tex2html2082" HREF="node166.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2080" HREF="node13.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2074" HREF="node164.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>   <A HREF="sun67.html#stardoccontents"><IMG  ALIGN="BOTTOM" BORDER="0"
+ SRC="contents_motif.gif"></A>
+<BR>
+<B> Next:</B> <A NAME="tex2html2083" HREF="node166.html">SLA_RDPLAN - Apparent of Planet</A>
+<BR>
+<B>Up:</B> <A NAME="tex2html2081" HREF="node13.html">SUBPROGRAM SPECIFICATIONS</A>
+<BR>
+<B> Previous:</B> <A NAME="tex2html2075" HREF="node164.html">SLA_RANORM - Put Angle into Range</A>
+<BR> <HR> <P>
+<P><!--End of Navigation Panel-->
+<ADDRESS>
+<I>SLALIB --- Positional Astronomy Library<BR>Starlink User Note 67<BR>P. T. Wallace<BR>5 March 2003<BR>E-mail:ptw@star.rl.ac.uk<BR><BR>Copyright &copy 2003 Council for the Central Laboratory of the Research Councils<BR></I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,4 @@
+<Eyepieces>
+  <eyepiece width='0.833333' height='0.833333' pa='0' isElliptical='1' isSolid='0'>My eyepiece #1</eyepiece>
+  <eyepiece width='0.333333' height='0.333333' pa='60' isElliptical='0' isSolid='1'>My CCD camera</eyepiece>
+</Eyepieces>

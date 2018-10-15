@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Accommodating Normal Document Changes</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Accommodating Normal Document Changes">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html369 HREF="node24.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html367 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html361 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html370 HREF="node24.html"> Forcing a Re-Link</A><BR>
+<B>Up:</B> <A NAME=tex2html368 HREF="node22.html"> WHEN TO RE-LINK</A><BR>
+<B> Previous:</B> <A NAME=tex2html362 HREF="node22.html"> WHEN TO RE-LINK</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00061000000000000000><A NAME=xref_accommodating_normal_document_changes>&#160;</A>Accommodating Normal Document Changes</A></H2>
+<P>
+A documentation set may need to be re-linked whenever any file in any
+of its <A HREF="node4.html#secthypertextdocuments">documents</A> changes, or when any document is added or
+removed, or moved to a new location.  The <A HREF="node3.html#sectHTX">HTX</A>
+<A HREF="node48.html#hlink">linker</A> detects changed documents by observing the
+modification dates of the document <A HREF="node8.html#sectdocumentdirectories"><tt>&quot;</tt>.htx<tt>&quot;</tt> directories</A>, the
+associated <A HREF="node18.html#sectindexfiles">index files</A>, and both the modification date and
+contents of the <tt>&quot;</tt>htx.log<tt>&quot;</tt> date-stamp file in each <A HREF="node9.html#sectdocumentlibraries">document
+library</A>.
+<P>
+This process is effective, except that it is sometimes possible to
+modify an <A NAME=tex2html30 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> file within a document without changing the
+modification date on the <tt>&quot;</tt>.htx<tt>&quot;</tt> directory that contains it. This is
+particularly likely if the HTML file resides in a sub-directory within
+the document. If such modifications are carried out, a simple remedy
+is to use the UNIX <tt>touch</tt> command to update the document's
+<tt>&quot;</tt>.htx<tt>&quot;</tt> directory and record the change before running the linker.
+<P>
+As an alternative, the <tt>hlink</tt> command may be invoked with the
+<tt>-d</tt> flag to specify a <em>deep dependency</em> test of all document
+files. This causes it to check the modification dates of all the HTML
+files in all the documents in order to detect changes. This is a
+thorough way of detecting changes, but may be rather too slow for
+regular use on large document collections.
+<P>
+You should also remember that re-linking can be rendered necessary not
+only by changes in document contents, but also by changes in document
+location. Thus, if documents or libraries are moved, it is always wise
+to re-run <tt>hlink</tt>.
+<P>
+<BR> <HR><A NAME=tex2html369 HREF="node24.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html367 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html361 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html370 HREF="node24.html"> Forcing a Re-Link</A><BR>
+<B>Up:</B> <A NAME=tex2html368 HREF="node22.html"> WHEN TO RE-LINK</A><BR>
+<B> Previous:</B> <A NAME=tex2html362 HREF="node22.html"> WHEN TO RE-LINK</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

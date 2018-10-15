@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Changes and New Features in V1.1</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Changes and New Features in V1.1">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html729 HREF="node59.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html727 HREF="node57.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html721 HREF="node57.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html730 HREF="node59.html"> Changes and New
+Features in V1.2</A><BR>
+<B>Up:</B> <A NAME=tex2html728 HREF="node57.html"> CHANGES AND NEW FEATURES</A><BR>
+<B> Previous:</B> <A NAME=tex2html722 HREF="node57.html"> CHANGES AND NEW FEATURES</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000141000000000000000>Changes and New Features in V1.1</A></H2>
+<P>
+The following describes the most significant changes which occurred in
+<A HREF="node3.html#sectHTX">HTX</A> between versions V1.0 and V1.1.
+<P>
+<OL><LI> Two new commands have been added:
+<P>
+<DL ><DT><A HREF="node47.html#findme"><tt>findme</tt></A>
+<DD><BR> 
+Performs <A HREF="node32.html#sectsearchingfordocuments">keyword searching</A> of
+local documents with hypertext display of the results using a
+<A HREF="node50.html#sectusingwwwbrowsers">WWW browser</A>. This forms the main
+command-line user interface to an HTX hypertext documentation set. A
+variety of search options are available.
+<P>
+<DT><A HREF="node49.html#showme"><tt>showme</tt></A>
+<DD><BR> Allows viewing of specified
+parts of documents, as identified by a document name and (optional)
+<A HREF="node12.html#secttargetlabels">cross-reference label</A>. The selected
+document is displayed using a WWW browser. This provides a useful
+command-line user interface for documents whose name or structure is
+known. It also provides a programming interface, for instance for
+implementing on-line <A HREF="node38.html#secthypertexthelp">hypertext help</A>
+systems in other software.
+<P>
+ </DL>
+<P>
+<LI> <A HREF="node18.html#sectindexfiles">Index files</A>  created by the
+<A HREF="node48.html#hlink"><tt>hlink</tt></A> command are no longer stored in the
+<A HREF="node9.html#sectdocumentlibraries">document library</A> using the file name
+<tt>&quot;</tt>document.index<tt>&quot;</tt>. Instead, they are now stored <em>inside</em> the
+document in a file named:
+<P>
+<blockquote> <PRE>document.htx/htx.index
+</PRE>
+</blockquote>
+<P>
+This means that if a document is removed from a library, its index
+file is automatically removed as well. This avoids the need for other
+library maintenance software to know about HTX index files.
+<P>
+The old <tt>&quot;</tt>docname.index<tt>&quot;</tt> files are no longer used and may be
+removed. New index files will then be generated when <tt>hlink</tt> is
+next run.
+<P>
+<LI> The format of index files has been changed and additional
+information is now stored in them. This means that index file
+generation is a little slower, but the additional information allows
+subsequent document searches (<em>e.g.</em> using the <tt>findme</tt>
+command) to run more rapidly.
+<P>
+<LI> Additional information is now stored in the
+<A HREF="node19.html#sectlinkediting"><tt>&quot;</tt>htx.log<tt>&quot;</tt></A> file which acts as a
+date-stamp in each document library and records when it was last
+re-linked using <tt>hlink</tt>. This information allows
+<tt>hlink</tt> to detect if documents have been added or removed from the
+documentation set, or moved to a different location, and will trigger
+a re-link of any documents that refer to them. This change removes the
+need to use the <tt>-r</tt> option with <tt>hlink</tt>.
+<P>
+<LI> The default for the <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search
+path</A> used for locating documents is now evaluated
+from the <tt>INSTALL</tt> and <tt>STARLINK</tt> environment variables when the
+HTX software is installed, rather than at run time.
+<P>
+This means that by default HTX can now locate both its own and other
+Starlink documentation even if it is not installed in the standard
+place (<em>i.e.</em> under the <tt>/star</tt> directory).
+<P>
+<LI> The concept of <A HREF="node41.html#sectcataloguefiles"><em>catalogue
+files</em></A>  has been introduced to
+allow searches to be performed on the names and titles of documents
+that are not installed locally in hypertext format.
+<P>
+<LI> Various improvements to efficiency have been implemented.
+<P>
+<LI> This document (<A HREF="../sun188.htx/sun188.html#xref_">SUN/188</A>) has been revised and updated.
+<P>
+</OL><BR> <HR><A NAME=tex2html729 HREF="node59.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html727 HREF="node57.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html721 HREF="node57.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html730 HREF="node59.html"> Changes and New
+Features in V1.2</A><BR>
+<B>Up:</B> <A NAME=tex2html728 HREF="node57.html"> CHANGES AND NEW FEATURES</A><BR>
+<B> Previous:</B> <A NAME=tex2html722 HREF="node57.html"> CHANGES AND NEW FEATURES</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

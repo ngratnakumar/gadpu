@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Defining Your X Display</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Defining Your X Display">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html669 HREF="node53.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html667 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html661 HREF="node51.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html670 HREF="node53.html"> WWW Browser Communication</A><BR>
+<B>Up:</B> <A NAME=tex2html668 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B> Previous:</B> <A NAME=tex2html662 HREF="node51.html"> Specifying a WWW Browser</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000132000000000000000><A NAME=xref_defining_your_X_display>&#160;</A>Defining Your X Display</A></H2>
+<P>
+In order to run a <A HREF="node50.html#sectusingwwwbrowsers">WWW browser</A> on an
+X windows display, the environment variable <tt>DISPLAY</tt> should first
+be defined to identify the display you want to
+use. <A HREF="node3.html#sectHTX">HTX</A> only supports WWW browsers which use
+<em>X displays</em>.
+<P>
+If you are a regular user of an X display, you will probably already
+have the necessary command in your <tt>.login</tt> file. If not, you may
+want to use the Starlink <tt>xdisplay</tt> command (described in
+<A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun129.htx/sun129.html?xref_">SUN/129</A>) to make the appropriate definition.
+<P>
+If HTX detects that the <tt>DISPLAY</tt> variable has not been defined, it
+will attempt to run the <tt>xdisplay</tt> utility itself before starting a
+WWW browser. For this to succeed, <tt>xdisplay</tt> must be installed on
+your system and the directory <tt>/star/bin</tt><A NAME=tex2html58 HREF="footnode.html#1805"><IMG ALIGN=BOTTOM ALT="gif" SRC="./foot_motif.gif"></A> must be on your UNIX <tt>PATH</tt>. If the
+<tt>xdisplay</tt> command cannot be found (and the <tt>DISPLAY</tt>
+environment variable is undefined), then an error will result.
+<P>
+Because the <tt>xdisplay</tt> command may take some time to complete, you
+will be warned if this must be repeated by each subsequent HTX
+command (not all WWW browsers require this), as it will slow down your
+access to documents. Defining the <tt>DISPLAY</tt> environment variable
+yourself will eliminate this delay.
+<P>
+<BR> <HR><A NAME=tex2html669 HREF="node53.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html667 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html661 HREF="node51.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html670 HREF="node53.html"> WWW Browser Communication</A><BR>
+<B>Up:</B> <A NAME=tex2html668 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B> Previous:</B> <A NAME=tex2html662 HREF="node51.html"> Specifying a WWW Browser</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

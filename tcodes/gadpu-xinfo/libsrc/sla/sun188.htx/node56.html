@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Inter-Machine Browser Communication</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Inter-Machine Browser Communication">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html707 HREF="node57.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html705 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html701 HREF="node55.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html708 HREF="node57.html"> CHANGES AND NEW FEATURES</A><BR>
+<B>Up:</B> <A NAME=tex2html706 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B> Previous:</B> <A NAME=tex2html702 HREF="node55.html"> Netscape Behaviour</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000134000000000000000><A NAME=sectintermachinecommunication>&#160;</A><A NAME=xref_inter_machine_browser_communication>&#160;</A>Inter-Machine Browser Communication</A></H2>
+<P>
+Often, your file system will be shared by more than one machine so
+that communication between different machines is possible via
+files. Such an arrangement provides an opportunity for
+<A HREF="node3.html#sectHTX">HTX</A> to pass information to WWW browsers which are
+already running on other machines. With the
+<A NAME=tex2html63 HREF="http://home.netscape.com/ "><em>Netscape</em></A> browser, this can make working on multiple
+machines considerably easier by reducing the number of browser
+invocations you require. For it to work successfully, however, the
+files you are accessing must be known by identical names on all the
+machines involved.
+<P>
+If your file system is suitably set up, then HTX will normally be able
+to take advantage of this without any further action on your part. To
+achieve this, the temporary files which HTX creates to communicate
+with the browser will be placed in the directory
+<tt>$HOME/.htxtmp</tt><A NAME=tex2html64 HREF="footnode.html#1463"><IMG ALIGN=BOTTOM ALT="gif" SRC="./foot_motif.gif"></A>. Therefore, if you use the same login directory (and
+<tt>$HOME</tt> translates to the same name) on each machine, these
+temporary files will be accessible to the browser wherever it is
+running.
+<P>
+If your login directory is not the same on each machine, then you can
+set the environment variable <tt>HTX_TMP</tt> to give the name of a
+suitable alternative directory to hold these temporary communication
+files. The directory you use should be accessible (for both reading
+and writing) and be known by identical names on all the machines which
+will use it.
+<P>
+<BR> <HR><A NAME=tex2html707 HREF="node57.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html705 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html701 HREF="node55.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html708 HREF="node57.html"> CHANGES AND NEW FEATURES</A><BR>
+<B>Up:</B> <A NAME=tex2html706 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B> Previous:</B> <A NAME=tex2html702 HREF="node55.html"> Netscape Behaviour</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

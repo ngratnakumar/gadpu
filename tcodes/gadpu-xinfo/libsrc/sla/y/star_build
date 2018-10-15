@@ -1,0 +1,899 @@
+#!/bin/sh
+#*****************************************************************************
+#
+# Name:
+#    star_build
+#
+# Purpose:
+#    To build a Starlink subroutine library and its dependencies.
+#
+# Language:
+#    Bourne shell
+#
+# Invocation:
+#    % starbuild pkg [level]
+#
+# Arguments:
+#    pkg      The name of the package.
+#    level    Optional, 1 (default) Build a complete system.
+#                       2 Build a subdirectory.
+#                       deinstall (
+#                       clean     ( Perform the specified make target for
+#                       unbuild   ( the item and its subsidiaries
+#                       check     (
+#
+# Method:
+#    Assuming the current directory contains:
+#      1. This file
+#      2. File pkg_needs or pkg_needs_run (where pkg is the lower case of
+#         the package name) listing the subsidiary items required to 
+#         build/install/run or install/run the package depending upon the 
+#         format obtained.
+#      3. Subdirectories containing all the dependencies of pkg which are 
+#         required to be built.
+#
+#    If the "level" is 1 or not present, all the items needed by "item"
+#    and then "item" itself will be checked and built and/or installed if
+#    necessary. The star_build script will obtain values for the environment
+#    variables INSTALL, STARLINK and SYSTEM (see the README file) by prompting
+#    the user as required. Suitable suggested values will be offered and the 
+#    chosen values saved for use as suggested values in subsequent invocations.
+#    star_build level 2 is then called for each of the items listed in any
+#    pkg_needs file or pkg_needs_run file.
+#
+#    If "level" is 2, star_build has been called from level 1 to build/install
+#    the named item. Level 2 must not be specified directly by users as it
+#    assumes that all required environment variables have been set.
+#     If the subdirectory corresponding with the named item contains a Starlink
+#    export compressed tar file, it is assumed that a new version of the item 
+#    has been obtained unless the directory also contains a .BUILT file which
+#    is newer. (Any .BUILT file extracted from the tar file is touched to flag
+#    the extraction.) If there is a new version, any existing version is
+#    deinstalled and unbuilt and the new version extracted and built and/or
+#    installed in its place.
+#
+#    If "level" is one of the other permitted values, values for INSTALL and 
+#    STARLINK are found as for level 1 and if they are the same, `make' is
+#    performed on the specified target for any dependencies listed in any
+#    pkg_needs or pkg_needs_run file, and then for pkg itself. 
+#
+#    HTX is treated as a special case and handled last as it may be required
+#    to deinstall any of the other items.
+#
+# Authors:
+#   AJC: A.J.Chipperfield (STARLINK)
+#
+# History:
+#   15-FEB-1995 (AJC):
+#     Original version
+#   1-SEP-1995 (AJC):
+#     Use pkg name as part of reply, build_temp and log file names
+#     Add deinstall, clean and unbuild facility
+#     Leave tar.Z file in situ. Compare date with .BUILT to see if it
+#      is a new version.
+#   14-SEP-1995 (AJC):
+#     Fix bug in getting SYSTEM value.
+#   20-OCT-1995 (AJC):
+#     Additional comments
+#     no special PKG for StarX
+#     HELP item name is now HLP
+#    4-MAR-1996 (AJC):
+#     Revised definition of _needs files allow for either or none
+#    3-APR-1996 (AJC):
+#     Add INSTALL/bin (and STARLINK/bin if different) to PATH if necessary
+#     This is required so that installed link scripts are found during
+#     building
+#   30-APR-1996 (AJC):
+#     Correctly get SYSTEM ix86_Linux
+#     Use $needs variable to avoid "missing file" on cat for Linux
+#     Remove check on form and system of tar file (Otherwise new systems
+#      have to be hardwired in.
+#    8-AUG-1996 (AJC):
+#     Use printf not echo -n for no newline
+#     Modify tr commands as required by Solaris
+#    4-DEC-1996 (AJC):
+#     Prevent hang in the event of no _needs[_run] file
+#   21-FEB-1997 (AJC):
+#     Fix bug finding SYSTEM on alphas since Linux added
+#   14-OCT-1999 (AJC):
+#     Fix bug handling maverick package names when subsidiary items found
+#     from different hierarchy.
+#-
+
+# Ensure we have the package name in lower case and upper case
+# pkg is used as the subdirectory name and temporary filename prefix.
+pkg=`echo $1 | tr '[A-Z]' '[a-z]'`
+# PKG is used as the name of the item in messages.
+PKG=`echo $1 | tr '[a-z]' '[A-Z]'`
+
+# Convert some maverick names
+# where the subdirectory name is not the lower case of the item name.
+if [ $pkg = starx ]
+then
+   pkg=starX
+fi
+
+# Define the abandon function
+abandon() { echo "";
+ echo "!! Here is a listing of the ${BUILD_LOG} file:";
+ sed 's/^/<   /' ${BUILD_LOG}; echo "!  End of log file listing."; echo "";
+ if [ -f ${pkg}_build_temp ]; then rm ${pkg}_build_temp; fi;
+ if [ -f $PKG_REPLY ]; then rm $PKG_REPLY; fi;
+ echo "!! Aborting star_build for $PKG";
+ exit 1; }
+
+# Define the abandon2 function
+abandon2() { echo ""; echo "!! Failed processing $PKG.";
+ exit 1; }
+
+# Select the required level of operation depending upon the second parameter.
+if [ $# -eq 1 ]
+then
+   level=1
+elif [ $2 = 1 -o $2 = 2 \
+       -o $2 = deinstall -o $2 = clean -o $2 = unbuild -o $2 = check ]
+then
+   level=$2
+else
+#***************************************************************************
+#
+#  P A R A M E T E R   E R R O R
+#
+#***************************************************************************
+   echo "Invalid second parameter ($2) in call of star_build"
+   abandon2
+fi
+
+#***************************************************************************
+#***************************************************************************
+#
+#  L E V E L  1 or deinstall etc.
+#
+#  Set up environment variables and 'build' each required subdirectory
+#
+#***************************************************************************
+if [ $level != 2 ]
+then
+#***********************************************************
+#
+# First create the 'reply' script to get user y/n responses.
+#
+#***********************************************************
+   PKG_REPLY=${pkg}_reply
+   export PKG_REPLY
+
+   cat << \**** > $PKG_REPLY
+#!/bin/sh
+REPLY=""
+while [ -z "$REPLY" ]
+do
+  read REP
+  REPLY=`echo $REP | tr yn YN`
+  DEFAULT=`echo $1 | tr yn YN`
+  if [ "$REPLY" = "$DEFAULT" -o "$REPLY" = "" ]
+  then
+    exit 0
+
+  elif [ "$REPLY" = "N" ]
+  then
+    exit 1
+
+  elif [ "$REPLY" = "Y" ]
+  then
+    if [ "$DEFAULT" = "" ]
+    then 
+       exit 0
+    else
+       exit 1
+    fi
+  else
+    REPLY=""
+    printf "Please answer y or n (y) > "
+  fi
+done
+****
+   chmod u+x $PKG_REPLY
+
+#*************************************************************
+#
+# Create a new log file.
+#
+#*************************************************************
+BUILD_LOG="star_build_${pkg}.log"
+export BUILD_LOG
+echo "star_build_${pkg} logfile" > ${BUILD_LOG}
+echo "Building $PKG  on `date`" >> ${BUILD_LOG}
+
+#*************************************************************
+#
+# Set up the SYSTEM environment variable.
+#
+#*************************************************************
+   if [ -z "$SYSTEM" ]
+   then
+      echo "Setting SYSTEM"
+#    Set the value of SYSTEM
+#    Save the values of the hardware and software.
+      hardware=`uname -m`
+      software=`uname -s`
+      echo "hardware = $hardware"
+      echo "software = $software"
+#    Set the default value of the SYSTEM environment variable.
+      SYSTEM=${hardware}_${software}
+   
+#    Handle special cases.
+   
+      if [ "$SYSTEM" = "RISC_ULTRIX" ]
+      then
+#     A DECstation running Ultrix.
+         SYSTEM=mips
+   
+      elif [ `echo ${hardware} | awk '{print substr($1,1,4)}'` = sun4 ]
+      then
+#    All Suns
+   
+         if [ `uname -r | awk '{print substr($1,1,1)}'` = 4 ]
+         then
+#    Suns running SunOs version 4.
+            SYSTEM=sun4
+         else
+#    Suns running SunOs version 5.
+            SYSTEM=sun4_Solaris
+         fi
+
+      elif [ "`echo ${SYSTEM} | awk '/86_Linux/{print "ix86_Linux"}'`" = "ix86_Linux" ]
+      then
+#   PC Linux
+         SYSTEM=ix86_Linux
+
+      fi
+   fi
+   export SYSTEM
+   
+#************************************************************
+#
+#    Now set the environment variables INSTALL and STARLINK
+#
+#************************************************************
+   installt=""
+   if [ -f $HOME/.star_config ]
+   then
+      installt=`sed  -e '/INSTALL: /!d' -e '/INSTALL: /s/INSTALL: //' $HOME/.star_config`
+   fi         
+   if [ -z "$installt" ]
+   then
+# There is no value for INSTALL in .star_config.
+# If there is a value to inherit, use it - otherwise use $HOME/star
+      if [ -z "$INSTALL" ]
+      then
+         installt=$HOME/star
+      else
+         installt=$INSTALL
+      fi
+   fi
+   
+   starlinkd=""
+   if [ -f $HOME/.star_config ]
+   then
+      starlinkd=`sed  -e '/STARLINK: /!d' -e '/STARLINK: /s/STARLINK: //' $HOME/.star_config`
+   fi         
+   if [ -z "$starlinkd" ]
+   then
+# The default value was not obtained from .star_config
+# If there is a value to inherit, use it - otherwise assume $installt
+      if [ -z "$STARLINK" ]
+      then
+         starlinkd="$installt"
+      else
+         starlinkd=$STARLINK
+      fi
+   fi
+   
+   echo ""
+   echo "Parameters are set for system type $SYSTEM"
+   echo ""
+
+   SET=""
+   while  [ -z "$SET" ]
+   do
+      echo ""
+      if [ "$level" = "1" ]
+      then
+         echo "Where do you want to 'install' the software?"
+      else
+         echo "Where is the software installed?"
+      fi
+      echo "Give the top-level directory name,"
+      echo "? for more information,"
+      printf "or <return> to accept the default ($installt) > "
+
+      read VAL
+      if [ -z "$VAL" ]
+      then
+#   RETURN typed - use default value
+         SET="Y"
+   
+      elif [ "$VAL" = "?" ]
+      then
+         more README
+         echo "----------------------------------------"
+         echo ""
+         echo "Resuming star_build"
+         echo ""
+
+      else
+#   A new value for INSTALL has been given - set it.
+         eval installt="$VAL"
+         if [ -z $installt ]
+         then
+            echo "Value evaluated to blank - try again"
+         else
+            SET="Y"
+         fi
+      fi
+
+#   If the value of INSTALL was set, inquire about STARLINK
+      if [ -n "$SET" ]
+      then
+         echo ""
+         echo "Do you want to define a different directory where subsidiary"
+         printf "Starlink Software Items are already installed? (N) > "
+
+         if ./$PKG_REPLY N
+         then
+            starlinkt="$installt"
+         else
+            echo ""
+            echo "*** WARNING - this is only valid if there are no sub-items"\
+             "to be built."
+            STARSET=""
+            while [ -z "$STARSET" ]
+            do
+               echo ""
+               echo "Give the top-level directory name for subsidiary software,"
+               echo "? for more information,"
+               printf "or <return> to accept the default ($starlinkd) > "
+               read VAL
+               echo "------------------------------------------------------"
+               if [ -z "$VAL" ]
+               then
+#           RETURN typed - use default value
+                  starlinkt="$starlinkd"
+                  STARSET="Y"                    
+
+               elif [ "$VAL" = "?" ]
+               then
+                  more README
+                  echo "----------------------------------------"
+                  echo ""
+                  echo "Resuming star_build"
+                  echo ""
+
+               else
+#          A new value for STARLINK has been given - set it
+#          and set a new default value.
+                  eval starlinkt="$VAL"
+                  if [ -z $starlinkt ]
+                  then
+                     echo "Value evaluated to blank - try again"
+                  else
+                     starlinkd="$starlinkt"
+                     STARSET="Y"
+                  fi
+               fi
+
+            done #getting STARLINK value
+
+         fi
+
+         echo ""
+         echo "Your top-level installation directory (INSTALL) is:"
+         echo "      $installt"
+
+         STARDIFF=""
+         if [ "$starlinkt" != "$installt" ]
+         then
+            STARDIFF="Y"
+            echo ""
+            echo "Subsidiary items are expected beneath:"
+            echo "      $starlinkt    (STARLINK)"  
+            echo ""
+            echo "*** WARNING - Your INSTALL directory is different from your"\
+              "STARLINK directory."
+            echo "***         - This is only valid if there are no sub-items"\
+              "to be built."
+         fi
+
+         echo ""
+         printf "Shall we continue on this basis? (Y) > "
+
+         if ./$PKG_REPLY Y
+         then
+            :
+         else
+            SET=""
+            STARDIFF=""
+         fi
+         echo "----------------------------------------------------"
+
+      fi
+
+   done # setting environment variables
+   
+   INSTALL="$installt"
+   STARLINK="$starlinkt"
+   export INSTALL
+   export STARLINK
+   export STARDIFF
+
+# Ensure that INSTALL/bin and STAR/bin (if different) are on the PATH
+   if echo "$PATH" | \grep ":$INSTALL/bin\$" > /dev/null; then ifound="true";
+   elif echo "$PATH" | \grep ":$INSTALL/bin:" > /dev/null; then ifound="true";
+   elif echo "$PATH" | \grep "^$INSTALL/bin\$" > /dev/null; then ifound="true";
+   elif echo "$PATH" | \grep "^$INSTALL/bin:" > /dev/null; then ifound="true";
+   else ifound="false"; fi
+   if [ "$ifound" != "true" ]
+   then
+      PATH="${PATH}${PATH:+:}$INSTALL/bin"
+   fi
+   if [ -n STARDIFF ]; then
+      if echo "$PATH" | \grep ":$STARLINK/bin\$" > /dev/null
+       then sfound="true";
+      elif echo "$PATH" | \grep ":$STARLINK/bin:" > /dev/null
+       then sfound="true";
+      elif echo "$PATH" | \grep "^$STARLINK/bin\$" > /dev/null
+       then sfound="true";
+      elif echo "$PATH" | \grep "^$STARLINK/bin:" > /dev/null
+       then sfound="true";
+      else sfound="false"; fi
+      if [ "$sfound" != "true" ]
+      then
+        PATH="${PATH}${PATH:+:}$STARLINK/bin"
+      fi
+   fi 
+   export PATH
+#######
+# A warning message could go in here
+#######
+ 
+# Write the .star_config file in the user's home directory
+# unless the values were obtained from it in the first place.
+   touch $HOME/.star_config
+   cp $HOME/.star_config tmp_config
+   sed -e '/STARLINK: /d' -e '/INSTALL: /d' tmp_config > $HOME/.star_config
+   echo "INSTALL: $INSTALL" >> $HOME/.star_config
+   echo "STARLINK: $starlinkd" >> $HOME/.star_config
+   rm tmp_config
+
+   echo ""
+   echo "File .star_config in your home directory now contains default"
+   echo "values for the top-level directories which will be used for"
+   echo "future star_builds."  
+
+# OK to go on
+   echo ""
+   echo "Proceeding to process dependencies for $PKG."
+
+# Now get a list of the existing needs files (should only be one) into $needs
+# If there isn't one, issue a warning, set $needs to /dev/null (to prevent a
+# hang on 'cat $needs' and attempt to continue
+   needs=`ls ${pkg}_needs ${pkg}_needs_run 2>/dev/null`
+   if [ -z "$needs" ]
+   then
+      needs=/dev/null      
+      echo ""
+      echo "*** WARNING: "\
+      "There is no '${pkg}_needs' or '${pkg}_needs_run' file in the"
+      echo "              current directory to define dependencies for $PKG"
+      echo "              - we assume there are none."
+   fi
+
+   if [ "$level" = "1" ]
+   then
+# Ensure that the INSTALL directory exists.
+      if [ ! -d $INSTALL ]
+      then
+         echo ""
+         echo "Creating the INSTALL directory ($INSTALL)."
+         mkdir -p $INSTALL
+      fi
+   
+#***************************************************************
+#
+#    Now call star_build level 2 for each dependency listed
+#    in any {pkg}_needs or {pkg}_needs_run file.
+#
+#***************************************************************
+      echo ""
+      cat $needs |
+         awk '/^#/{next};/^[^#]/{print "./star_build " $1 " 2 || exit 1"}' \
+         > ${pkg}_build_temp 
+         sh ${pkg}_build_temp || abandon
+   
+#***************************************************************
+#
+#    Finally call star_build level 2 for PKG itself
+#    STARDIFF is no longer relevant so reset it
+#
+#***************************************************************
+      STARDIFF=""
+      ./star_build $PKG 2 || abandon
+   
+#***************************************************************
+#
+#    and clear up
+#
+#***************************************************************
+      rm -f ${pkg}_build_temp
+      rm -f $PKG_REPLY   
+      echo
+      echo "$PKG has been successfully installed."
+      echo ""
+      echo "The README file gives hints on how to use the software"
+      echo ""
+      exit 0
+
+   else
+#***************************************************************
+#
+#  We require to do a de-install, clean or unbuild on all the
+#  items in the `needs' file, but always deinstall HTX last as
+#  the others may need it.
+#
+#***************************************************************
+#***************************************************************
+#
+#  Now call the mk script for each dependency listed in any
+#  `needs' file unless subsidiary stuff is not in INSTALL.
+#
+#***************************************************************
+      if [ -z "$STARDIFF" ]
+      then
+         echo ""
+         cat $needs | tr "[A-Z]" "[a-z]" | \
+         awk \
+         '/^#/{next}; /^htx/{next}; \
+          /^[^#]/{print "cd " $1 \
+                      "; echo " level "ing " $1 \
+                      ";./mk -s " level " || exit 1; cd .." }'\
+         level=$level - | sh || abandon
+      fi
+
+#***************************************************************
+#
+#    Finally call the mk script for PKG itself
+#    and for HTX if necessary (i.e. if it appears in the `needs'.
+#
+#***************************************************************
+      echo "${level}ing $pkg"
+      cd ${pkg}; ./mk -s ${level} || abandon; cd ..
+  
+      if [ -z "$STARDIFF" ]
+      then
+         cat $needs | tr "[A-Z]" "[a-z]" | \
+         awk \
+         '/^htx/{if ( !htxdone ) {htxdone++; \
+                    print "cd " $1 \
+                 "; echo " level "ing " $1 \
+                 ";./mk -s " level " || exit 1; cd .." } }'\
+         level=$level - | sh || abandon
+      fi
+   fi
+
+#****************************************************************************
+#****************************************************************************
+#
+#  L E V E L  2
+#
+#  Ensure that the specified package is available.
+#
+#****************************************************************************
+elif [ "$level" = "2" ]
+then
+# If the specified directory exists, and an alternate STARLINK directory
+# is not defined, go to it and determine which, if any, tar.Z files are there.
+# STARDIFF is set TRUE at level 1 if INSTALL and STARLINK are different.
+# It is set to FALSE at level 1 when we come to process the main item.
+   echo "* Processing $PKG."
+   dir=$pkg
+
+# Convert the argument (directory name) to the correct file prefix 
+# where necessary.
+   pkg=`echo $pkg | sed -e s#beta-##`
+   if [ $pkg = mers ]; then pkg=err; fi
+   if [ $pkg = primdat ]; then pkg=prm; fi
+   if [ $pkg = transform ]; then pkg=trn; fi
+
+   if [ -d $dir -a -z "$STARDIFF" ]
+   then
+#************************************************************
+#
+#  We have the required subdirectory
+#
+#************************************************************
+      cd $dir
+
+
+#***************************************************************
+#
+#  Find the required tar.Z file
+#
+#  .BUILT is touched as soon as it is extracted or created
+#  so if there is a .BUILT file, we are only interested in tar.Z 
+#  files newer than it.
+#
+#  If more than one eligible tar.Z file is found, the user is
+#  quetsioned about which one to use.
+#
+#  We end up with $tarz being the required tar file name and
+#  $ntars = 1 or 0 to indicate whether or not there is a new
+#  version to extract
+#
+#****************************************************************
+      if [ -f .BUILT ]
+      then
+         tarzs=`find . \
+         \( -name ${pkg}.tar.Z -o -name "${pkg}_${SYSTEM}*.tar.Z" \) \
+         -newer .BUILT -print`
+      else
+         tarzs=`/bin/ls -t -x ${pkg}.tar.Z ${pkg}_${SYSTEM}*.tar.Z 2> /dev/null`
+      fi
+      ntars=`echo $tarzs | wc -w`
+      
+      if [ $ntars -eq 1 ]
+      then
+#    There is only one suitable tar.Z file - use it
+         tarz=`basename $tarzs`
+
+      elif [ $ntars -gt 1 ]
+      then
+#    There is more than one suitable tar.Z file, ask for clarification.
+         echo ""
+         echo \
+         "!! There is more than one suitable tar.Z file in the $PKG directory!" 
+         echo "!  They are:"
+         echo "!  $tarzs."
+         echo "!  Please select the one to be used for the build."
+         echo ""
+         for name in $tarzs
+         do
+            printf "Do you want ${name}? y/n (y) > "
+            if ../$PKG_REPLY
+            then
+               echo "-------------------------------------------------"
+               tarz=`basename $name`
+               ntars=1
+               break
+            fi
+         done       
+      
+         if [ $ntars -ne 1 ]
+         then
+            echo ""
+            echo "!! You have not selected any of the tar.Z files."
+            echo "!  We can continue as if there were none to start with,"
+            echo "!  or we can abort."
+            echo ""
+            printf "Shall we continue? y/n (y) > "
+            if ../$PKG_REPLY
+            then
+               echo "-------------------------------------------------"
+               ntars=0
+            else
+               abandon2
+            fi
+         fi
+      fi
+
+#*************************************************************
+#
+#  Find if the current version is installed and check where
+#  it is installed. 
+#  If there is a new version to install, make sure that this
+#  version is de-installed (from elsewhere if necessary).
+#
+#*************************************************************
+#    Check if the current version is installed elsewhere than $INSTALL
+#    by reading the entry in .INSTALLED_$SYSTEM
+      if [ -f .INSTALLED_$SYSTEM ]
+      then
+         instd=`sed -n -e 1p .INSTALLED_$SYSTEM`
+#       First check if it is a new-style .INSTALLED_$SYSTEM file.
+#       If not, compare pkg_datestamps
+         if [ -z "$instd" ]
+         then
+            if [ -f $INSTALL/dates/${pkg}_datestamp ]
+            then
+               if diff ${pkg}_datestamp $INSTALL/dates > /dev/null 2>&1
+               then
+#                The datestamps are the same - set instd to INSTALL
+                  instd=$INSTALL
+               fi
+            fi            
+         fi
+
+#       If we don't know where this is installed, we can't de-install it
+#       However there may already be another version installed in INSTALL.
+#       Decide this later.
+         if [ -z "$instd" ]
+         then
+            echo ""
+            echo "!! The version of $PKG already here is installed," \
+                 "but we don't know where."
+            echo "!  It is not in your INSTALL directory ($INSTALL)."
+
+#       If we know where this is installed, compare the directories.
+#       If they differ, see if the user wants to de-install the existing
+#       installation
+         elif [ $instd != $INSTALL ]
+         then
+            echo ""
+            echo "!! The version of $PKG here is installed in $instd"
+            echo "!   and not in your INSTALL directory ($INSTALL)."
+            echo "!  This version must be de-installed from $instd"
+            echo "!   and installed in your INSTALL directory for it to be used"
+            echo "!   in this build."
+            echo ""
+            printf "Shall we de-install $PKG from $instd? y/n (y) > "
+            if ../$PKG_REPLY
+            then
+               echo "De-installing $PKG from $instd."
+               echo "---------------------------------------------------"
+               INSTALL=$instd ./mk -s deinstall \
+               >> ../${BUILD_LOG} 2>&1 \
+               || abandon2
+            fi
+
+#    If this version is installed in $INSTALL and there is a new version,
+#    de-install it.
+         elif [ $ntars -eq 1 ]
+         then
+            echo "De-installing $PKG from $INSTALL."
+            ./mk -s deinstall >> ../${BUILD_LOG} 2>&1 || abandon2
+   
+#    If this version is installed in $INSTALL and there is no new version,
+#    there is nothing more to do
+         else
+            echo "$PKG is already installed in $INSTALL."
+            exit 0
+         fi
+      fi
+   
+#******************************************************************
+#
+#    If we get here, this version of the package is not installed
+#    in INSTALL so, if there is a version there, we either use it 
+#    or attempt to overwrite it.
+#    If we want to overwrite it and this one is already installed
+#    somewhere else we cannot continue.
+#
+#******************************************************************
+      if [ -f $INSTALL/dates/${pkg}_datestamp ]
+      then
+         echo ""
+         echo "!! There is already a version of $PKG in $INSTALL"
+         echo "!  and it is not this version."
+         if [ ! -f .INSTALLED_$SYSTEM ]
+         then
+            echo "!  We can use the existing version"
+            echo "!   or attempt to overwrite it with this version."
+         fi
+
+         echo ""
+         printf "Do you want to use the existing installation? y/n (y) "
+         if ../$PKG_REPLY Y
+         then
+            echo "Using version of $PKG already installed in $INSTALL."
+            exit 0
+         elif [ ! -f .INSTALLED_$SYSTEM ]
+         then
+            echo "Attempting to overwrite an existing installation of $PKG."
+#          Permit installed datestamp to be overwritten
+            chmod 644 $INSTALL/dates/${pkg}_datestamp
+         else
+            echo ""
+            echo "!!  We cannot find a version of $PKG to use."
+            abandon2
+         fi
+      fi
+   
+#***************************************************************
+#
+#    If we get here, there is no version of the package in
+#    $INSTALL so the way is now clear to build/install the 
+#    current package.
+#       
+#***************************************************************
+
+#    If there is a new tar.Z file (or more than one and clarification has
+#    occurred) clear up the old version if necessary and build/install the
+#    new version.
+      if [ $ntars -eq 1 ]
+      then
+   
+#    We are going to build a new system so, if this is already built, 
+#    unbuild it.
+         if [ -f .BUILT ]
+         then
+            echo "Un-building $PKG"
+            ./mk -s unbuild >> ../${BUILD_LOG} 2>&1 || abandon2
+         fi
+   
+#    Having cleaned up the existing system, untar the new files.
+#    The tar.Z file is left in place.
+         echo "Extracting new files from $tarz"
+         zcat $tarz | tar xf -
+   
+#    Touch any extracted .BUILT file to prevent star_build re-extracting
+#    the same stuff.
+         if [ -f .BUILT ]
+         then
+            touch .BUILT
+         fi
+
+      fi
+   
+#******************************************************************
+#    We get here having either no tar.Z files in the directory 
+#    in the first place or having cleared out any existing 
+#    installation from this directory and extracted the new 
+#    files from the tar file.
+#    We should now have mk, makefile, documentation (if any) and:
+#     For a 'source' distribution, pkg_source.tar
+#     For a 'built' distribution, built files (including .BUILT) 
+#         + pkg_source.tar
+#     For a 'runtime' distribution, built files (including .BUILT).
+#
+#*******************************************************************
+   
+#    If it needs building, build it.
+      if [ ! -f .BUILT ]
+      then
+         echo "Building $PKG."
+         ./mk -s build >> ../${BUILD_LOG} 2>&1 || abandon2
+#    Check for build not complete but no error reported
+         if [ ! -f .BUILT ]
+         then
+            abandon2
+         fi
+      fi
+   
+#    If it needs installing, install it.
+      if [ ! -f .INSTALLED_$SYSTEM ]
+      then
+         echo "Installing $PKG in $INSTALL."
+         ./mk -s install >> ../${BUILD_LOG} 2>&1 || abandon2
+#    Check for install not complete but no error reported.
+#    Use the datestamp as that is the last thing installed and .INSTALLED_x
+#    is the first thing created.
+         if diff ${pkg}_datestamp $INSTALL/dates > /dev/null 2>&1
+         then
+            :
+         else
+            abandon2
+         fi
+      fi
+   
+#***************************************************************
+#
+#    If the required subdirectory does not exist, or an alternate
+#    STARLINK directory is defined, see if there is already a 
+#    version of the package installed in $STARLINK.
+#
+#***************************************************************
+   else
+      if [ -f $STARLINK/dates/${pkg}_datestamp ]
+      then
+#      it's OK, the package is already installed in $STARLINK
+         echo "Using version of $PKG already installed in $STARLINK."
+      else
+         echo ""
+         echo "!! You do not have Starlink Software Item $PKG available."
+         echo "!   It must be already installed in $STARLINK"
+         echo "!   or in subdirectory $pkg, ready to be built and/or installed"
+         echo "!"
+         echo "!   $PKG may be obtained from Starlink in the normal way."
+         abandon2
+      fi
+   fi
+fi

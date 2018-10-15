@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Controlling the Depth of Search</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Controlling the Depth of Search">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html481 HREF="node35.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html479 HREF="node32.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html473 HREF="node33.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html482 HREF="node35.html"> Searching Specific Documents</A><BR>
+<B>Up:</B> <A NAME=tex2html480 HREF="node32.html"> SEARCHING FOR INFORMATION IN DOCUMENTS</A><BR>
+<B> Previous:</B> <A NAME=tex2html474 HREF="node33.html"> Performing Keyword Searches</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00092000000000000000><A NAME=sectdepthofsearch>&#160;</A><A NAME=xref_controlling_the_depth_of_search>&#160;</A>Controlling the Depth of Search</A></H2>
+<P>
+The <A HREF="node47.html#findme"><tt>findme</tt></A> command allows you to find information at
+the level of detail you want by searching any of four categories of
+information associated with <A HREF="node4.html#secthypertextdocuments">hypertext
+documents</A>:
+<P>
+<OL><LI> <A NAME=sectsearchname>&#160;</A><b> The document name (-n
+switch)</b><BR> This is given by the name of the
+<A HREF="node8.html#sectdocumentdirectories">directory</A> that contains the
+document.
+For example, the name of the document you are reading now is
+<A HREF="../sun188.htx/sun188.html#xref_"><tt>&quot;</tt>sun188<tt>&quot;</tt></A> because its hypertext version resides in
+a directory called <tt>&quot;</tt>sun188.htx<tt>&quot;</tt>. The name of a document may
+indicate what category of information it contains and is very quick
+and easy to search.
+<P>
+<LI> <A NAME=sectsearchtitle>&#160;</A><b> The document title (-t
+switch)</b><BR> This is extracted from the <A HREF="node14.html#sectentiredocuments"><tt>&quot;</tt>top<tt>&quot;</tt> HTML
+page</A> of a document
+and consists of the text that appears between the <tt><b>&lt;</b>TITLE<b>&gt;</b></tt> and
+<tt><b>&lt;</b>/TITLE<b>&gt;</b></tt> tags in the HTML header section for that page. The
+title of a document is obviously a good place to search for important
+topics and this can be done quite quickly.
+<P>
+<LI> <A NAME=sectsearchheading>&#160;</A><b> The document's page headings (-h
+switch)</b><BR> These are extracted in the same way as the document
+title (above), but from all the other HTML pages in the document,
+excluding the <tt>&quot;</tt>top<tt>&quot;</tt> page. If you have
+<A HREF="node16.html#sectconvertingfromlatex">converted</A> your document from a
+format such as <A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun199.htx/sun199.html?xref_">LaTeX</A>, then these will be the section headings
+that appear in the printed form of the document. This is normally a
+fruitful place to search for slightly more specialised topics and can
+be done without a serious time penalty because <A HREF="node3.html#sectHTX">HTX</A>
+caches this information in a document's <A HREF="node18.html#sectindexfiles">index
+file</A>.
+<P>
+<LI> <A NAME=sectsearchline>&#160;</A><b> The lines of text in the document (-l switch)</b><BR> 
+These consist of the contents of all the HTML files in the document
+(including all their <A NAME=tex2html36 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> tags, <A NAME=tex2html37 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URLs</A>,
+<em>etc</em>). This is the ultimate place to search for information, but
+this can take quite a while if the documentation set is large.
+<P>
+</OL>
+<P>
+If none of the switches shown above is used when <tt>findme</tt> is
+invoked, its default action is to:
+<P>
+<OL><LI> Search the document titles
+<LI> If that fails to find a match, search the page headings
+<LI> If that fails to find a match, search the lines of text
+</OL>
+<P>
+However, if one or more of the <tt>-n</tt>, <tt>-t</tt>, <tt>-h</tt> or <tt>-l</tt>
+switches is used, then <em>only</em> the specified categories of
+information will be searched, and this will be done in a single pass
+through all the documents. For instance:
+<P>
+<blockquote> <PRE>findme -n sun
+</PRE>
+</blockquote>
+<P>
+will cause only the document names to be searched (for the string
+<tt>&quot;</tt>sun<tt>&quot;</tt>), while:
+<P>
+<blockquote> <PRE>findme -t sun
+</PRE>
+</blockquote>
+<P>
+would search only the document titles, and:
+<P>
+<blockquote> <PRE>findme -t -h sun
+</PRE>
+</blockquote>
+<P>
+would search both the titles and page headings in a single pass.
+<P>
+<BR> <HR><A NAME=tex2html481 HREF="node35.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html479 HREF="node32.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html473 HREF="node33.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html482 HREF="node35.html"> Searching Specific Documents</A><BR>
+<B>Up:</B> <A NAME=tex2html480 HREF="node32.html"> SEARCHING FOR INFORMATION IN DOCUMENTS</A><BR>
+<B> Previous:</B> <A NAME=tex2html474 HREF="node33.html"> Performing Keyword Searches</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

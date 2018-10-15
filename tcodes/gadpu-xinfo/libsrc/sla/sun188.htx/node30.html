@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Displaying Documents by Name</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Displaying Documents by Name">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html439 HREF="node31.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html437 HREF="node29.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html431 HREF="node29.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html440 HREF="node31.html"> Displaying Parts of Documents by Label</A><BR>
+<B>Up:</B> <A NAME=tex2html438 HREF="node29.html"> GAINING ACCESS TO DOCUMENTS</A><BR>
+<B> Previous:</B> <A NAME=tex2html432 HREF="node29.html"> GAINING ACCESS TO DOCUMENTS</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00081000000000000000><A NAME=sectaccessingbyname>&#160;</A><A NAME=xref_displaying_documents_by_name>&#160;</A>Displaying Documents by Name</A></H2>
+<P>
+The simplest form of <A HREF="node4.html#secthypertextdocuments">document</A>
+access is provided by the <A HREF="node49.html#showme"><tt>showme</tt></A> command, which
+simply displays the document you name. For instance:
+<P>
+<blockquote> <PRE>showme sun188
+</PRE>
+</blockquote>
+<P>
+would display the <A HREF="node14.html#sectentiredocuments"><tt>&quot;</tt>top<tt>&quot;</tt> page</A> of the
+document called <A HREF="../sun188.htx/sun188.html#xref_"><tt>&quot;</tt>sun188<tt>&quot;</tt></A> (<em>i.e.</em> the one you
+are reading now).  Using this command is normally easier than entering
+a full <A NAME=tex2html34 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URL</A> for the document.
+<P>
+The <tt>showme</tt> command displays the document <A HREF="node50.html#sectusingwwwbrowsers">using a WWW
+browser</A> and will make use of one you already
+have running if possible. You can specify <A HREF="node51.html#sectspecifyingabrowser">which
+browser</A> to use, if required.
+<P>
+If you do not give any directory information, <tt>showme</tt> will search
+for the document using the <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search
+path</A>, but you
+can specify explicitly where the document is if you prefer, as in:
+<P>
+<blockquote> <PRE>showme ~/mydocs/galaxy_survey
+</PRE>
+</blockquote>
+<P>
+If <tt>showme</tt> cannot find the document locally, it will try and fetch
+it from the <A HREF="node26.html#sectremoteservers">remote document server</A>
+instead.
+You can suppress this behavior using the <tt>-l</tt> switch if you prefer:
+<P>
+<blockquote> <PRE>showme -l document
+</PRE>
+</blockquote>
+<P>
+in which case failure to find the document locally will simply result
+in an error. You can also specify that a remote copy of the document
+is required using the <tt>-r</tt> switch, in which case any local copy
+will be ignored and the remote document server will be asked to supply
+the document.
+<P>
+<BR> <HR><A NAME=tex2html439 HREF="node31.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html437 HREF="node29.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html431 HREF="node29.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html440 HREF="node31.html"> Displaying Parts of Documents by Label</A><BR>
+<B>Up:</B> <A NAME=tex2html438 HREF="node29.html"> GAINING ACCESS TO DOCUMENTS</A><BR>
+<B> Previous:</B> <A NAME=tex2html432 HREF="node29.html"> GAINING ACCESS TO DOCUMENTS</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

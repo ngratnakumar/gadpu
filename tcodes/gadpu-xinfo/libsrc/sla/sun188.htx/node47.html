@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> 
+   findme
+-
+   Search for documents by keyword and display a list of those found
+</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" 
+   findme
+-
+   Search for documents by keyword and display a list of those found
+">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html615 HREF="node48.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html613 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html607 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html616 HREF="node48.html"> 
+   hlink
+-
+   Perform cross-linking of hypertext documents
+</A><BR>
+<B>Up:</B> <A NAME=tex2html614 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A><BR>
+<B> Previous:</B> <A NAME=tex2html608 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000121000000000000000>
+   findme
+<A NAME=xref_findme>&#160;</A>-<A NAME=findme>&#160;</A>
+   Search for documents by keyword and display a list of those found
+</A></H2>
+<P>
+<DL ><DT>Description:
+<DD>
+<DL >This command performs <A HREF="node32.html#sectsearchingfordocuments">keyword
+      searching</A> of locally available (or
+      locally catalogued) <A HREF="node4.html#secthypertextdocuments">documents</A>
+      and displays a list of those found using a <A HREF="node50.html#sectusingwwwbrowsers">WWW
+      browser</A>. This list includes hyper-links
+      to the parts of each document that were matched.
+<P>
+ </DL>
+   <DT>Invocation:
+<DD>
+<DL ><tt> 
+      findme [switches] [keyword] [doclist]
+   </tt>
+<P>
+ </DL>
+   <DT>
+      Parameters
+   
+<DD>
+<DL ><DT>
+         keyword
+      
+<DD>
+         The string of characters to be searched for. This is treated as a
+         single string (not as multiple keywords) and should be quoted if it
+         contains special characters or white space. Pattern matching
+         characters, as used in <tt>&quot;</tt>sed<tt>&quot;</tt> or <tt>&quot;</tt>grep<tt>&quot;</tt> regular expressions, may be
+         included.
+<P>
+         If this parameter is omitted, then all documents searched will be
+         matched. This provides a convenient way of listing all the
+         documents available.
+      
+      <DT>
+         doclist
+      
+<DD>
+         An optional space-separated list of the documents to be
+         searched. If this is omitted, then the complete set of
+         hypertext documents will be searched, as found on the
+         <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search path.</A> Any further documents
+         described in <A HREF="node41.html#sectcataloguefiles">catalogue
+         files</A>
+         will also be included.
+<P>
+         Any <tt>&quot;</tt>.htx<tt>&quot;</tt> extension on document names is ignored.
+      
+<P>
+ </DL>
+   <DT>
+      Switches
+   
+<DD>
+<DL ><DT>
+         -b
+      
+<DD>
+         Requests that a <tt>&quot;</tt>brief<tt>&quot;</tt> list be produced of the documents found. This
+         means that only document names and titles will appear and references
+         to individual pages will be omitted. By default, individual pages will
+         be listed if the search has included them and they match the search
+         criteria.
+      
+      <DT>
+         -c
+      
+<DD>
+         Indicates that case is significant when searching for the keyword. By
+         default, differences in case are ignored.
+      
+      <DT>
+         -f
+      
+<DD>
+         Indicates that a full search should be performed, involving searching
+         document names, titles, page headings and lines of text. This option
+         is shorthand for the switches <tt>-n</tt>, <tt>-t</tt>, <tt>-h</tt> and <tt>-l</tt> used together.
+      
+      <DT>
+         -h
+      
+<DD>
+         Indicates that a search for the keyword is to be performed on
+         all the <A HREF="node34.html#sectsearchheading">page
+         headings</A> within each document.This provides a convenient
+         compromise between speed of execution and full search
+         coverage, and generally produces an acceptable amount of
+         output. By default, a search on page headings is performed if
+         the keyword cannot be found in any document title. Page
+         headings may only be searched in local hypertext (<tt>&quot;</tt>.htx<tt>&quot;</tt>)
+         documents.
+      
+      <DT>
+         -html
+      
+<DD>
+         Indicates that the list of documents found by this command should not
+         be displayed using a WWW browser. Instead, the results are simply
+         written to standard output as a list in <A NAME=tex2html49 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> format (without
+         a surrounding HTML document). This
+         provides an interface for other software that will display
+         the results itself.
+<P>
+         Note that the <A NAME=tex2html50 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URLs</A> used for hyper-links in this output list
+         will be suitable only for local use by a WWW browser running on the
+         same machine as the <tt>findme</tt> command. They may not be suitable,
+         for instance, for embedding in an HTML document that will be
+         interpreted by a remote WWW browser.
+      
+      <DT>
+         -l
+      
+<DD>
+         Indicates that a search for the keyword is to be performed on
+         all <A HREF="node34.html#sectsearchline">lines of text</A>
+          within each
+document (note that this will include all HTML tags, URLs,
+<em>etc.</em>). This provides the fullest possible form of keyword search,
+but may take some time to complete and could generate a large volume
+of output. By default, a search of document lines is only performed if
+the keyword cannot be found in any document title or page
+heading. Line-oriented searching can only be performed on local
+hypertext (<tt>&quot;</tt>.htx<tt>&quot;</tt>) documents.
+      
+      <DT>
+         -m
+      
+<DD>
+         Indicates that the output list is to contain information on which
+         search criteria were matched and how many matches were found. By
+         default, this information is omitted.
+      
+      <DT>
+         -n
+      
+<DD>
+         Indicates that a search for the keyword is to be performed on
+         the <A HREF="node34.html#sectsearchname">name</A>
+ of each document.
+         Searching of document names is not performed by default.
+      
+      <DT>
+         -q
+      
+<DD>
+         Indicates that the search should progress in <tt>&quot;</tt>quiet<tt>&quot;</tt> mode without
+         producing messages about its progress. By default, messages about the
+         progress of the search are written to the controlling terminal.
+      
+      <DT>
+         -s
+      
+<DD>
+         Indicates that the output list is to be sorted so that the most
+         significant matches appear first and the least significant last.
+         In assessing this, matches to the document name are given the highest
+         significance, then matches to titles, page headings and finally lines
+         of textual content (see &#167;<A HREF="node34.html#sectdepthofsearch"><IMG ALIGN=BOTTOM ALT="gif" SRC="./cross_ref_motif.gif"></A>). An alphabetical sort on document title and page
+         heading is used to resolve any remaining ambiguity over output order.
+         By default, a simple alphabetical sort on document title and page
+         heading is used alone.
+      
+      <DT>
+         -t
+      
+<DD>
+         Indicates that a search for the keyword is to be performed on
+         the <A HREF="node34.html#sectsearchtitle">title</A>  of each document.
+         This provides a quick but effective form of search for major
+         topics and gives at most one entry in the output list for
+         each document matched. By default, title matching is
+         performed first, and a search of page headings (and
+         eventually lines of textual content) is performed only if
+         this initial search fails to match any documents (see
+         &#167;<A HREF="node34.html#sectdepthofsearch"><IMG ALIGN=BOTTOM ALT="gif" SRC="./cross_ref_motif.gif"></A>). Using <tt>-t</tt> prevents these
+         subsequent searches from happening automatically.
+      
+      <DT>
+         -w
+      
+<DD>
+         Indicates that the keyword supplied must match an entire word
+         (<em>i.e.</em> a
+         string delimited by characters which are not underscores or
+         alphanumerics, or delimited by the beginning or end of the text, or
+         by a newline). By default, the specified string of characters is
+         matched wherever it occurs, so long as it does not span multiple
+         lines of text.
+      
+      <DT>
+         -warn
+      
+<DD>
+         Indicates that any warning messages issued by the WWW browser
+         (<em>e.g.</em> when it is started up) are to be suppressed. By default, these
+         warnings are written to standard error along with any other warning
+         or error messages.
+      
+<P>
+ </DL>
+   <DT>
+      Exit Status
+   
+<DD>
+<DL >The exit status from this command is set equal to the number of
+      documents matched by the search. Thus a non-zero exit status
+      indicates success, while a zero status indicates failure to find
+      any document. Note that this is the reverse of the convention
+      normally adopted by UNIX commands.
+<P>
+ </DL>
+   <DT>
+      Notes On Searching
+   
+<DD>
+<DL ><UL><LI> 
+         If none of the switches <tt>-n</tt>, <tt>-t</tt>, <tt>-h</tt> or <tt>-l</tt> is used, the keyword
+         given will first be searched for in the title of each document. If this
+         fails to produce a match, it will next be searched for in the page
+         headings of each document. If this also fails to produce a match, a final
+         search of the lines of text within each document will be made.
+<P>
+         <LI> 
+         If one or more of the switches <tt>-n</tt>, <tt>-t</tt>, <tt>-h</tt> or <tt>-l</tt> is used, the
+         automatic sequence of searches described above will not occur. Instead,
+         only those document components specified by these switches (name, title,
+         page header and lines of text, respectively) will be searched. This will
+         be done in a single pass through all documents.
+<P>
+         <LI> 
+         To obtain the fullest possible (but slowest) search, use the <tt>-f</tt>
+         option. This is equivalent to using all of the switches
+         <tt>-n</tt>, <tt>-t</tt>, <tt>-h</tt> and <tt>-l</tt> together.
+<P>
+</UL> 
+ </DL>
+   <DT>
+      Notes on Specifying Documents
+   
+<DD>
+<DL ><UL><LI> 
+         If no documents are specified, then all directories on the
+         <tt>HTX_PATH</tt> search path will be inspected for hypertext
+         (<tt>&quot;</tt>.htx<tt>&quot;</tt>) documents and all those found will be searched.
+         In addition, if any directory on the search path contains a
+         catalogue file, the documents it describes will also be
+         included in any search of document names or titles (but not
+         of page headings or lines of text).
+<P>
+         <LI> 
+         If one or more document names are supplied, then the search will be
+         restricted to the specified documents only.
+         If these document names are supplied without directory information, then
+         they will be located by following the <tt>HTX_PATH</tt> search path
+         and then by reading the contents of any catalogue files, if necessary.
+         If document names are supplied with explicit directory information,
+         then they must refer to local hypertext documents and no
+         search will be made to locate them.
+<P>
+         <LI> 
+         If documents with the same name are found both locally in hypertext
+         form and in one or more catalogue files, then the hypertext version takes
+         precedence.
+         If a document with the same name appears more than once in the list
+         given for the <tt>doclist</tt> parameter, then the first occurrence takes
+         precedence, except that the first occurrence of a name with explicit
+         directory information always takes precedence over the same document
+         specified without directory information.
+<P>
+</UL> 
+ </DL>
+   <DT>Examples:
+<DD>
+<DL ><DT><tt> 
+         findme
+      </tt>
+<DD> <BR> 
+         Finds all available documents.
+<P>
+      <DT><tt> 
+         findme guide
+      </tt>
+<DD> <BR> 
+         Finds all documents with the string <tt>&quot;</tt>guide<tt>&quot;</tt> in them. This is done
+         by first searching their titles, then (if that fails) by searching
+         all their page headings, then (if that also fails) by searching all
+         of their lines of text.
+<P>
+      <DT><tt> 
+         findme -t guide
+      </tt>
+<DD> <BR> 
+         Finds all documents with the string <tt>&quot;</tt>guide<tt>&quot;</tt> in their
+         title. Only titles are searched.
+<P>
+      <DT><tt> 
+         findme -n sun
+      </tt>
+<DD> <BR> 
+         Finds all documents whose names contain the string <tt>&quot;</tt>sun<tt>&quot;</tt>.
+<P>
+      <DT><tt> 
+         findme -w star
+      </tt>
+<DD> <BR> 
+         Finds documents that contain <tt>&quot;</tt>star<tt>&quot;</tt> as a word on its own.
+<P>
+      <DT><tt> 
+         findme -c GnS
+      </tt>
+<DD> <BR> 
+         Finds documents that contain the string <tt>&quot;</tt>GnS<tt>&quot;</tt> with the correct
+         capitalisation.
+<P>
+      <DT><tt> 
+         findme -l -b unix
+      </tt>
+<DD> <BR> 
+         Searches all lines of text in all documents for the string <tt>&quot;</tt>unix<tt>&quot;</tt> and
+         displays a brief listing of the results, so that only the relevant
+         document names and titles are shown.
+<P>
+      <DT><tt> 
+         findme -h DAT_ sun92
+      </tt>
+<DD> <BR> 
+         Finds a document called <tt>&quot;</tt>sun92<tt>&quot;</tt> and searches its page headings (only)
+         for the string <tt>&quot;</tt>DAT_<tt>&quot;</tt>. Each page which matches is listed.
+<P>
+      <DT><tt> 
+         findme -t -h '?$' docs/<IMG  ALIGN=BOTTOM ALT="" SRC="img1.gif">.htx
+      </tt>
+<DD> <BR> 
+         Searches the titles and page headings of all hypertext documents
+         stored in directory <tt>docs</tt> and lists those which end in a question
+         mark (<tt>&quot;</tt>?$<tt>&quot;</tt> is a regular expression specifying that there should be a
+         question mark at the end of a line).
+<P>
+      <DT><tt> 
+         findme -h -html -q &quot;$keyword&quot; pkg_manual &gt;&gt;/tmp/results$$
+      </tt>
+<DD> <BR> 
+         This command might be used to provide a command lookup facility for a
+         software package. It searches all the page headings in
+         the document called <tt>&quot;</tt>pkg_manual<tt>&quot;</tt> for the command stored
+         in the <tt>keyword</tt> variable
+         and appends the resulting list (in HTML format) to a scratch file in
+         which an HTML page of results is being constructed. Messages about
+         the progress of the search are suppressed with the <tt>-q</tt> switch.
+<P>
+ </DL>
+   <DT>
+      Environment Variables Used
+   
+<DD>
+<DL ><DT>
+         <A HREF="node51.html#sectspecifyingabrowser"><tt>HTX_BROWSER</tt></A>
+      
+<DD>
+         The command which will be used to invoke the <A HREF="node50.html#sectusingwwwbrowsers">WWW
+         browser</A>.
+      
+      <DT>
+         <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt></A>
+      
+<DD>
+         A colon-separated list of the library directories in which to
+         search for hypertext documents.
+      
+      <DT>
+         <A HREF="node27.html#sectspecifyingaserver"><tt>HTX_SERVER</tt></A>
+      
+<DD>
+         The URL of the document server to be used for serving remote
+         documents.
+      
+      <DT>
+         <A HREF="node56.html#sectintermachinecommunication"><tt>HTX_TMP</tt></A>
+      
+<DD>
+         The name of the directory in which to create temporary communication
+         files. If this variable is not set or is null, then
+         <tt>$HOME/.htxtmp</tt> is used instead.
+      
+<P>
+ </DL> 
+ </DL>
+<P>
+<BR> <HR><A NAME=tex2html615 HREF="node48.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html613 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html607 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html616 HREF="node48.html"> 
+   hlink
+-
+   Perform cross-linking of hypertext documents
+</A><BR>
+<B>Up:</B> <A NAME=tex2html614 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A><BR>
+<B> Previous:</B> <A NAME=tex2html608 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

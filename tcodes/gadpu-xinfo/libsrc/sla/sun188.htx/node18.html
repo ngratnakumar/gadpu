@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Index Files</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Index Files">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html318 HREF="node19.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html316 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html310 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html319 HREF="node19.html"> Link-Editing</A><BR>
+<B>Up:</B> <A NAME=tex2html317 HREF="node17.html"> HOW HTX LINKING WORKS</A><BR>
+<B> Previous:</B> <A NAME=tex2html311 HREF="node17.html"> HOW HTX LINKING WORKS</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00051000000000000000><A NAME=sectindexfiles>&#160;</A><A NAME=xref_index_files>&#160;</A>Index Files</A></H2>
+<P>
+When you invoke the <A HREF="node48.html#hlink"><tt>hlink</tt></A> command, it first looks to
+find all the <A HREF="node4.html#secthypertextdocuments">documents</A> that may need to be linked. This it
+does by searching in all the <A HREF="node9.html#sectdocumentlibraries">document libraries</A> specified on
+the command line (or just the current directory by default), looking
+for <A HREF="node8.html#sectdocumentdirectories">directories with a <tt>&quot;</tt>.htx<tt>&quot;</tt> extension</A>.
+<P>
+It then ensures that each document has an up to date <em>index file</em>
+(a file called <tt>&quot;</tt>htx.index<tt>&quot;</tt> stored within the document directory),
+creating one if necessary. Index files are text files that contain,
+amongst other things, details of all the potential in-going and
+out-going cross-references for a document and list the <A NAME=tex2html26 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A>
+files in which they occur.  This is a summary of the cross-links the
+document might potentially be involved in and serves to reduce the
+time needed to re-link it on subsequent occasions. New index files are
+normally only re-generated when a document changes.
+<P>
+In addition to cross-reference information, index files also contain
+details of the title of each HTML page in the document and an
+indication of which is the <A HREF="node14.html#sectentiredocuments"><tt>&quot;</tt>top<tt>&quot;</tt> page</A>. This information is used by other HTX
+utilities to perform <A HREF="node32.html#sectsearchingfordocuments">documentation
+searches</A>, <em>etc.</em>
+<P>
+<BR> <HR><A NAME=tex2html318 HREF="node19.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html316 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html310 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html319 HREF="node19.html"> Link-Editing</A><BR>
+<B>Up:</B> <A NAME=tex2html317 HREF="node17.html"> HOW HTX LINKING WORKS</A><BR>
+<B> Previous:</B> <A NAME=tex2html311 HREF="node17.html"> HOW HTX LINKING WORKS</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

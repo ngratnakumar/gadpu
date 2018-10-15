@@ -1,0 +1,423 @@
+< sun67.html 
+< node1.html abstract
+< node14.html SLA_ADDET
+< node15.html SLA_AFIN
+< node16.html SLA_AIRMAS
+< node17.html SLA_ALTAZ
+< node18.html SLA_AMP
+< node19.html SLA_AMPQK
+< node20.html SLA_AOP
+< node21.html SLA_AOPPA
+< node22.html SLA_AOPPAT
+< node23.html SLA_AOPQK
+< node24.html SLA_ATMDSP
+< node25.html SLA_AV2M
+< node26.html SLA_BEAR
+< node27.html SLA_CAF2R
+< node28.html SLA_CALDJ
+< node29.html SLA_CALYD
+< node30.html SLA_CC2S
+< node31.html SLA_CC62S
+< node32.html SLA_CD2TF
+< node33.html SLA_CLDJ
+< node34.html SLA_CLYD
+< node35.html SLA_COMBN
+< node36.html SLA_CR2AF
+< node37.html SLA_CR2TF
+< node38.html SLA_CS2C
+< node39.html SLA_CS2C6
+< node40.html SLA_CTF2D
+< node41.html SLA_CTF2R
+< node42.html SLA_DAF2R
+< node43.html SLA_DAFIN
+< node44.html SLA_DAT
+< node45.html SLA_DAV2M
+< node46.html SLA_DBEAR
+< node47.html SLA_DBJIN
+< node48.html SLA_DC62S
+< node49.html SLA_DCC2S
+< node50.html SLA_DCMPF
+< node51.html SLA_DCS2C
+< node52.html SLA_DD2TF
+< node53.html SLA_DE2H
+< node54.html SLA_DEULER
+< node55.html SLA_DFLTIN
+< node56.html SLA_DH2E
+< node57.html SLA_DIMXV
+< node58.html SLA_DJCAL
+< node59.html SLA_DJCL
+< node60.html SLA_DM2AV
+< node61.html SLA_DMAT
+< node62.html SLA_DMOON
+< node63.html SLA_DMXM
+< node64.html SLA_DMXV
+< node65.html SLA_DPAV
+< node66.html SLA_DR2AF
+< node67.html SLA_DR2TF
+< node68.html SLA_DRANGE
+< node69.html SLA_DRANRM
+< node70.html SLA_DS2C6
+< node71.html SLA_DS2TP
+< node72.html SLA_DSEP
+< node73.html SLA_DSEPV
+< node74.html SLA_DT
+< node75.html SLA_DTF2D
+< node76.html SLA_DTF2R
+< node77.html SLA_DTP2S
+< node78.html SLA_DTP2V
+< node79.html SLA_DTPS2C
+< node80.html SLA_DTPV2C
+< node81.html SLA_DTT
+< node82.html SLA_DV2TP
+< node83.html SLA_DVDV
+< node84.html SLA_DVN
+< node85.html SLA_DVXV
+< node86.html SLA_E2H
+< node87.html SLA_EARTH
+< node88.html SLA_ECLEQ
+< node89.html SLA_ECMAT
+< node90.html SLA_ECOR
+< node91.html SLA_EG50
+< node92.html SLA_EL2UE
+< node93.html SLA_EPB
+< node94.html SLA_EPB2D
+< node95.html SLA_EPCO
+< node96.html SLA_EPJ
+< node97.html SLA_EPJ2D
+< node98.html SLA_EQECL
+< node99.html SLA_EQEQX
+< node100.html SLA_EQGAL
+< node101.html SLA_ETRMS
+< node102.html SLA_EULER
+< node103.html SLA_EVP
+< node104.html SLA_FITXY
+< node105.html SLA_FK425
+< node106.html SLA_FK45Z
+< node107.html SLA_FK524
+< node108.html SLA_FK52H
+< node109.html SLA_FK54Z
+< node110.html SLA_FK5HZ
+< node111.html SLA_FLOTIN
+< node112.html SLA_GALEQ
+< node113.html SLA_GALSUP
+< node114.html SLA_GE50
+< node115.html SLA_GEOC
+< node116.html SLA_GMST
+< node117.html SLA_GMSTA
+< node118.html SLA_GRESID
+< node119.html SLA_H2E
+< node120.html SLA_H2FK5
+< node121.html SLA_HFK5Z
+< node122.html SLA_IMXV
+< node123.html SLA_INTIN
+< node124.html SLA_INVF
+< node125.html SLA_KBJ
+< node126.html SLA_M2AV
+< node127.html SLA_MAP
+< node128.html SLA_MAPPA
+< node129.html SLA_MAPQK
+< node130.html SLA_MAPQKZ
+< node131.html SLA_MOON
+< node132.html SLA_MXM
+< node133.html SLA_MXV
+< node134.html SLA_NUT
+< node135.html SLA_NUTC
+< node136.html SLA_OAP
+< node137.html SLA_OAPQK
+< node138.html SLA_OBS
+< node139.html SLA_PA
+< node140.html SLA_PAV
+< node141.html SLA_PCD
+< node142.html SLA_PDA2H
+< node143.html SLA_PDQ2H
+< node144.html SLA_PERMUT
+< node145.html SLA_PERTEL
+< node146.html SLA_PERTUE
+< node147.html SLA_PLANEL
+< node148.html SLA_PLANET
+< node149.html SLA_PLANTE
+< node150.html SLA_PLANTU
+< node151.html SLA_PM
+< node152.html SLA_POLMO
+< node153.html SLA_PREBN
+< node154.html SLA_PREC
+< node155.html SLA_PRECES
+< node156.html SLA_PRECL
+< node157.html SLA_PRENUT
+< node158.html SLA_PV2EL
+< node159.html SLA_PV2UE
+< node160.html SLA_PVOBS
+< node161.html SLA_PXY
+< node162.html SLA_RANDOM
+< node163.html SLA_RANGE
+< node164.html SLA_RANORM
+< node165.html SLA_RCC
+< node166.html SLA_RDPLAN
+< node167.html SLA_REFCO
+< node168.html SLA_REFCOQ
+< node169.html SLA_REFRO
+< node170.html SLA_REFV
+< node171.html SLA_REFZ
+< node172.html SLA_RVEROT
+< node173.html SLA_RVGALC
+< node174.html SLA_RVLG
+< node175.html SLA_RVLSRD
+< node176.html SLA_RVLSRK
+< node177.html SLA_S2TP
+< node178.html SLA_SEP
+< node179.html SLA_SEPV
+< node180.html SLA_SMAT
+< node181.html SLA_SUBET
+< node182.html SLA_SUPGAL
+< node183.html SLA_SVD
+< node184.html SLA_SVDCOV
+< node185.html SLA_SVDSOL
+< node186.html SLA_TP2S
+< node187.html SLA_TP2V
+< node188.html SLA_TPS2C
+< node189.html SLA_TPV2C
+< node190.html SLA_UE2EL
+< node191.html SLA_UE2PV
+< node192.html SLA_UNPCD
+< node193.html SLA_V2TP
+< node194.html SLA_VDV
+< node195.html SLA_VN
+< node196.html SLA_VXV
+< node197.html SLA_WAIT
+< node198.html SLA_XY2XY
+< node199.html SLA_ZD
+t icons.html
+t node212.html Aberration
+t node232.html About this document ...
+t node1.html Abstract
+t node11.html Acknowledgements
+t node216.html Apparent Place to Observed Place
+t node221.html Atomic Time: TAI
+t node225.html Calendars
+t node205.html Celestial Coordinate Systems
+t node8.html C Version
+t node213.html Different Sorts of Mean Place
+t node224.html Dynamical Time: TT, TDB
+t node218.html Efficiency considerations
+t node227.html Ephemerides
+t node209.html Epoch
+t node4.html Example Application
+t node200.html EXPLANATION AND EXAMPLES
+t node229.html Focal-Plane Astrometry
+t footnode.html Footnotes
+t node202.html Formatting angles
+t node7.html Fortran Version
+t node9.html Future Versions
+t node226.html Geocentric Coordinates
+t node2.html INTRODUCTION
+t node12.html LINKING
+t node208.html Mean Places
+t node215.html Mean Place to Apparent Place
+t node214.html Mean Place Transformations
+t node10.html New Functions
+t node230.html Numerical Methods
+t node6.html Objectives
+t node211.html Parallax and Radial Velocity
+t node206.html Precession and Nutation
+t node210.html Proper Motion
+t node3.html Purpose
+t node228.html Radial Velocity and Light-Time Corrections
+t node217.html Refraction
+t node5.html Scope
+t node223.html Sidereal Time: GMST, LAST
+t node14.html SLA_ADDET - Add E-terms of Aberration
+t node15.html SLA_AFIN - Sexagesimal character string to angle
+t node16.html SLA_AIRMAS - Air Mass
+t node17.html SLA_ALTAZ - Velocities etc. for Altazimuth Mount
+t node18.html SLA_AMP - Apparent to Mean
+t node19.html SLA_AMPQK - Quick Apparent to Mean
+t node20.html SLA_AOP - Apparent to Observed
+t node21.html SLA_AOPPA - Appt-to-Obs Parameters
+t node22.html SLA_AOPPAT - Update Appt-to-Obs Parameters
+t node23.html SLA_AOPQK - Quick Appt-to-Observed
+t node24.html SLA_ATMDSP - Atmospheric Dispersion
+t node25.html SLA_AV2M - Rotation Matrix from Axial Vector
+t node26.html SLA_BEAR - Direction Between Points on a Sphere
+t node27.html SLA_CAF2R - Deg,Arcmin,Arcsec to Radians
+t node28.html SLA_CALDJ - Calendar Date to MJD
+t node29.html SLA_CALYD - Calendar to Year, Day
+t node30.html SLA_CC2S - Cartesian to Spherical
+t node31.html SLA_CC62S - Cartesian 6-Vector to Spherical
+t node32.html SLA_CD2TF - Days to Hour,Min,Sec
+t node33.html SLA_CLDJ - Calendar to MJD
+t node34.html SLA_CLYD - Calendar to Year, Day
+t node35.html SLA_COMBN - Next Combination
+t node36.html SLA_CR2AF - Radians to Deg,Arcmin,Arcsec
+t node37.html SLA_CR2TF - Radians to Hour,Min,Sec
+t node39.html SLA_CS2C6 - Spherical Pos/Vel to Cartesian
+t node38.html SLA_CS2C - Spherical to Cartesian
+t node40.html SLA_CTF2D - Hour,Min,Sec to Days
+t node41.html SLA_CTF2R - Hour,Min,Sec to Radians
+t node42.html SLA_DAF2R - Deg,Arcmin,Arcsec to Radians
+t node43.html SLA_DAFIN - Sexagesimal character string to angle
+t node44.html SLA_DAT - TAI-UTC
+t node45.html SLA_DAV2M - Rotation Matrix from Axial Vector
+t node46.html SLA_DBEAR - Direction Between Points on a Sphere
+t node47.html SLA_DBJIN - Decode String to B/J Epoch (DP)
+t node48.html SLA_DC62S - Cartesian 6-Vector to Spherical
+t node49.html SLA_DCC2S - Cartesian to Spherical
+t node50.html SLA_DCMPF - Interpret Linear Fit
+t node51.html SLA_DCS2C - Spherical to Cartesian
+t node52.html SLA_DD2TF - Days to Hour,Min,Sec
+t node53.html SLA_DE2H - to Az,El
+t node54.html SLA_DEULER - Euler Angles to Rotation Matrix
+t node55.html SLA_DFLTIN - Decode a Double Precision Number
+t node56.html SLA_DH2E - Az,El to
+t node57.html SLA_DIMXV - Apply 3D Reverse Rotation
+t node58.html SLA_DJCAL - MJD to Gregorian for Output
+t node59.html SLA_DJCL - MJD to Year,Month,Day,Frac
+t node60.html SLA_DM2AV - Rotation Matrix to Axial Vector
+t node61.html SLA_DMAT - Solve Simultaneous Equations
+t node62.html SLA_DMOON - Approx Moon Pos/Vel
+t node63.html SLA_DMXM - Multiply Matrices
+t node64.html SLA_DMXV - Apply 3D Rotation
+t node65.html SLA_DPAV - Position-Angle Between Two Directions
+t node66.html SLA_DR2AF - Radians to Deg,Min,Sec,Frac
+t node67.html SLA_DR2TF - Radians to Hour,Min,Sec,Frac
+t node68.html SLA_DRANGE - Put Angle into Range
+t node69.html SLA_DRANRM - Put Angle into Range
+t node70.html SLA_DS2C6 - Spherical Pos/Vel to Cartesian
+t node71.html SLA_DS2TP - Spherical to Tangent Plane
+t node72.html SLA_DSEP - Angle Between 2 Points on Sphere
+t node73.html SLA_DSEPV - Angle Between 2 Vectors
+t node74.html SLA_DT - Approximate ET minus UT
+t node75.html SLA_DTF2D - Hour,Min,Sec to Days
+t node76.html SLA_DTF2R - Hour,Min,Sec to Radians
+t node77.html SLA_DTP2S - Tangent Plane to Spherical
+t node78.html SLA_DTP2V - Tangent Plane to Direction Cosines
+t node79.html SLA_DTPS2C - Plate centre from and
+t node80.html SLA_DTPV2C - Plate centre from and x,y,z
+t node81.html SLA_DTT - TT minus UTC
+t node82.html SLA_DV2TP - Direction Cosines to Tangent Plane
+t node83.html SLA_DVDV - Scalar Product
+t node84.html SLA_DVN - Normalize Vector
+t node85.html SLA_DVXV - Vector Product
+t node86.html SLA_E2H - to Az,El
+t node87.html SLA_EARTH - Approx Earth Pos/Vel
+t node88.html SLA_ECLEQ - Ecliptic to Equatorial
+t node89.html SLA_ECMAT - Form Matrix
+t node90.html SLA_ECOR - RV &amp; Time Corrns to Sun
+t node91.html SLA_EG50 - B1950 to Galactic
+t node92.html SLA_EL2UE - Conventional to Universal Elements
+t node94.html SLA_EPB2D - Besselian Epoch to MJD
+t node93.html SLA_EPB - MJD to Besselian Epoch
+t node95.html SLA_EPCO - Convert Epoch to B or J
+t node97.html SLA_EPJ2D - Julian Epoch to MJD
+t node96.html SLA_EPJ - MJD to Julian Epoch
+t node98.html SLA_EQECL - J2000 to Ecliptic
+t node99.html SLA_EQEQX - Equation of the Equinoxes
+t node100.html SLA_EQGAL - J2000 to Galactic
+t node101.html SLA_ETRMS - E-terms of Aberration
+t node102.html SLA_EULER - Rotation Matrix from Euler Angles
+t node103.html SLA_EVP - Earth Position &amp; Velocity
+t node104.html SLA_FITXY - Fit Linear Model to Two Sets
+t node105.html SLA_FK425 - FK4 to FK5
+t node106.html SLA_FK45Z - FK4 to FK5, no P.M. or Parallax
+t node107.html SLA_FK524 - FK5 to FK4
+t node108.html SLA_FK52H - FK5 to Hipparcos
+t node109.html SLA_FK54Z - FK5 to FK4, no P.M. or Parallax
+t node110.html SLA_FK5HZ - FK5 to Hipparcos, no P.M.
+t node111.html SLA_FLOTIN - Decode a Real Number
+t node112.html SLA_GALEQ - Galactic to J2000
+t node113.html SLA_GALSUP - Galactic to Supergalactic
+t node114.html SLA_GE50 - Galactic to B1950
+t node115.html SLA_GEOC - Geodetic to Geocentric
+t node117.html SLA_GMSTA - UT to GMST (extra precision)
+t node116.html SLA_GMST - UT to GMST
+t node118.html SLA_GRESID - Gaussian Residual
+t node119.html SLA_H2E - Az,El to
+t node120.html SLA_H2FK5 - Hipparcos to FK5
+t node121.html SLA_HFK5Z - Hipparcos to FK5, no P.M.
+t node122.html SLA_IMXV - Apply 3D Reverse Rotation
+t node123.html SLA_INTIN - Decode an Integer Number
+t node124.html SLA_INVF - Invert Linear Model
+t node125.html SLA_KBJ - Select Epoch Prefix
+T sun67.html SLALIB -- Positional Astronomy Library
+t node207.html SLALIB support for precession and nutation
+t node126.html SLA_M2AV - Rotation Matrix to Axial Vector
+t node127.html SLA_MAP - Mean to Apparent
+t node128.html SLA_MAPPA - Mean to Apparent Parameters
+t node129.html SLA_MAPQK - Quick Mean to Apparent
+t node130.html SLA_MAPQKZ - Quick Mean-Appt, no PM etc.
+t node131.html SLA_MOON - Approx Moon Pos/Vel
+t node132.html SLA_MXM - Multiply Matrices
+t node133.html SLA_MXV - Apply 3D Rotation
+t node135.html SLA_NUTC - Nutation Components
+t node134.html SLA_NUT - Nutation Matrix
+t node136.html SLA_OAP - Observed to Apparent
+t node137.html SLA_OAPQK - Quick Observed to Apparent
+t node138.html SLA_OBS - Observatory Parameters
+t node139.html SLA_PA - to Parallactic Angle
+t node140.html SLA_PAV - Position-Angle Between Two Directions
+t node141.html SLA_PCD - Apply Radial Distortion
+t node142.html SLA_PDA2H - H.A. for a Given Azimuth
+t node143.html SLA_PDQ2H - H.A. for a Given P.A.
+t node144.html SLA_PERMUT - Next Permutation
+t node145.html SLA_PERTEL - Perturbed Orbital Elements
+t node146.html SLA_PERTUE - Perturbed Universal Elements
+t node147.html SLA_PLANEL - Planet Position from Elements
+t node148.html SLA_PLANET - Planetary Ephemerides
+t node149.html SLA_PLANTE - of Planet from Elements
+t node150.html SLA_PLANTU - from Universal Elements
+t node151.html SLA_PM - Proper Motion
+t node152.html SLA_POLMO - Polar Motion
+t node153.html SLA_PREBN - Precession Matrix (FK4)
+t node155.html SLA_PRECES - Precession
+t node156.html SLA_PRECL - Precession Matrix (latest)
+t node154.html SLA_PREC - Precession Matrix (FK5)
+t node157.html SLA_PRENUT - Precession-Nutation Matrix
+t node158.html SLA_PV2EL - Orbital Elements from Position/Velocity
+t node159.html SLA_PV2UE - Position/Velocity to Universal Elements
+t node160.html SLA_PVOBS - Observatory Position &amp; Velocity
+t node161.html SLA_PXY - Apply Linear Model
+t node162.html SLA_RANDOM - Random Number
+t node163.html SLA_RANGE - Put Angle into Range
+t node164.html SLA_RANORM - Put Angle into Range
+t node165.html SLA_RCC - Barycentric Coordinate Time
+t node166.html SLA_RDPLAN - Apparent of Planet
+t node168.html SLA_REFCOQ - Refraction Constants (fast)
+t node167.html SLA_REFCO - Refraction Constants
+t node169.html SLA_REFRO - Refraction
+t node170.html SLA_REFV - Apply Refraction to Vector
+t node171.html SLA_REFZ - Apply Refraction to ZD
+t node172.html SLA_RVEROT - RV Corrn to Earth Centre
+t node173.html SLA_RVGALC - RV Corrn to Galactic Centre
+t node174.html SLA_RVLG - RV Corrn to Local Group
+t node175.html SLA_RVLSRD - RV Corrn to Dynamical LSR
+t node176.html SLA_RVLSRK - RV Corrn to Kinematical LSR
+t node177.html SLA_S2TP - Spherical to Tangent Plane
+t node178.html SLA_SEP - Angle Between 2 Points on Sphere
+t node179.html SLA_SEPV - Angle Between 2 Vectors
+t node180.html SLA_SMAT - Solve Simultaneous Equations
+t node181.html SLA_SUBET - Remove E-terms
+t node182.html SLA_SUPGAL - Supergalactic to Galactic
+t node184.html SLA_SVDCOV - Covariance Matrix from SVD
+t node183.html SLA_SVD - Singular Value Decomposition
+t node185.html SLA_SVDSOL - Solution Vector from SVD
+t node186.html SLA_TP2S - Tangent Plane to Spherical
+t node187.html SLA_TP2V - Tangent Plane to Direction Cosines
+t node188.html SLA_TPS2C - Plate centre from and
+t node189.html SLA_TPV2C - Plate centre from and x,y,z
+t node190.html SLA_UE2EL - Universal to Conventional Elements
+t node191.html SLA_UE2PV - Pos/Vel from Universal Elements
+t node192.html SLA_UNPCD - Remove Radial Distortion
+t node193.html SLA_V2TP - Direction Cosines to Tangent Plane
+t node194.html SLA_VDV - Scalar Product
+t node195.html SLA_VN - Normalize Vector
+t node196.html SLA_VXV - Vector Product
+t node197.html SLA_WAIT - Time Delay
+t node198.html SLA_XY2XY - Apply Linear Model to an
+t node199.html SLA_ZD - to Zenith Distance
+t node201.html Spherical Trigonometry
+t node13.html SUBPROGRAM SPECIFICATIONS
+t node231.html SUMMARY OF CALLS
+t node219.html The Hipparcos Catalogue and the ICRS
+t node220.html Timescales
+t node222.html Universal Time: UTC, UT1
+t node204.html Using vectors
+t node203.html Vectors and Matrices

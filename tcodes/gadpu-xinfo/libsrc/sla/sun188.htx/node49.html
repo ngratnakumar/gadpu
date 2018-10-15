@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> 
+   showme
+-
+   Display a specified part of a document using a WWW browser
+</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" 
+   showme
+-
+   Display a specified part of a document using a WWW browser
+">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html633 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html631 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html627 HREF="node48.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html634 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B>Up:</B> <A NAME=tex2html632 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A><BR>
+<B> Previous:</B> <A NAME=tex2html628 HREF="node48.html"> 
+   hlink
+-
+   Perform cross-linking of hypertext documents
+</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000123000000000000000>
+   showme
+<A NAME=xref_showme>&#160;</A>-<A NAME=showme>&#160;</A>
+   Display a specified part of a document using a WWW browser
+</A></H2>
+<P>
+<DL ><DT>Description:
+<DD>
+<DL >This command takes the name of a
+      <A HREF="node4.html#secthypertextdocuments">document</A> and (optionally) the
+      name of a <A HREF="node12.html#secttargetlabels">cross-reference label</A>
+      within it, and displays the requested part of the document using
+      a <A HREF="node50.html#sectusingwwwbrowsers">WWW browser</A>. It may also be
+      used to display local files or any other <A NAME=tex2html53 HREF="http://www.w3.org/hypertext/WWW/ ">WWW</A> page for
+      which a <A NAME=tex2html54 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URL</A> is available.
+<P>
+ </DL>
+   <DT>Invocation:
+<DD>
+<DL ><tt> 
+      showme [switches] doc [label]
+   </tt>
+<P>
+ </DL>
+   <DT>
+      Parameters
+   
+<DD>
+<DL ><DT>
+         doc
+      
+<DD>
+         The name of the document. If no directory information is supplied,
+         the document will be located using the
+         <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search path</A>. If directory information is
+         given, no search will be performed. In either case, a
+         <tt>&quot;</tt>.htx<tt>&quot;</tt> extension to the document name is optional.
+<P>
+         If the <tt>-f</tt> option is used, this parameter is interpreted
+         as the name of a local file which is to be displayed. If the
+         <tt>-u</tt> option is used, it is interpreted as a general URL.
+      
+      <DT>
+         label
+      
+<DD>
+         An optional cross-reference label. If given, this specifies
+         which part of the document is required. If omitted, it is
+         assumed that the entire document is required and the
+         appropriate <A HREF="node14.html#sectentiredocuments"><tt>&quot;</tt>top<tt>&quot;</tt> page</A> is
+         displayed.
+<P>
+         This parameter is ignored if the <tt>-f</tt> or <tt>-u</tt> options are used.
+      
+<P>
+ </DL>
+   <DT>
+      Switches
+   
+<DD>
+<DL ><DT>
+         -f
+      
+<DD>
+         Specifies that the document name supplied is the name of a
+         local file (<em>e.g.</em> in <A NAME=tex2html52 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> format) which is to
+         be displayed. If this option is used, the <tt>label</tt>
+         parameter and the <tt>-l</tt> and <tt>-r</tt> switches are ignored.
+      
+      <DT>
+         -l
+      
+<DD>
+         Specifies that a local document should be displayed and that it
+         should not be fetched from a remote document server. In this
+         case, if the document cannot be found locally an error will result.
+      
+      <DT>
+         -n
+      
+<DD>
+         Specifies that the document is not to be displayed. In this case, no
+         WWW browser will be used and the URL that would otherwise have been
+         passed to it is simply written to standard output. This provides an
+         interface for use by other software that will handle
+         document display itself.
+<P>
+         Note that the URL generated is suitable only
+         for local use by a WWW browser running on the same machine as the
+         <tt>showme</tt> command. It may not be suitable, for instance,
+         for embedding in an HTML document that will be interpreted by a remote
+         WWW browser. 
+      
+      <DT>
+         -r
+      
+<DD>
+         Specifies that a <A HREF="node21.html#sectremotedocuments">remote
+         document</A> is required. In this case, a
+         reference to a remote document server will be generated and
+         passed to the WWW browser, even if a local copy of the
+         document exists.
+      
+      <DT>
+         -u
+      
+<DD>
+         Specifies that the document name supplied is a URL which is to be
+         passed directly to the WWW browser for interpretation. Any form of URL
+         which the browser can handle may be given. If this option is used, the
+         <tt>label</tt> parameter and the <tt>-l</tt> and <tt>-r</tt> switches are ignored.
+      
+      <DT>
+         -warn
+      
+<DD>
+         Indicates that any warning messages issued by the WWW browser
+         (<em>e.g.</em> when it is started up) are to be suppressed. By default, these
+         warnings are written to standard error along with any other warning
+         or error messages.
+      
+<P>
+ </DL>
+   <DT>Notes:
+<DD>
+<DL ><UL><LI> 
+         If the document is found locally, the local copy will be displayed.
+         If it is not found locally (subject to any command switches) a reference
+         to a remote document server will be passed to the WWW browser instead.
+         <LI> 
+         If a cross-reference label is specified for a local document but it
+         cannot be found in that document, then an error will result.
+         There is no checking of the existence of remote documents, nor of
+         the cross-reference labels they contain. This checking must be performed
+         by the remote document server.
+         <LI> 
+         The <tt>-l</tt> and <tt>-r</tt> switches are mutually exclusive. If both are given,
+         the latter one predominates.
+         Similarly, the <tt>-f</tt> and <tt>-u</tt> switches are mutually exclusive. If both
+         are given, the latter one predominates.
+<P>
+</UL> 
+ </DL>
+   <DT>Examples:
+<DD>
+<DL ><DT><tt> 
+         showme sun188
+      </tt>
+<DD> <BR> 
+         Displays the document called
+         <A HREF="../sun188.htx/sun188.html#xref_"><tt>&quot;</tt>sun188<tt>&quot;</tt></A>. The local copy is used, if
+         available, otherwise it is fetched from the remote document
+         server.
+<P>
+      <DT><tt> 
+         showme sun188 showme
+      </tt>
+<DD> <BR> 
+         Displays the part of document <tt>&quot;</tt>sun188<tt>&quot;</tt> identified by the
+         cross-reference label <tt>&quot;</tt>showme<tt>&quot;</tt> (<em>i.e.</em> the section you are
+         reading now). As before, the local copy of the document is used, if
+         possible.
+<P>
+      <DT><tt> 
+         showme -l quantum-theory
+      </tt>
+<DD> <BR> 
+         Searches for a local copy of the document <tt>&quot;</tt>quantum-theory<tt>&quot;</tt> and
+         displays it. If the document cannot be found locally, an error
+         results.
+<P>
+      <DT><tt> 
+         showme -r quantum-theory speculation
+      </tt>
+<DD> <BR> 
+         Displays the section identified by the <tt>&quot;</tt>speculation<tt>&quot;</tt>
+         cross-reference label in a remote copy of the document called
+         <tt>&quot;</tt>quantum-theory<tt>&quot;</tt>. Any local copy is ignored.
+<P>
+      <DT><tt> 
+         showme mydocs/help available_commands
+      </tt>
+<DD> <BR> 
+         Displays the section identified by the
+         <tt>&quot;</tt>available_commands<tt>&quot;</tt> label in a local document stored in
+         the directory <tt>mydocs/help.htx</tt>.  Because explicit
+         directory information is given, the document is not searched
+         for using the <tt>HTX_PATH</tt> search path. If the document
+         doesn't exist, a copy will be fetched from the remote
+         document server.
+<P>
+      <DT><tt> 
+         showme -n -l mydocs/help available_commands
+      </tt>
+<DD> <BR> 
+         Performs the same function as the previous example, except
+         that the document is not actually displayed. Instead, its URL
+         is simply written to standard output. The <tt>-l</tt> switch
+         specifies that a local document is required, so an error will
+         result if it cannot be found.
+<P>
+ </DL>
+   <DT>
+      Environment Variables Used
+   
+<DD>
+<DL ><DT>
+         <A HREF="node51.html#sectspecifyingabrowser"><tt>HTX_BROWSER</tt></A>
+      
+<DD>
+         The command which will be used to invoke the <A HREF="node50.html#sectusingwwwbrowsers">WWW
+         browser</A>.
+      
+      <DT>
+         <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt></A>
+      
+<DD>
+         A colon-separated list of the library directories in which to
+         search for hypertext documents.
+      
+      <DT>
+         <A HREF="node27.html#sectspecifyingaserver"><tt>HTX_SERVER</tt></A>
+      
+<DD>
+         The URL of the document server to be used for serving remote
+         documents.
+      
+      <DT>
+         <A HREF="node56.html#sectintermachinecommunication"><tt>HTX_TMP</tt></A>
+      
+<DD>
+         The name of the directory in which to create temporary communication
+         files. If this variable is not set or is null, then
+         <tt>$HOME/.htxtmp</tt> is used instead.
+      
+<P>
+ </DL> 
+ </DL>
+<P>
+<BR> <HR><A NAME=tex2html633 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html631 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html627 HREF="node48.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html634 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B>Up:</B> <A NAME=tex2html632 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A><BR>
+<B> Previous:</B> <A NAME=tex2html628 HREF="node48.html"> 
+   hlink
+-
+   Perform cross-linking of hypertext documents
+</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

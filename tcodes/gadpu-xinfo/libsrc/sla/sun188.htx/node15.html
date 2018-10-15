@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Linking your Hypertext Documents</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Linking your Hypertext Documents">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html286 HREF="node16.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html284 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html278 HREF="node14.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html287 HREF="node16.html"> Using Cross-References from LaTeX</A><BR>
+<B>Up:</B> <A NAME=tex2html285 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html279 HREF="node14.html"> Referring to an Entire Document</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00044000000000000000><A NAME=secthowtolink>&#160;</A><A NAME=xref_how_to_link>&#160;</A>Linking your Hypertext Documents</A></H2>
+<P>
+Once you have set up a collection of <A HREF="node4.html#secthypertextdocuments">documents</A> with
+cross-references implemented using the special forms of <A NAME=tex2html21 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A>
+anchor recognised by <A HREF="node3.html#sectHTX">HTX</A>, the next step is to link these
+documents together.  This consists of editing the <A NAME=tex2html22 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URLs</A> in HTX
+cross-references so that they identify the current true location of
+the referenced files. No other URLs are touched during this process.
+<P>
+Linking hypertext documents is straightforward. Simply go to the
+directory containing the document collection (the <A HREF="node9.html#sectdocumentlibraries">document
+library</A>) and use the command:
+<P>
+<blockquote> <A HREF="node48.html#hlink"><tt>hlink</tt></A>
+</blockquote>
+<P>
+<b> WARNING: this will modify your documents. If you are worried
+about this, then make a backup first.</b>
+<P>
+The <tt>hlink</tt> command will display some informational messages as it
+links your documents and will warn you if you have referred to any
+<A HREF="node12.html#secttargetlabels">cross-reference labels</A> that do not exist.  When it completes,
+you should be able to read your documents using any <A NAME=tex2html23 HREF="http://www.w3.org/hypertext/WWW/ ">WWW</A>
+browser and to follow all the cross-references that they contain.
+<P>
+When you change any of your documents, you can re-link them to
+accommodate the changes simply by using the <tt>hlink</tt> command
+again. Because no essential information is discarded during linking,
+this process can be repeated indefinitely. You do not need a fresh
+copy of the documents each time.
+<P>
+If the documents you want to link reside in more than one document
+library, then simply list the library directories on the command line,
+as follows:
+<P>
+<blockquote> <PRE>hlink dir1 dir2 dir3
+</PRE>
+</blockquote>
+<P>
+Remember that any other local documents that you refer to (but do not
+actually want to modify) should reside in libraries that appear on
+your <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search path</A>. If they do not, they will be regarded as
+<A HREF="node21.html#sectremotedocuments">remote documents</A> and the URLs generated for them will invoke
+a <A HREF="node26.html#sectremoteservers">remote document server</A>.
+This is usually less efficient than referring directly to local files.
+<P>
+<BR> <HR><A NAME=tex2html286 HREF="node16.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html284 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html278 HREF="node14.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html287 HREF="node16.html"> Using Cross-References from LaTeX</A><BR>
+<B>Up:</B> <A NAME=tex2html285 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html279 HREF="node14.html"> Referring to an Entire Document</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

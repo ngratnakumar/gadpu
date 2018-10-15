@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Performing Document Searches from Other Software</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Performing Document Searches from Other Software">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html540 HREF="node41.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html538 HREF="node37.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html534 HREF="node39.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html541 HREF="node41.html"> CATALOGUE FILES</A><BR>
+<B>Up:</B> <A NAME=tex2html539 HREF="node37.html"> USING HTX FACILITIES FROM OTHER SOFTWARE</A><BR>
+<B> Previous:</B> <A NAME=tex2html535 HREF="node39.html"> Using HTX to Control a WWW Browser</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000103000000000000000><A NAME=xref_performing_document_searches_from_other_software>&#160;</A>Performing Document Searches from Other Software</A></H2>
+<P>
+You can use the <A HREF="node47.html#findme"><tt>findme</tt></A> command from within other
+software to implement <A HREF="node32.html#sectsearchingfordocuments">document
+searches</A> with a user interface of your
+own design. This is done by using the <tt>-html</tt> switch, as follows:
+<P>
+<blockquote> <PRE>findme -html -q keyword
+</PRE>
+</blockquote>
+<P>
+This switch prevents <tt>findme</tt> from displaying its list of results
+via a <A HREF="node50.html#sectusingwwwbrowsers">WWW browser</A>, and it instead
+writes them to its standard output in <A NAME=tex2html43 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A>
+format.<A NAME=tex2html44 HREF="footnode.html#1680"><IMG ALIGN=BOTTOM ALT="gif" SRC="./foot_motif.gif"></A> In this mode, a
+<tt>&quot;</tt>naked<tt>&quot;</tt> output list is produced that lacks the surrounding HTML
+document and this allows it to be embedded in any other HTML context
+where it may be needed.
+<P>
+An example of this might be a <A NAME=tex2html45 HREF="http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/Docs/fill-out-forms/overview.html ">WWW forms</A> interface for
+performing local document searches. Typically, a <em> Common Gateway
+Interface</em> (<A NAME=tex2html46 HREF="http://hoohoo.ncsa.uiuc.edu/cgi/overview.html ">CGI</A>) script would be written to be invoked by
+your <A NAME=tex2html47 HREF="http://www.w3.org/hypertext/WWW/ ">WWW</A> server and perform the search, generating a page of
+HTML as its output. Such a script could invoke the <tt>findme</tt> command
+in the form above to implement the search and then embed its output in
+the page it generates.
+<P>
+Alternatively, a script invoked from the command line or a graphical
+user interface might build an HTML document, including search output
+from <tt>findme</tt>, in a local file. It could then use the
+<A HREF="node49.html#showme"><tt>showme</tt></A> command with its <tt>-f</tt> flag to display the
+result.
+<P>
+You can test for the success of a search by examining the return
+status from <tt>findme</tt> which is set to the number of documents that
+were matched.
+<P>
+<BR> <HR><A NAME=tex2html540 HREF="node41.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html538 HREF="node37.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html534 HREF="node39.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html541 HREF="node41.html"> CATALOGUE FILES</A><BR>
+<B>Up:</B> <A NAME=tex2html539 HREF="node37.html"> USING HTX FACILITIES FROM OTHER SOFTWARE</A><BR>
+<B> Previous:</B> <A NAME=tex2html535 HREF="node39.html"> Using HTX to Control a WWW Browser</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

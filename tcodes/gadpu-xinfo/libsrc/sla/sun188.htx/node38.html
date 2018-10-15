@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Providing Hypertext Help</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Providing Hypertext Help">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html522 HREF="node39.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html520 HREF="node37.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html514 HREF="node37.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html523 HREF="node39.html"> Using HTX to Control a WWW Browser</A><BR>
+<B>Up:</B> <A NAME=tex2html521 HREF="node37.html"> USING HTX FACILITIES FROM OTHER SOFTWARE</A><BR>
+<B> Previous:</B> <A NAME=tex2html515 HREF="node37.html"> USING HTX FACILITIES FROM OTHER SOFTWARE</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000101000000000000000><A NAME=secthypertexthelp>&#160;</A><A NAME=xref_providing_hypertext_help>&#160;</A>Providing Hypertext Help</A></H2>
+<P>
+An important application of the <A HREF="node49.html#showme"><tt>showme</tt></A> command is to
+provide hypertext help for other software packages.
+<P>
+In this situation, the help information would be contained in one or
+more <A HREF="node4.html#secthypertextdocuments">hypertext documents</A> and the
+controlling software would invoke the <tt>showme</tt> command to
+<A HREF="node29.html#sectaccessingdocuments">display the required part</A> of it on
+demand, the information being selected by giving an appropriate
+<A HREF="node12.html#secttargetlabels">cross-reference label</A>. The person
+reading the displayed information can then explore any hyper-links
+within it to gain further information. These could point at other
+documents you have <A HREF="node15.html#secthowtolink">linked</A> the help
+documents against or, indeed, anything else on the <A NAME=tex2html40 HREF="http://www.w3.org/hypertext/WWW/ ">WWW</A>.
+<P>
+When designing a graphical user interface, help information can easily
+be made <tt>&quot;</tt>context sensitive<tt>&quot;</tt> by setting the cross-reference label
+according to the task being performed (<em>e.g.</em> which window is
+active) and invoking <tt>showme</tt> when a <tt>&quot;</tt>help<tt>&quot;</tt> button is
+pressed. In fact, with a dedicated <A HREF="node50.html#sectusingwwwbrowsers">WWW
+browser</A>, one might even consider displaying
+the information automatically as the task in hand changed, without
+waiting to be asked.
+<P>
+By going via this <A HREF="node3.html#sectHTX">HTX</A> interface, the controlling
+software is insulated from changes in the way the help documentation
+is organised and <A HREF="node18.html#sectindexfiles">indexed</A>. It also need not
+concern itself with how to
+<A HREF="node53.html#sectbrowsercommunication">communicate</A> with the WWW
+browser. <A NAME=textgettingdocumenturls>&#160;</A>In some cases, however, you
+may want your software to handle the display of help information
+yourself. You can do this by using the <tt>-n</tt> switch on the
+<tt>showme</tt> command, thus:
+<P>
+<blockquote> <PRE>showme -n help_document subject_label
+</PRE>
+</blockquote>
+<P>
+This prevents <tt>showme</tt> from displaying the document. Instead, it
+simply writes the <A NAME=tex2html41 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URL</A> for the part of the document you
+requested to its standard output. Your software can then read this and
+handle it in whatever way you choose.
+<P>
+<BR> <HR><A NAME=tex2html522 HREF="node39.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html520 HREF="node37.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html514 HREF="node37.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html523 HREF="node39.html"> Using HTX to Control a WWW Browser</A><BR>
+<B>Up:</B> <A NAME=tex2html521 HREF="node37.html"> USING HTX FACILITIES FROM OTHER SOFTWARE</A><BR>
+<B> Previous:</B> <A NAME=tex2html515 HREF="node37.html"> USING HTX FACILITIES FROM OTHER SOFTWARE</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

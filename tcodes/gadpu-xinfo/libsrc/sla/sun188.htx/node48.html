@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> 
+   hlink
+-
+   Perform cross-linking of hypertext documents
+</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" 
+   hlink
+-
+   Perform cross-linking of hypertext documents
+">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html625 HREF="node49.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html623 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html617 HREF="node47.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html626 HREF="node49.html"> 
+   showme
+-
+   Display a specified part of a document using a WWW browser
+</A><BR>
+<B>Up:</B> <A NAME=tex2html624 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A><BR>
+<B> Previous:</B> <A NAME=tex2html618 HREF="node47.html"> 
+   findme
+-
+   Search for documents by keyword and display a list of those found
+</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000122000000000000000>
+   hlink
+<A NAME=xref_hlink>&#160;</A>-<A NAME=hlink>&#160;</A>
+   Perform cross-linking of hypertext documents
+</A></H2>
+<P>
+<DL ><DT>Description:
+<DD>
+<DL >This command searches for <A HREF="node4.html#secthypertextdocuments">hypertext
+      documents</A> in a specified list of
+      <A HREF="node9.html#sectdocumentlibraries">library directories</A> and
+      link-edits their <tt>&quot;</tt>.html<tt>&quot;</tt> files to insert the correct
+      <A NAME=tex2html51 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URLs</A> so that
+      <A HREF="node11.html#sectcrossreferences">cross-reference</A> links between
+      the documents point at the appropriate files.
+<P>
+ </DL>
+   <DT>Invocation:
+<DD>
+<DL ><tt> 
+      hlink [switches] [dirlist]
+   </tt>
+<P>
+ </DL>
+   <DT>
+      Parameters
+   
+<DD>
+<DL ><DT>
+         dirlist
+      
+<DD>
+         A space-separated list of directories in which to search for
+         the hypertext documents to be linked (as identified by their
+         <tt>&quot;</tt>.htx<tt>&quot;</tt> file extension). If this list is not given, the
+         default directory <tt>&quot;</tt>.<tt>&quot;</tt> is used.
+      
+<P>
+ </DL>
+   <DT>
+      Switches
+   
+<DD>
+<DL ><DT>
+         -a
+      
+<DD>
+         Specifies that all documents in the specified directories should be
+         re-linked <tt>&quot;</tt>from source<tt>&quot;</tt>. This means that all documents will be
+         re-examined for cross-references, regardless of whether they appear to
+         have changed since they were last linked, and all the
+         resulting cross-references will be resolved.
+      
+      <DT>
+         -d
+      
+<DD>
+         Specifies that a <tt>&quot;</tt>deep<tt>&quot;</tt> dependency test should be performed to see
+         which documents have changed, and therefore need re-linking. This
+         involves examining the modification dates of all the <tt>&quot;</tt>.html<tt>&quot;</tt> files in
+         each document. A deep dependency test is more likely to identify
+         changed documents than the default method (which simply examines the
+         modification date of the <A HREF="node8.html#sectdocumentdirectories">document directory</A> file) but it may take
+         considerably longer.
+      
+      <DT>
+         -r
+      
+<DD>
+         Specifies that documents that make references only to other <A HREF="node21.html#sectremotedocuments"><tt>&quot;</tt>remote<tt>&quot;</tt></A>
+         documents should be re-linked. This option is present for historical
+         reasons and it should not normally be necessary to use it. It may
+         eventually be removed.
+      
+      <DT>
+         -v
+      
+<DD>
+         Specifies <tt>&quot;</tt>verbose mode<tt>&quot;</tt>, which results in additional
+         information about the linking process being written to
+         standard output.
+      
+<P>
+ </DL>
+   <DT>Notes:
+<DD>
+<DL >Documents which are found on the
+      <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search path</A> will be
+      linked against (<em>i.e.</em> references to them will be resolved),
+      but they will not themselves be modified unless they are also
+      found in the directory list specified on the command line.
+<P>
+ </DL>
+<P>
+   <DT>Examples:
+<DD>
+<DL ><DT><tt> 
+         hlink
+      </tt>
+<DD> <BR> 
+         Re-links all documents in the current directory against
+         themselves and all other documents found on the
+         <tt>HTX_PATH</tt> search path. New <A HREF="node18.html#sectindexfiles">index
+         files</A> are first generated for any documents
+         that have changed.
+<P>
+      <DT><tt> 
+         hlink . mydocs
+      </tt>
+<DD> <BR> 
+         Re-links all documents found in both the current directory
+         and the <tt>&quot;</tt>mydocs<tt>&quot;</tt> directory against themselves and all
+         other documents found on the <tt>HTX_PATH</tt> search path. Only
+         those documents residing in the <tt>&quot;</tt>.<tt>&quot;</tt> and <tt>&quot;</tt>mydocs<tt>&quot;</tt>
+         directories will be modified by this command.
+<P>
+      <DT><tt> 
+         hlink -d
+      </tt>
+<DD> <BR> 
+         Re-links all documents in the current directory after first checking
+         the modification dates of <b> all</b> the <tt>&quot;</tt>.html<tt>&quot;</tt> files they contain
+         to determine which documents have changed since the last re-link.
+<P>
+      <DT><tt> 
+         hlink -a dir1 dir2 dir3
+      </tt>
+<DD> <BR> 
+         Generates new index files and re-links all documents in the specified
+         directories regardless of whether they have changed since the last
+         re-link.
+<P>
+ </DL>
+   <DT>
+      Environment Variables Used
+   
+<DD>
+<DL ><DT>
+         <A HREF="node25.html#sectsuppressing"><tt>HTX_NOLINK</tt></A>
+      
+<DD>
+         Setting this environment variable (to any value) will suppress
+         re-linking. A message to this effect will be produced
+         instead.
+      
+      <DT>
+         <A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt></A>
+      
+<DD>
+         A colon-separated list of the library directories in which to
+         search for hypertext documents.
+      
+      <DT>
+         <A HREF="node27.html#sectspecifyingaserver"><tt>HTX_SERVER</tt></A>
+      
+<DD>
+         The URL of the document server to be used for serving remote
+         documents.
+      
+<P>
+ </DL> 
+ </DL>
+<P>
+<BR> <HR><A NAME=tex2html625 HREF="node49.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html623 HREF="node46.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html617 HREF="node47.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html626 HREF="node49.html"> 
+   showme
+-
+   Display a specified part of a document using a WWW browser
+</A><BR>
+<B>Up:</B> <A NAME=tex2html624 HREF="node46.html"> DESCRIPTIONS OF HTX COMMANDS</A><BR>
+<B> Previous:</B> <A NAME=tex2html618 HREF="node47.html"> 
+   findme
+-
+   Search for documents by keyword and display a list of those found
+</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

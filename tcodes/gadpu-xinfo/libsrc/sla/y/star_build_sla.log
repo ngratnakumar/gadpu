@@ -1,0 +1,33 @@
+star_build_sla logfile
+Building SLA  on Thu Jan 18 16:05:10 IST 2007
+mk: Environment variables defined for ix86_Linux system
+make -e -s build
+
+*** The HTX package has been built
+
+mk: Environment variables defined for ix86_Linux system
+make -e -s install
+Updating index file for document: sun188
+1 hypertext document needs re-linking
+   updating cross-references in document sun188 (11 files to modify)...
+   replacing original files with re-linked versions...
+      ...document sun188 linked
+
+*** The HTX package has been installed in directory /home/das/lib
+
+mk: Environment variables defined for ix86_Linux system
+make -e -s build
+ar: creating libsla.a
+
+*** The SLALIB package has been built
+
+mk: Environment variables defined for ix86_Linux system
+make -e -s install
+Updating index file for document: sun67
+1 hypertext document needs re-linking
+   updating cross-references in document sun67 (0 files to modify)...
+   replacing original files with re-linked versions...
+      ...document sun67 linked
+
+*** The SLALIB package has been installed in directory /home/das/lib
+

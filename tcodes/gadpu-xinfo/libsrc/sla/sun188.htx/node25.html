@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Suppressing Re-Linking</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Suppressing Re-Linking">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html387 HREF="node26.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html385 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html381 HREF="node24.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html388 HREF="node26.html"> REMOTE
+DOCUMENT SERVERS</A><BR>
+<B>Up:</B> <A NAME=tex2html386 HREF="node22.html"> WHEN TO RE-LINK</A><BR>
+<B> Previous:</B> <A NAME=tex2html382 HREF="node24.html"> Forcing a Re-Link</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00063000000000000000><A NAME=xref_suppressing_relinking>&#160;</A><A NAME=sectsuppressing>&#160;</A>Suppressing Re-Linking</A></H2>
+<P>
+It is often convenient to use the <A HREF="node48.html#hlink"><tt>hlink</tt></A> command as
+part of software-maintenance procedures, such as in makefiles, since
+this allows your documentation set to be re-linked automatically
+whenever software is installed or de-installed. However, in a large
+software installation this can take some time. Rather than re-linking
+after each item of software is changed, it can sometimes be more
+efficient to wait until a sequence of changes has been completed. A
+grand re-link of the entire documentation set can then be performed.
+<P>
+To permit this, you can set the <tt>HTX_NOLINK</tt> environment variable
+(to any value). While this variable is set, the <tt>hlink</tt> command
+will cease to function normally. Instead. it will simply produce a
+message saying that hypertext linking has been suppressed. You can
+then perform your software updates without waiting for re-linking to
+occur. When you have finished, you can un-set the <tt>HTX_NOLINK</tt>
+environment variable and use <tt>hlink</tt> to bring the cross-references
+in the associated documentation up to date.
+<P>
+<BR> <HR><A NAME=tex2html387 HREF="node26.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html385 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html381 HREF="node24.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html388 HREF="node26.html"> REMOTE
+DOCUMENT SERVERS</A><BR>
+<B>Up:</B> <A NAME=tex2html386 HREF="node22.html"> WHEN TO RE-LINK</A><BR>
+<B> Previous:</B> <A NAME=tex2html382 HREF="node24.html"> Forcing a Re-Link</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

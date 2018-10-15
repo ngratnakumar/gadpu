@@ -1,0 +1,24 @@
+XEphem.DBinitialFiles:                       Messier.edb nvss.10jy.edb vla.cal.90cm.edb
+XEphem.Elevation:                            588.0 m
+XEphem.Lat:                                  19:05:48
+XEphem.Long:                                 -74:03:00
+XEphem.Sitename:                             GMRT
+XEphem.TZName:                               IST
+XEphem.TZone:                                -5:30:00
+XEphem*Moon*Grid.set:                        True
+XEphem*Moon*Scale3X.set:                     False
+XEphem*Moon*Scale6X.set:                     True
+XEphem*HelpConfig*BrowserChoice0.set:        False
+XEphem*HelpConfig*BrowserChoice1.set:        True
+XEphem*HelpConfig*BrowserCmd1.value:         /usr/bin/firefox %s
+XEphem*HelpConfig*BrowserName1.value:        firefox
+XEphem*SkyIP*Glass*Size*128x128.set:         True
+XEphem*SkyIP*Glass*Size*64x64.set:           False
+XEphem.Temp:                                 25.0 C
+XEphem*CoordsConv*Equinox.value:             1950.0
+XEphem*DataSetup*Horizon.value:              17.5
+XEphem*DateFormat.D/M/Y.set:                 True
+XEphem*DateFormat.M/D/Y.set:                 False
+XEphem*Equatorial.Topocentric.set:           False
+XEphem*SolarSystem*DBToo.set:                True
+XEphem.ShareDir: /astro/Linux/lib/xephem

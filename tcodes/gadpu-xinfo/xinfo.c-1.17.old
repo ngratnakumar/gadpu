@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <malloc.h>
+#include <lta.h>
+#include <newcorr.h>
+#include <unistd.h>
+
+
+//static char rcsid[]="$Id: xinfo.c,v 1.5 2004/07/19 05:58:01 das Exp $";
+
+#define WRITE_FIELD(name,type,fmt,val)  { fprintf(ifp,"%s %s \n",type, name);\
+                                          fprintf(dfp,fmt,val); }
+
+int xinfo_global_hdr(CorrType *corr, ScanInfoType *scan,char *obsno, FILE *dfp)
+{     fprintf(dfp,"INSERT INTO \"main\" (\"OBSERVATION_NO\", \"CORR_VERSION\", \"STA_TIME\",\
+\"NUM_POLS\", \"NUM_CHANS\", \"LTA_TIME\", \"PROJ_TITLE\", \"PROJ_CODE\",\
+\"OBSERVER\") VALUES (%d, \'%s\', %d, %d, %d, %d, \'%s\', \'%s\', \'%s\');\n",\
+atoi(obsno),corr->version, corr->corrpar.statime, corr->corrpar.pols, \
+corr->daspar.channels, corr->daspar.lta, scan->proj.title, \
+scan->proj.code, scan->proj.observer);
+
+   fprintf(dfp,"\n");
+   return 0;
+}   
+int xinfo_scan_hdr(CorrType *corr, ScanInfoType *scan, int datarecs, 
+	     ScanHdr *shdr, char *ltapath, char *obsno, int lscannum,FILE *dfp)
+{ double time_on_src=corr->daspar.lta*(((float)corr->corrpar.statime)/1.0e6)*datarecs;
+  char  *ltafile;
+  double epoch,epoch1,ra,dec;
+  void sla_preces_(char *system,double *epoch, double *epoch1,
+		   double *ra, double *dec,int len);
+
+  ltafile=strrchr(ltapath,'/');
+  if(ltafile==NULL)ltafile=ltapath;
+  else ltafile++;
+  
+
+  epoch=2000.0 + (corr->daspar.mjd_ref - 51544.5)/365.25 ;
+  epoch1=2000.0;
+  ra=scan->source.ra_mean;dec=scan->source.dec_mean;
+  sla_preces_("FK5",&epoch,&epoch1,&ra,&dec,3);  /* J2000 co-ordinates */
+
+  fprintf(dfp,"INSERT INTO \"scans\" (\"OBSERVATION_NO\", \"SCAN_NO\",\"PROJ_CODE\",");
+  fprintf(dfp," \"DATE_OBS\", \"ANT_MASK\", \"BAND_MASK\", \"SOURCE\", \"CALCODE\", ");
+  fprintf(dfp," \"QUAL\", \"RA_DATE\",\"DEC_DATE\",\"DRA\",\"DDEC\", \"SKY_FREQ1\", ");  
+  fprintf(dfp," \"SKY_FREQ2\", \"REST_FREQ1\", \"REST_FREQ2\",\"LSR_VEL1\",\"LSR_VEL2\", "); 
+  fprintf(dfp," \"CHAN_WIDTH\", \"NET_SIGN1\",\"NET_SIGN2\",\"NET_SIGN3\",\"NET_SIGN4\", ");
+  fprintf(dfp," \"ONSRC_TIME\", \"LTA_FILE\", \"RA_2000\", \"DEC_2000\" )");
+  fprintf(dfp,"VALUES ( %d, %d, \'%s\', \'%-69s\', %d, %d, \'%s\', %d, %d, \
+%f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %lf, \'%s\', %lf, %lf );\n", \
+	  atoi(obsno), lscannum, scan->proj.code,shdr->date_obs, scan->source.antmask, 
+	  scan->source.bandmask,scan->source.object, scan->source.calcode, scan->source.calcode,     
+	  scan->source.ra_mean, scan->source.dec_mean, scan->source.dra,
+	  scan->source.ddec, scan->source.freq[0], scan->source.freq[1],
+	  scan->source.rest_freq[0], scan->source.rest_freq[1], scan->source.lsrvel[0],   
+	  scan->source.lsrvel[1], scan->source.ch_width, scan->source.net_sign[0], 
+	  scan->source.net_sign[1], scan->source.net_sign[2], scan->source.net_sign[3], 
+	  time_on_src, ltafile,ra,dec);
+
+  return 0;
+}   
+
+int main(int argc, char **argv)
+{  LtaInfo      linfo;
+   int          i,c;
+   FILE         *fp, *fp1=stdout;
+   char         datafiles[1024],logfile[1024],obsno[1024];
+   char         *p;
+
+   datafiles[0]=logfile[0]=obsno[0]='\0';
+   while((c=getopt(argc,argv,"l:o:n:"))!=-1)
+   {switch(c)
+    { case 'l': strncpy(datafiles,optarg,1023); break;
+      case 'o': strncpy(logfile,optarg,1023);
+                if((fp1 = fopen(logfile,"a")) == NULL){ perror(logfile); exit(1); }
+                break;
+      case 'n': strncpy(obsno,optarg,4);break;
+      default : fprintf(stderr,"USAGE: xinfo -l lta[,lta1,...] -o log -n obsno\n");
+                return 1;
+    }
+   }
+   if(!strlen(datafiles))
+   { fprintf(stderr,"USAGE: xinfo -l lta[,lta1,...] -o log -n obsno\n"); return 1; }
+    
+
+   p=datafiles;
+   while(p!=NULL && strlen(p))
+   { char *q=strchr(p,',');
+     if(q==NULL){q=p;p=NULL;}
+     else{ char *t=q; *q='\0';q=p;p=++t;}
+     if((fp=fopen(q,"r"))==NULL)
+     { fprintf(stderr,"xinfo: Cannot open %s\n",q); return 1;}
+
+     { int t=1;
+       if (*((unsigned char *)&t) == 1) linfo.local_byte_order = LittleEndian;
+       else linfo.local_byte_order=BigEndian;
+     }
+     if(get_lta_hdr(fp,&linfo))
+     { fprintf(stderr,"Error reading LtaHdr from %s\n",q); return 1;}
+
+     if(make_scantab(fp,&linfo)) return 1;
+     for(i=0;i<linfo.scans;i++)
+     { ScanInfoType *scan=&linfo.stab[i].scan;
+       ScanHdr      *shdr=&linfo.stab[i].shdr;
+       int           recs=linfo.stab[i].recs;
+       if(i==0 && xinfo_global_hdr(&linfo.corr,scan,obsno,fp1))
+       { fprintf(stderr,"xinfo: Error creating global info\n");return 1;}
+       if(xinfo_scan_hdr(&linfo.corr,scan,recs,shdr,q,obsno,i,fp1))
+       {fprintf(stderr,"xinfo: Error creating scan info\n"); return 1;}
+     }
+     free(linfo.stab);fclose(fp); 
+   }
+   return 0;
+}
+
+
+
+
+  

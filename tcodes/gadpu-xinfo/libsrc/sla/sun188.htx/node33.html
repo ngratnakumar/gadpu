@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Performing Keyword Searches</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Performing Keyword Searches">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html471 HREF="node34.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html469 HREF="node32.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html463 HREF="node32.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html472 HREF="node34.html"> Controlling the Depth of Search</A><BR>
+<B>Up:</B> <A NAME=tex2html470 HREF="node32.html"> SEARCHING FOR INFORMATION IN DOCUMENTS</A><BR>
+<B> Previous:</B> <A NAME=tex2html464 HREF="node32.html"> SEARCHING FOR INFORMATION IN DOCUMENTS</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00091000000000000000><A NAME=xref_performing_keyword_searches>&#160;</A>Performing Keyword Searches</A></H2>
+<P>
+Keyword searching is performed using the <A HREF="node47.html#findme"><tt>findme</tt></A>
+command, which is simply illustrated:
+<P>
+<blockquote> <PRE>findme HTX
+</PRE>
+</blockquote>
+<P>
+This command will search your documentation set for the string
+<tt>&quot;</tt>HTX<tt>&quot;</tt> and will then display a list of the documents found using
+your <A HREF="node50.html#sectusingwwwbrowsers">WWW browser</A>, with each entry in
+the list being a hyper-link to the document in question. It is then a
+simple matter to follow the link to the document you want to read (in
+this example there will probably only be one document to choose from
+-- <A HREF="../sun188.htx/sun188.html#xref_">this one</A>).
+<P>
+The way in which the <tt>findme</tt> command performs its search is
+explained in the <A HREF="node34.html#sectdepthofsearch">next section</A>, but in
+essence it attempts to find information about major topics quickly by
+searching only the main titles of documents. It then goes on to
+consider more detailed (and time consuming) searches only for more
+obscure topics that can't be found readily. The progress of the search
+is displayed on your terminal, so you can interrupt it if you fail to
+find what you want quickly and don't want to wait.
+<P>
+The more level of detail <tt>findme</tt> needs to consider, the more
+detailed will be the list of results it generates, with individual
+<A NAME=tex2html35 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> pages being listed if appropriate. This strategy of
+performing progressively deeper searches can be observed if you ask
+for information on something a little more obscure, like:
+<P>
+<blockquote> <PRE>findme findme
+</PRE>
+</blockquote>
+<P>
+which makes <tt>findme</tt> search for information on itself, or even
+something very obscure, like:
+<P>
+<blockquote> <PRE>findme HTX_PATH
+</PRE>
+</blockquote>
+<P>
+which will (probably) only be found in the body of the text of this
+document.
+<P>
+<BR> <HR><A NAME=tex2html471 HREF="node34.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html469 HREF="node32.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html463 HREF="node32.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html472 HREF="node34.html"> Controlling the Depth of Search</A><BR>
+<B>Up:</B> <A NAME=tex2html470 HREF="node32.html"> SEARCHING FOR INFORMATION IN DOCUMENTS</A><BR>
+<B> Previous:</B> <A NAME=tex2html464 HREF="node32.html"> SEARCHING FOR INFORMATION IN DOCUMENTS</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

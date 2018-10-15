@@ -1,0 +1,2866 @@
+\batchmode
+\documentclass[11pt,twoside]{article}
+\makeatletter
+\input{/home/user1/dec/ptw/hypertext/sun67_htx/html.sty}
+\input{/home/user1/dec/ptw/hypertext/sun67_htx/star2html.sty} 
+\setcounter{tocdepth}{2}
+\pagestyle{myheadings}
+
+\markright{SUN/67.61}
+
+\setlength {\textwidth}{160mm}
+        
+\setlength {\textheight}{230mm}
+       
+\setlength {\topmargin}{-5mm}
+         
+
+\setlength {\textwidth}{160mm}
+ 
+
+\setlength {\textheight}{230mm}
+ 
+
+\setlength {\topmargin}{-2mm}
+ 
+
+\setlength {\oddsidemargin}{0mm}
+ 
+
+\setlength {\evensidemargin}{0mm}
+ 
+
+\setlength {\parindent}{0mm}
+ 
+
+\setlength {\parskip}{\medskipamount}
+ 
+
+\setlength {\unitlength}{1mm}
+ 
+
+\latex{\renewcommand {\_}{{\tt\symbol{95}}}}
+
+\newlength {\oldspacing}
+ 
+
+\newcommand{\stardoccategory}  {Starlink User Note}
+
+\newcommand{\stardocinitials}  {SUN}
+
+\newcommand{\stardocsource}    {sun67.61}
+
+\newcommand{\stardocnumber}    {67.61}
+
+\newcommand{\stardocauthors}   {P.\,T.\,Wallace}
+
+\newcommand{\stardocdate}      {5 March 2003}
+
+\newcommand{\stardoctitle}     {SLALIB --- Positional Astronomy Library}
+
+\newcommand{\stardocversion}   {2.4-12}
+
+\newcommand{\stardocmanual}    {Programmer's Manual}
+
+\newcommand{\stardocname}{\stardocinitials /\stardocnumber}
+
+\newcommand{\htmladdnormallinkfoot}[2]{#1\footnote{#2}}
+
+\newcommand{\htmladdnormallink}[2]{#1}
+
+\newcommand{\htmladdimg}[1]{}
+
+\newenvironment{latexonly}{}{}
+
+\newcommand{\hyperref}[4]{#2\ref{#4}#3}
+
+\newcommand{\htmlref}[2]{#1}
+
+\newcommand{\htmlimage}[1]{}
+
+\newcommand{\htmladdtonavigation}[1]{}
+
+\newcommand{\xref}[3]{#1}
+
+\newcommand{\xlabel}[1]{}
+
+\newcommand{\latextohtml}{{\bf LaTeX}{2}{\tt{HTML}}}
+
+\newcommand{\latex}[1]{#1}
+
+\newcommand{\setunderscore}{\renewcommand {\_}{{\tt\symbol{95}}}}
+
+\newcommand{\latexonlytoc}[0]{\tableofcontents}
+
+\newcommand{\nroutines} {187}
+
+\newcommand{\radec}     {$[\,\alpha,\delta\,]$}
+
+\newcommand{\hadec}     {$[\,h,\delta\,]$}
+
+\newcommand{\xieta}     {$[\,\xi,\eta\,]$}
+
+\newcommand{\azel}      {$[\,Az,El~]$}
+
+\newcommand{\ecl}       {$[\,\lambda,\beta~]$}
+
+\newcommand{\gal}       {$[\,l^{I\!I},b^{I\!I}\,]$}
+
+\newcommand{\xy}        {$[\,x,y\,]$}
+
+\newcommand{\xyz}       {$[\,x,y,z\,]$}
+
+\newcommand{\xyzd}      {$[\,\dot{x},\dot{y},\dot{z}\,]$}
+
+\newcommand{\xyzxyzd}   {$[\,x,y,z,\dot{x},\dot{y},\dot{z}\,]$}
+
+\newcommand{\degree}[2] {$#1^{\circ}
+                        \hspace{-0.37em}.\hspace{0.02em}#2$}
+
+\newcommand{\arcsec}[2] {\arcseci{#1}$\hspace{-0.4em}.#2$}
+
+\newcommand{\arcseci}[1] {$#1\hspace{-0.05em}$\raisebox{-0.5ex}
+                         {$^{'\hspace{-0.1em}'}$}}
+
+\renewcommand{\arcseci}[1] {$#1\hspace{-0.05em}^{'\hspace{-0.1em}'}$}
+
+\newcommand{\dms}[4]    {$#1^{\circ}\,#2\raisebox{-0.5ex}
+                        {$^{'}$}\,$\arcsec{#3}{#4}}
+
+\renewcommand{\dms}[4]{$#1^{\circ}\,#2^{'}\,#3^{''}.#4$}
+
+\newcommand{\tseci}[1]   {$#1$\mbox{$^{\rm s}$}}
+
+\newcommand{\tsec}[2]    {\tseci{#1}$\hspace{-0.3em}.#2$}
+
+\renewcommand{\tsec}[2] {$#1^{\rm s}\hspace{-0.3em}.#2$}
+
+\newcommand{\hms}[4]    {$#1^{\rm h}\,#2^{\rm m}\,$\tsec{#3}{#4}}
+
+\renewcommand{\hms}[4] {$#1^{h}\,#2^{m}\,#3^{s}.#4$}
+
+\newcommand{\callhead}[1]{\goodbreak\vspace{\bigskipamount}{\large\bf{#1}}}
+
+\newenvironment{callset}{\begin{list}{}{\setlength{\leftmargin}{2cm}
+                             \setlength{\parsep}{\smallskipamount}}}{\end{list}}
+
+\newcommand{\subp}[1]{\item\hspace{-1cm}#1\\}
+
+\newcommand{\subq}[2]{\item\hspace{-1cm}#1\\\hspace*{-1cm}#2\\}
+
+\newcommand{\name}[1]{\mbox{#1}}
+
+\newcommand{\fortvar}[1]{\mbox{\em #1}}
+
+\newcommand{\routine}[3]
+{\hbadness=10000
+  \vbox
+  {
+    \rule{\textwidth}{0.3mm}\\    {\Large {\bf #1} \hfill #2 \hfill {\bf #1}}\\    \setlength{\oldspacing}{\topsep}
+    \setlength{\topsep}{0.3ex}
+    \begin{description}
+      #3
+    \end{description}
+    \setlength{\topsep}{\oldspacing}
+  }
+}
+
+\renewcommand{\routine}[3]
+   {
+      \subsection{#1\xlabel{#1} - #2\label{#1}}
+       \begin{description}
+         #3
+       \end{description}
+   }
+
+\newcommand{\action}[1]
+{\item[ACTION]: #1}
+
+\newcommand{\call}[1]
+{\item[CALL]: \hspace{0.4em}{\tt #1}}
+
+\renewcommand{\call}[1]
+   {
+    \item[CALL:] {\tt #1}
+   }
+
+\newcommand{\args}[2]
+{
+  \goodbreak
+  \setlength{\oldspacing}{\topsep}
+  \setlength{\topsep}{0.3ex}
+  \begin{description}
+  \item[#1]:\\[1.5ex]
+    \begin{tabular}{p{7em}p{6em}p{22em}}
+      #2
+    \end{tabular}
+  \end{description}
+  \setlength{\topsep}{\oldspacing}
+}
+
+\renewcommand{\args}[2]
+   {
+     \begin{description}
+        \item[#1:]\\        \begin{tabular}{p{7em}p{6em}l}
+           #2
+        \end{tabular}
+     \end{description}
+   }
+
+\newcommand{\spec}[3]
+{
+  {\em {#1}} & {\bf \mbox{#2}} & {#3}
+}
+
+\newcommand{\specel}[2]
+{
+  \multicolumn{1}{c}{#1} & {} & {#2}
+}
+
+\newcommand{\anote}[1]
+{
+  \goodbreak
+  \setlength{\oldspacing}{\topsep}
+  \setlength{\topsep}{0.3ex}
+  \begin{description}
+    \item[NOTE]:
+        #1
+  \end{description}
+  \setlength{\topsep}{\oldspacing}
+}
+
+\renewcommand{\anote}[1]
+   {
+      \begin{description}
+      \item[NOTE:]
+          #1
+      \end{description}
+   }
+
+\newcommand{\notes}[1]
+{
+  \goodbreak
+  \setlength{\oldspacing}{\topsep}
+  \setlength{\topsep}{0.3ex}
+  \begin{description}
+    \item[NOTES]:
+        #1
+  \end{description}
+  \setlength{\topsep}{\oldspacing}
+}
+
+\renewcommand{\notes}[1]
+   {
+      \begin{description}
+         \item[NOTES:]
+            #1
+      \end{description}
+   }
+
+\newcommand{\aref}[1]
+{
+  \goodbreak
+  \setlength{\oldspacing}{\topsep}
+  \setlength{\topsep}{0.3ex}
+  \begin{description}
+    \item[REFERENCE]:
+        #1
+  \end{description}
+  \setlength{\topsep}{\oldspacing}
+}
+
+\newcommand{\refs}[1]
+{
+  \goodbreak
+  \setlength{\oldspacing}{\topsep}
+  \setlength{\topsep}{0.3ex}
+  \begin{description}
+    \item[REFERENCES]:
+        #1
+  \end{description}
+  \setlength{\topsep}{\oldspacing}
+}
+
+\newcommand{\exampleitem}{\item [EXAMPLE]:}
+
+\renewcommand{\exampleitem}{\item [EXAMPLE:]}
+
+\renewcommand{\thepage}{\roman{page}}
+
+\renewcommand{\latexonlytoc}[0]{}
+
+\renewcommand{\thepage}{\arabic{page}}
+\input{/home/user1/dec/ptw/hypertext/sun67_htx/star2html.sty}
+
+
+\makeatother
+\ifx\AtBeginDocument\undefined \newcommand{\AtBeginDocument}[1]{}\fi
+\newenvironment{tex2html_wrap}{}{}
+\newbox\sizebox
+\setlength{\hoffset}{0pt}\setlength{\voffset}{0pt}
+\addtolength{\textheight}{\footskip}\setlength{\footskip}{0pt}
+\addtolength{\textheight}{\topmargin}\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{\headheight}\setlength{\headheight}{0pt}
+\addtolength{\textheight}{\headsep}\setlength{\headsep}{0pt}
+\setlength{\textwidth}{451pt}
+\newwrite\lthtmlwrite
+\makeatletter
+\let\realnormalsize=\normalsize
+\topskip=0pt
+\def\preveqno{}\let\real@float=\@float \let\realend@float=\end@float
+\def\@float{\let\@savefreelist\@freelist\real@float}
+\def\end@float{\realend@float\global\let\@freelist\@savefreelist}
+\let\real@dbflt=\@dbflt \let\end@dblfloat=\end@float
+\let\@largefloatcheck=\relax
+\def\@dbflt{\let\@savefreelist\@freelist\real@dbflt}
+\def\adjustnormalsize{\def\normalsize{\mathsurround=0pt \realnormalsize\parindent=0pt\abovedisplayskip=0pt\belowdisplayskip=0pt}\normalsize}
+\def\lthtmltypeout#1{{\let\protect\string\immediate\write\lthtmlwrite{#1}}}%
+\newcommand\lthtmlhboxmathA{\adjustnormalsize\setbox\sizebox=\hbox\bgroup}%
+\newcommand\lthtmlvboxmathA{\adjustnormalsize\setbox\sizebox=\vbox\bgroup%
+ \let\ifinner=\iffalse }%
+\newcommand\lthtmlboxmathZ{\@next\next\@currlist{}{\def\next{\voidb@x}}%
+ \expandafter\box\next\egroup}%
+\newcommand\lthtmlmathtype[1]{\def\lthtmlmathenv{#1}}%
+\newcommand\lthtmllogmath{\lthtmltypeout{l2hSize %
+:\lthtmlmathenv:\the\ht\sizebox::\the\dp\sizebox::\the\wd\sizebox.\preveqno}}%
+\newcommand\lthtmlfigureA[1]{\let\@savefreelist\@freelist
+       \lthtmlmathtype{#1}\lthtmlvboxmathA}%
+\newcommand\lthtmlfigureZ{\lthtmlboxmathZ\lthtmllogmath\copy\sizebox
+       \global\let\@freelist\@savefreelist}%
+\newcommand\lthtmldisplayA[1]{\lthtmlmathtype{#1}\lthtmlvboxmathA}%
+\newcommand\lthtmldisplayB[1]{\edef\preveqno{(\theequation)}%
+  \lthtmldisplayA{#1}\let\@eqnnum\relax}%
+\newcommand\lthtmldisplayZ{\lthtmlboxmathZ\lthtmllogmath\lthtmlsetmath}%
+\newcommand\lthtmlinlinemathA[1]{\lthtmlmathtype{#1}\lthtmlhboxmathA  \vrule height1.5ex width0pt }%
+\newcommand\lthtmlinlinemathZ{\egroup\expandafter\ifdim\dp\sizebox>0pt %
+  \expandafter\centerinlinemath\fi\lthtmllogmath\lthtmlsetmath}
+\def\lthtmlsetmath{\hbox{\vrule width.5pt\vtop{\vbox{%
+  \kern.5pt\kern0.75 pt\hbox{\hglue.5pt\copy\sizebox\hglue0.75 pt}\kern.5pt%
+  \ifdim\dp\sizebox>0pt\kern0.75 pt\fi}%
+  \ifdim\hsize>\wd\sizebox \hrule depth1pt\fi}}}
+\def\centerinlinemath{\dimen1=\ht\sizebox
+  \ifdim\dimen1<\dp\sizebox \ht\sizebox=\dp\sizebox
+  \else \dp\sizebox=\ht\sizebox \fi}
+
+\def\lthtmlcheckvsize{\ifdim\ht\sizebox<\vsize\expandafter\vfill
+  \else\expandafter\vss\fi}%
+\makeatletter
+
+
+\begin{document}
+\pagestyle{empty}\thispagestyle{empty}%
+\lthtmltypeout{latex2htmlLength hsize=\the\hsize}%
+\lthtmltypeout{latex2htmlLength vsize=\the\vsize}%
+\lthtmltypeout{latex2htmlLength hoffset=\the\hoffset}%
+\lthtmltypeout{latex2htmlLength voffset=\the\voffset}%
+\lthtmltypeout{latex2htmlLength topmargin=\the\topmargin}%
+\lthtmltypeout{latex2htmlLength topskip=\the\topskip}%
+\lthtmltypeout{latex2htmlLength headheight=\the\headheight}%
+\lthtmltypeout{latex2htmlLength headsep=\the\headsep}%
+\lthtmltypeout{latex2htmlLength parskip=\the\parskip}%
+\lthtmltypeout{latex2htmlLength oddsidemargin=\the\oddsidemargin}%
+\makeatletter
+\if@twoside\lthtmltypeout{latex2htmlLength evensidemargin=\the\evensidemargin}%
+\else\lthtmltypeout{latex2htmlLength evensidemargin=\the\oddsidemargin}\fi%
+\makeatother
+\setcounter{tocdepth}{2}
+\stepcounter{section}
+\setcounter{page}{1}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline417}%
+$0^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline419}%
+$-1^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline529}%
+$[\,\alpha,\delta\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+
+\setlength {\oldspacing}{\topsep}
+%
+
+
+\setlength {\topsep}{0.3ex}
+%
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline787}%
+$12^{\circ}\,34^{'}\,56^{''}.7$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+
+\setlength {\topsep}{\oldspacing}
+%
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline789}%
+${\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline803}%
+$1/{2 \pi} = 0.1591549430918953358$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline807}%
+$15/{2\pi} = 2.3873241463784300365$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline894}%
+$\zeta = 87^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+
+\setlength {\parskip}{\medskipamount}
+%
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1091}%
+$\times 360/2\pi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1093}%
+$\rightarrow$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1095}%
+$\times (2\pi/86400) \times (360/2\pi)$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1099}%
+$\times (2\pi/86400)^2 \times (360/2\pi)$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1103}%
+$[\,0,2\pi\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1105}%
+$+\pi/2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1107}%
+$\pm\pi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1374}%
+$\times 2 / $%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1376}%
+$\sqrt{1-\left|\mbox{\bf v}\right|^2}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1378}%
+$3\times3$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1702}%
+$\Delta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1706}%
+$[\,x,y\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1708}%
+$\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1710}%
+$90^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1712}%
+$\delta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1714}%
+$\alpha$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1716}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1718}%
+$\zeta<70^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1722}%
+$3^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1726}%
+$[\,Az,El~]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1730}%
+$[\,h,\delta\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1746}%
+$\pm$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1748}%
+$0^{\rm s}\hspace{-0.3em}.9$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline1750}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.3$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2525}%
+$76^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2705}%
+$0.7\,\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2707}%
+$0.4\,\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2709}%
+$29^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2711}%
+$290^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2713}%
+$0.0065^\circ m^{-1}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2717}%
+$15^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2719}%
+$1.0\,\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2721}%
+$0.3\,\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2723}%
+$20\,\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2725}%
+$11\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2727}%
+$100\,\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2729}%
+$(\mu-1)$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2868}%
+$[\lambda,\phi]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline2874}%
+$\pm\pi/2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline3017}%
+$\cdots$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline3161}%
+$0^{\rm h}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline3381}%
+$[\,x,y,z\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline3494}%
+$[\,x,y,z,\dot{x},\dot{y},\dot{z}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline4118}%
+$2\pi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline4124}%
+$360^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+
+\setlength {\oldspacing}{\topsep}
+%
+
+
+\setlength {\topsep}{0.3ex}
+%
+
+
+\setlength {\topsep}{\oldspacing}
+%
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5206}%
+$23^{\rm h}\,59^{\rm m}\,59^{\rm s}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5955}%
+$[x_{1},y_{1}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5957}%
+$[x_{2},y_{2}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5963}%
+$x' = x_{1} + {\rm XZ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5965}%
+$y' = y_{1} + {\rm YZ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5967}%
+$x'' = x' {\rm XS}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5969}%
+$y'' = y' {\rm YS}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5971}%
+$x''' = + x'' \cos {\rm PERP}/2 + y'' \sin {\rm PERP}/2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5973}%
+$y''' = + x'' \sin {\rm PERP}/2 + y'' \cos {\rm PERP}/2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5975}%
+$x_{2} = + x''' \cos {\rm ORIENT} +
+                          y''' \sin {\rm ORIENT}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline5977}%
+$y_{2} = - x''' \sin {\rm ORIENT} +
+                          y''' \cos {\rm ORIENT}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline6231}%
+$h,\delta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline6233}%
+$0\!-\!2\pi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline6348}%
+$\equiv123$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline6476}%
+$\pm n.n x \pm n$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline6492}%
+$x\!\pm\!n$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline6714}%
+$^{T}\cdot$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline6718}%
+${\bf \rm M}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7187}%
+$\cdot$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7189}%
+$n \times n$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7359}%
+$10\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7361}%
+$3\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7363}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7365}%
+$3\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.7$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7367}%
+$2\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.3$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7369}%
+$18\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7371}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.50$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7375}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.24$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7377}%
+$30\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7379}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.5$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline7466}%
+$\times$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline8211}%
+$[\,\xi,\eta\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline8454}%
+$20^{\rm s}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline8456}%
+$30^{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline8458}%
+$-26\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.00$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline8920}%
+$\alpha=0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline9065}%
+$\xi,\eta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline9067}%
+$\alpha,\delta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline9075}%
+$\xi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline9884}%
+$\times10^{-5}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline9886}%
+$\times10^{-10}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10039}%
+$\alpha,\delta\rightarrow\lambda,\beta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10188}%
+$0^{\rm s}\hspace{-0.3em}.03$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10190}%
+$0^{\rm s}\hspace{-0.3em}.01$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10263}%
+$[\,l^{I\!I},b^{I\!I}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10673}%
+$\Omega$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10675}%
+$\varpi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10677}%
+$\omega$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10697}%
+${\rm \bf r}_0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10699}%
+${\rm \bf v}_0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10701}%
+${\rm \bf r}_0.{\rm \bf v}_0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10705}%
+$\psi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10735}%
+$( 0 \leq e < 1 )$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline10769}%
+$( 0 \leq e \leq 10 )$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline11250}%
+$\Delta\psi\,cos\,\epsilon$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline11409}%
+$[\Delta x, \Delta y, \Delta z\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline11411}%
+$20\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.49552$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline11666}%
+$[\,\dot{x},\dot{y},\dot{z}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline11680}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.001$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline11900}%
+$[x_{m},y_{m}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline11902}%
+$[x_{e},y_{e}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline12171}%
+$\dot{\alpha}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline12173}%
+$\dot{\alpha}\cos\delta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline12175}%
+$10^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline12177}%
+$\Delta\alpha$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline13366}%
+$l^{I\!I}=137.37$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline13606}%
+$1.0027379\cdots$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline13683}%
+$[\,0,\,1\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline14352}%
+${\bf M}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline14482}%
+$\pm n$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline15322}%
+$920\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline15324}%
+$1\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.85$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline15650}%
+$14\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline15654}%
+$9\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline17046}%
+$\rho = r (1 + c r^{2})$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline17052}%
+$\rho$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+
+\setlength {\parskip}{\medskipamount}
+%
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19140}%
+$4\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19142}%
+$5\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19144}%
+$6\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19146}%
+$17\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19148}%
+$71\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19150}%
+$81\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19152}%
+$86\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19156}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.6$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline19160}%
+${\rm MJD} = ({\rm JD} - 2400000.5$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline20266}%
+$270^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline20540}%
+$1\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline20546}%
+$100\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline20548}%
+$1000\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline21384}%
+$0-2\pi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline21959}%
+$[x_{p},y_{p}\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22036}%
+$0 \leq x < 1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22315}%
+$\mu$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmldisplayA{displaymath22309}%
+\begin{displaymath}\frac{{\bf v}_e \cdot ( {\bf x} - {\bf x}_e )}{c^2}\end{displaymath}%
+\lthtmldisplayZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22319}%
+${\bf v}_e$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22321}%
+${\bf x}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22323}%
+${\bf x}_e$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22325}%
+$\pm3$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22794}%
+$\Delta \zeta = a \tan \zeta + b \tan^{3} \zeta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22796}%
+$\zeta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22798}%
+$\Delta \zeta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22804}%
+$\tan \zeta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22806}%
+$\tan^{3} \zeta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22814}%
+$\tan^{-1} 1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22816}%
+$45^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22818}%
+$\tan^{-1} 4$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22820}%
+$\sim 76^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22824}%
+$\zeta<80^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22826}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.01$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22828}%
+$\zeta<60^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22832}%
+$\zeta<45^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23085}%
+$\sim\!76^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23095}%
+$25^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23097}%
+$50^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23099}%
+$75^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23113}%
+$-10^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23115}%
+$+20^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23117}%
+$280^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23123}%
+$2\mu{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23135}%
+$6.5^\circ K km^{-1}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23147}%
+$7^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23155}%
+$\tan^5$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23159}%
+$\beta~(=H_0/r_0)$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23163}%
+$\beta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23386}%
+$70^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23388}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.05$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23400}%
+$93^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23402}%
+$=93^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23408}%
+$1\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23410}%
+$80^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23412}%
+$\nu=p_w/p_s$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23414}%
+$\nu=\rho_w/\rho_s$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23615}%
+$30^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23617}%
+$\zeta=70^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23621}%
+$\zeta_{obs}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23625}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.4$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23627}%
+$81^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23629}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.8$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23631}%
+$82^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23633}%
+$1\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.6$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23635}%
+$83^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23639}%
+$84^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23641}%
+$7\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23643}%
+$85^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23647}%
+$86^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23649}%
+$45\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23651}%
+$87^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23653}%
+$150\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23655}%
+$88^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23657}%
+$340\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23659}%
+$89^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23661}%
+$620\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23665}%
+$1100\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23667}%
+$91^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23669}%
+$1900\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23673}%
+$92^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23675}%
+$3200\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23681}%
+$\zeta=84^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23922}%
+$\zeta=80^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23924}%
+$\zeta=83^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmldisplayA{displaymath23910}%
+\begin{displaymath}\Delta \zeta = F \left(
+  \frac{0^\circ\hspace{-0.37em}.\hspace{0.02em}55445
+                - 0^\circ\hspace{-0.37em}.\hspace{0.02em}01133 E
+                          + 0^\circ\hspace{-0.37em}.\hspace{0.02em}00202 E^2}
+             {1 + 0.28385 E +0.02390 E^2} \right) \end{displaymath}%
+\lthtmldisplayZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23928}%
+$E=90^\circ-\zeta_{true}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23948}%
+$1\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.5$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23952}%
+$3\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23956}%
+$4\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.9$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23960}%
+$5\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.8$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23964}%
+$6\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23968}%
+$7\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23976}%
+$21\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23980}%
+$43\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23984}%
+$92\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline23990}%
+$220\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline24173}%
+$l^{I\!I}=90^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline24175}%
+$b^{I\!I}=0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline24349}%
+$l^{I\!I}=53^{\circ},b^{I\!I}=+25^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline24448}%
+$\alpha=18^{\rm h},\delta=+30^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline25322}%
+$\times n$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline25324}%
+$m \geq n$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline25326}%
+$m \times n$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline25330}%
+$w_{ii} \geq 0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline25799}%
+$\cdot~[diag(1/$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline25801}%
+$_{j})]
+           \cdot ($%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+
+\setlength {\parskip}{\medskipamount}
+%
+
+\stepcounter{subsection}
+
+\setlength {\parskip}{\medskipamount}
+%
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline27844}%
+$0\!-\!\pi$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{section}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline27904}%
+$61^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline27912}%
+$+1^{\circ}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline27918}%
+$24^{h}\,59^{m}\,59^{s}.999$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline27985}%
+$[\,\theta,\phi~]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline27999}%
+$[\,\Delta x,\Delta y, \Delta z\,]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28005}%
+${\bf d}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28007}%
+${\bf v}_1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28009}%
+${\bf v}_2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28011}%
+$<{\bf v}_1+{\bf d}>$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28013}%
+$(1-{\bf d}\cdot{\bf v}_1)$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28015}%
+$\delta E$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28019}%
+${\tan \delta E\approx\delta E}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28025}%
+$\delta E \cos E$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28027}%
+$\delta E \sin E$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28033}%
+$\cos \delta E$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28035}%
+$(1-\delta E^2 /2)$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28039}%
+$\equiv$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28045}%
+$[\theta,\phi,\dot{\theta},\dot{\phi}]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28271}%
+$\lambda,\beta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28273}%
+$l^{I\!I},b^{I\!I}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{figure28071}%
+\begin{figure}\begin{center}
+\begin{tabular}{|cccccc|}   \hline
+& & & & & \\\hspace{5em} & \hspace{5em} & \hspace{5em} &
+   \hspace{5em} & \hspace{5em} & \hspace{5em}  \\\multicolumn{2}{|c}{\hspace{0em}
+\fbox {\parbox{8.5em}{\center \vspace{-2ex}
+                                                   mean $[\,\alpha,\delta\,]$, FK4, \\                                                   any equinox
+                                                   \vspace{0.5ex}}}
+} &
+ \multicolumn{2}{c}{\hspace{0em}
+\fbox {\parbox{8.5em}{\center \vspace{-2ex}
+                                                   mean $[\,\alpha,\delta\,]$, FK4,
+                                                   no $\mu$, any equinox
+                                                   \vspace{0.5ex}}}
+} &
+\multicolumn{2}{c|}{\hspace{0em}
+\fbox {\parbox{8.5em}{\center \vspace{-2ex}
+                                                   mean $[\,\alpha,\delta\,]$, FK5, \\                                                   any equinox
+                                                   \vspace{0.5ex}}}
+} \\& \multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{} & \\\multicolumn{2}{|c}{space motion} & \multicolumn{1}{c|}{} & &
+   \multicolumn{2}{c|}{space motion} \\\multicolumn{2}{|c}{-- E-terms} &
+   \multicolumn{2}{c}{-- E-terms} & \multicolumn{1}{c|}{} & \\\multicolumn{2}{|c}{precess to B1950} & \multicolumn{2}{c}{precess to B1950} &
+   \multicolumn{2}{c|}{precess to J2000} \\\multicolumn{2}{|c}{+ E-terms} &
+   \multicolumn{2}{c}{+ E-terms} & \multicolumn{1}{c|}{} & \\\multicolumn{2}{|c}{FK4 to FK5, no $\mu$} &
+   \multicolumn{2}{c}{FK4 to FK5, no $\mu$} & \multicolumn{1}{c|}{} & \\\multicolumn{2}{|c}{parallax} & \multicolumn{1}{c|}{} & &
+   \multicolumn{2}{c|}{parallax} \\& \multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{} & \\ \cline{2-5}
+\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{
+\fbox {\parbox{18em}{\center \vspace{-2ex}
+                                   FK5, J2000, current epoch, geocentric
+                                          \vspace{0.5ex}}}
+} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{light deflection} & \\& \multicolumn{4}{c}{annual aberration} & \\& \multicolumn{4}{c}{precession-nutation} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{
+\fbox {Apparent $[\,\alpha,\delta\,]$}
+} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{Earth rotation} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{
+\fbox {Apparent $[\,h,\delta\,]$}
+} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{diurnal aberration} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{
+\fbox {Topocentric $[\,h,\delta\,]$}
+} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{$[\,h,\delta\,]$\ to $[\,Az,El~]$} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{
+\fbox {Topocentric $[\,Az,El~]$}
+} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{refraction} & \\\multicolumn{3}{|c|}{} & & & \\& \multicolumn{4}{c}{
+\fbox {Observed $[\,Az,El~]$}
+} & \\& & & & & \\& & & & & \\ \hline
+\end{tabular}
+\end{center}
+\vspace{-0.5ex}
+Star positions are published or catalogued using
+one of the mean $[\,\alpha,\delta\,]$\ systems shown at
+the top.  The ``FK4'' systems
+were used before about 1980 and are usually
+equinox B1950.  The ``FK5'' system, equinox J2000, is now preferred,
+or rather its modern equivalent, the International Celestial Reference
+Frame (in the optical, the Hipparcos catalogue).
+The figure relates a star's mean $[\,\alpha,\delta\,]$\ to the actual
+line-of-sight to the star.
+Note that for the conventional choices of equinox, namely
+B1950 or J2000, all of the precession and E-terms corrections
+are superfluous.
+\end{figure}%
+\lthtmlfigureZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28399}%
+$23^{\circ}
+                        \hspace{-0.37em}.\hspace{0.02em}5$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28409}%
+$\epsilon$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28411}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.0001$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28413}%
+$(3\times3)$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28415}%
+$0^{\circ}
+                        \hspace{-0.37em}.\hspace{0.02em}2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28444}%
+$50\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28448}%
+$12^{h}\,07^{m}\,58^{s}.09$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28450}%
+$-19^{\circ}\,44^{'}\,37^{''}.1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28480}%
+$[\mu_\alpha,\mu_\delta]$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28543}%
+$20\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.5$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28627}%
+$\mu_\alpha=-$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28629}%
+$0^{\rm s}\hspace{-0.3em}.015869$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28633}%
+$0^{\rm s}\hspace{-0.3em}.029032$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28635}%
+$~\sin \alpha
+            +$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28637}%
+$0^{\rm s}\hspace{-0.3em}.000340$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28639}%
+$~\cos \alpha ) \sin \delta
+            -$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28641}%
+$0^{\rm s}\hspace{-0.3em}.000105$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28643}%
+$~\cos \alpha
+            -$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28645}%
+$0^{\rm s}\hspace{-0.3em}.000083$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28647}%
+$~\sin \alpha ) \sec \delta $%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28649}%
+$\mu_\delta\,=+$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28651}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.43549$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28655}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.00510$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28657}%
+$~\sin \alpha +
+              ($%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28659}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.00158$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28661}%
+$~\sin \alpha
+              -$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28663}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.00125$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28667}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.00066$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28669}%
+$~\cos \delta $%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28735}%
+$\alpha=$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28737}%
+$16^{h}\,09^{m}\,55^{s}.13$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28739}%
+$\delta=$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28741}%
+$-75^{\circ}\,59^{'}\,27^{''}.2$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28743}%
+$\mu_\alpha=$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28745}%
+$-0^{\rm s}\hspace{-0.3em}.0312$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28749}%
+$\mu_\delta=$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28751}%
+$+0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.103$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28755}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.062$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28795}%
+$1\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.74$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28797}%
+$0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.02$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28799}%
+$20^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28803}%
+$90^\circ-\delta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28908}%
+$\theta$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmldisplayA{displaymath28888}%
+\begin{displaymath}h = \theta - \alpha \end{displaymath}%
+\lthtmldisplayZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28916}%
+$=\Delta\psi\cos\epsilon$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28930}%
+$0^{\circ}
+                        \hspace{-0.37em}.\hspace{0.02em}5$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmldisplayA{displaymath28889}%
+\begin{displaymath}\zeta _{vac} \approx \zeta _{obs}
+                     + A \tan \zeta _{obs}
+                     + B \tan ^{3}\zeta _{obs} \end{displaymath}%
+\lthtmldisplayZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28934}%
+$\zeta _{vac}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28942}%
+$60\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28944}%
+$-0\hspace{-0.05em}^{'\hspace{-0.1em}'}\hspace{-0.4em}.06$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmldisplayA{displaymath28890}%
+\begin{displaymath}\zeta _{obs} \approx \zeta _{vac}
+    - \frac{A \tan \zeta _{vac} + B \tan ^{3}\zeta _{vac}}
+    {1 + ( A + 3 B \tan ^{2}\zeta _{vac} ) \sec ^{2}\zeta _{vac}}\end{displaymath}%
+\lthtmldisplayZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline28966}%
+$100\mu {\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29070}%
+$23^{h}\,59^{m}\,60^{s}.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29072}%
+$00^{h}\,00^{m}\,00^{s}.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29076}%
+$\Delta\psi\cos\epsilon$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29082}%
+$32^{\rm s}\hspace{-0.3em}.184$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29088}%
+$0^{\rm s}\hspace{-0.3em}.0017$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29092}%
+$0^{\rm s}\hspace{-0.3em}.0013$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29094}%
+$\Delta {\rm T} = {\rm ET} - {\rm UT}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29096}%
+$\Delta {\rm T}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29246}%
+$2\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29252}%
+$\pm100$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29260}%
+$1^\circ$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29262}%
+$8\hspace{-0.05em}^{'\hspace{-0.1em}'}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29264}%
+$5^{\rm h}\,25^{\rm m}$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29324}%
+$\varpi = \Omega + \omega$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29336}%
+$L = \varpi + M$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29348}%
+$M_\odot = 1$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29367}%
+$\sim20$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29459}%
+$C_1\!=\!+50.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29461}%
+$C_2\!=\!-2.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29463}%
+$C_3\!=\!-10.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29465}%
+$C_4\!=\!+25.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29467}%
+$\sigma=5.0$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline29469}%
+$1000\times20$%
+\lthtmlinlinemathZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{section}
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\setlength {\leftmargin}{2cm}
+%
+
+
+\setlength {\parsep}{\smallskipamount}
+%
+
+
+\end{document}

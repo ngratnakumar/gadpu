@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Referring to an Entire Document</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Referring to an Entire Document">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html276 HREF="node15.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html274 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html268 HREF="node13.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html277 HREF="node15.html"> Linking your Hypertext Documents</A><BR>
+<B>Up:</B> <A NAME=tex2html275 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html269 HREF="node13.html"> Referring to Cross-Reference Targets</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00043000000000000000><A NAME=xref_blank_labels>&#160;</A><A NAME=sectentiredocuments>&#160;</A>Referring to an Entire Document</A></H2>
+<P>
+<A HREF="node3.html#sectHTX">HTX</A> recognises a <A HREF="node12.html#secttargetlabels">cross-reference target</A> with the form:
+<P>
+<blockquote> <PRE>&lt;A NAME=&quot;xref_&quot;&gt;any text&lt;/A&gt;
+</PRE>
+</blockquote>
+<P>
+(<em>i.e.</em> with a blank label) as a special case, to be used to
+identify the ``top'' page of a <A HREF="node4.html#secthypertextdocuments">hypertext document</A>. This
+should be the point to which a reader is transferred if the entire
+document is requested and no particular part of it is specified.
+<P>
+Any other document can refer to this label, using an anchor with the
+form:
+<P>
+<blockquote> <PRE>&lt;A HREF=&quot;/any_where/docname.htx/any_file.html#xref_&quot;&gt;any text&lt;/A&gt;
+</PRE>
+</blockquote>
+<P>
+but its inclusion as a cross-reference target in the referenced
+document is optional. If it is omitted, HTX will assume that the top
+<A NAME=tex2html19 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> page in a document is named after the document
+itself. That is, it will use a <A NAME=tex2html20 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URL</A> such as:
+<P>
+<blockquote> <PRE>/some_where/docname.htx/docname.html#xref_
+</PRE>
+</blockquote>
+<P>
+If your document does not follow this convention, then you should
+include a cross-reference target with a blank label at the start of
+whichever HTML file serves the same purpose.
+<P>
+<BR> <HR><A NAME=tex2html276 HREF="node15.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html274 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html268 HREF="node13.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html277 HREF="node15.html"> Linking your Hypertext Documents</A><BR>
+<B>Up:</B> <A NAME=tex2html275 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html269 HREF="node13.html"> Referring to Cross-Reference Targets</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

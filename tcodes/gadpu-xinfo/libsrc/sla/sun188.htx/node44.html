@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> How Catalogue Files are Searched</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" How Catalogue Files are Searched">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html584 HREF="node45.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html582 HREF="node41.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html576 HREF="node43.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html585 HREF="node45.html"> Providing a Local Catalogue of Remote Documents</A><BR>
+<B>Up:</B> <A NAME=tex2html583 HREF="node41.html"> CATALOGUE FILES</A><BR>
+<B> Previous:</B> <A NAME=tex2html577 HREF="node43.html"> A Catalogue File Example</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000113000000000000000><A NAME=xref_how_catalogue_files_are_searched>&#160;</A>How Catalogue Files are Searched</A></H2>
+<P>
+Documents listed in <A HREF="node3.html#sectHTX">HTX</A> <A HREF="node41.html#sectcataloguefiles">catalogue
+files</A> are added into the documentation set <b>
+after</b> all hypertext documents have first been found using the
+<A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search path</A>.  If a document is found in hypertext form, it
+occludes any subsequence occurrence of a document with the same name
+in a catalogue file. This means that if you convert an <tt>&quot;</tt>old<tt>&quot;</tt>
+document into hypertext form (with a <tt>&quot;</tt>.htx<tt>&quot;</tt> file extension), the
+new version will automatically be found in preference to the old one
+-- there is no need to remove it from the catalogue file.
+<P>
+Catalogue files are also found by following the <tt>HTX_PATH</tt> search
+path after it has been used to find hypertext documents, and are
+recognised by the name <tt>&quot;</tt>htx.catalogue<tt>&quot;</tt>. If more than one catalogue
+file is found, their contents are simply concatenated in the order in
+which they are found.
+<P>
+Duplicate entries for a document are permitted in catalogue files (and
+can also arise when catalogue files are concatenated). They provide a
+mechanism for a document to have alternative titles. This can
+sometimes improve the usefulness of document searches if the original
+title lacks any useful keywords (you might think of this as combining
+both a title index and a subject index into the same file).  If more
+than one title entry is matched for a particular document, then the
+one that occurs first in the catalogue file(s) is used.
+<P>
+<BR> <HR><A NAME=tex2html584 HREF="node45.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html582 HREF="node41.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html576 HREF="node43.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html585 HREF="node45.html"> Providing a Local Catalogue of Remote Documents</A><BR>
+<B>Up:</B> <A NAME=tex2html583 HREF="node41.html"> CATALOGUE FILES</A><BR>
+<B> Previous:</B> <A NAME=tex2html577 HREF="node43.html"> A Catalogue File Example</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

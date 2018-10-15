@@ -1,0 +1,30 @@
+Package : SLALIB
+Version : V2.4-12
+Library : V1.6
+
+Built by: chengalu on node astro0.gmrt.ncra.tifr.res.in
+On      : Mon Jul 21 16:42:31 IST 2008
+
+Machine : i686 running Linux #1 SMP Fri Jun 27 16:14:35 EDT 2008 (release 2.6.25.9-76.fc9.i686)
+
+make macros:
+
+   SYSTEM  : ix86_Linux
+
+   EXPORT  : .
+   INSTALL : /home/chengalu
+   STARLINK: /star
+
+   AR_IN   : ar r
+   BLD_SHR : :
+   CC      : gcc
+   CFLAGS  : -O
+   FC      : g77
+   FFLAGS  : -fno-second-underscore -O
+   LINK    : ln -s
+   RANLIB  : ranlib
+   SHARE   : .so
+   SOURCE_VARIANT: ix86_Linux
+   TAR_IN  : tar -cvhf
+   TAR_OUT : tar -xf
+

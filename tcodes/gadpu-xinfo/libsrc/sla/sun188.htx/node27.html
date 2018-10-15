@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Specifying a Document Server</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Specifying a Document Server">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html409 HREF="node28.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html407 HREF="node26.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html401 HREF="node26.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html410 HREF="node28.html"> The Document Server's Role</A><BR>
+<B>Up:</B> <A NAME=tex2html408 HREF="node26.html"> REMOTE
+DOCUMENT SERVERS</A><BR>
+<B> Previous:</B> <A NAME=tex2html402 HREF="node26.html"> REMOTE
+DOCUMENT SERVERS</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00071000000000000000><A NAME=sectspecifyingaserver>&#160;</A><A NAME=xref_HTX_SERVER_remote_server_URL>&#160;</A>Specifying a Document Server</A></H2>
+<P>
+If <A HREF="node3.html#sectHTX">HTX</A> detects that a <A HREF="node4.html#secthypertextdocuments">document</A> has been referenced
+but cannot find it locally (see &#167;<A HREF="node21.html#sectremotedocuments"><IMG ALIGN=BOTTOM ALT="gif" SRC="./cross_ref_motif.gif"></A>), it will
+generate a reference to a remote document server in place of a link to
+the local document. The <A NAME=tex2html31 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URL</A> it generates in this case takes
+the form:
+<P>
+<blockquote> <PRE>$HTX_SERVER/docname.htx/some_file.html?xref_label
+</PRE>
+</blockquote>
+<P>
+That is, it replaces any directory path at the start of the URL with
+the URL of a remote document server, obtained by translating the
+<tt>HTX_SERVER</tt> environment variable. It also replaces
+<tt>&quot;</tt>#xref_<tt>&quot;</tt> with <tt>&quot;</tt>?xref_<tt>&quot;</tt>
+so that the server will receive the <A HREF="node12.html#secttargetlabels">label field</A> of the URL as
+a <em>query string</em> which it can interpret.
+<P>
+You may set the <tt>HTX_SERVER</tt> environment variable to identify any
+document server you like (for instance, one that you write
+yourself). However, if you do not specify one explicitly, the default
+is to use the Starlink HTX document server at RAL, whose URL is:
+<P>
+<blockquote> <PRE>http://star-www.rl.ac.uk/cgi-bin/htxserver
+</PRE>
+</blockquote>
+<P>
+Once a document has been linked, the choice of server is fixed, until
+it is linked again.
+<P>
+<BR> <HR><A NAME=tex2html409 HREF="node28.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html407 HREF="node26.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html401 HREF="node26.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html410 HREF="node28.html"> The Document Server's Role</A><BR>
+<B>Up:</B> <A NAME=tex2html408 HREF="node26.html"> REMOTE
+DOCUMENT SERVERS</A><BR>
+<B> Previous:</B> <A NAME=tex2html402 HREF="node26.html"> REMOTE
+DOCUMENT SERVERS</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

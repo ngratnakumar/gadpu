@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Multiple Libraries and the Library Search Path</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Multiple Libraries and the Library Search Path">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html231 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html229 HREF="node7.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html225 HREF="node9.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html232 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B>Up:</B> <A NAME=tex2html230 HREF="node7.html"> DOCUMENT ORGANISATION</A><BR>
+<B> Previous:</B> <A NAME=tex2html226 HREF="node9.html"> Document Libraries</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00033000000000000000><A NAME=sectsearchpath>&#160;</A><A NAME=xref_multiple_libraries_and_the_library_search_path>&#160;</A><A NAME=xref_HTX_PATH_search_path>&#160;</A>Multiple Libraries and the Library Search Path</A></H2>
+<P>
+You may not always want to modify the contents of existing
+<A HREF="node9.html#sectdocumentlibraries">libraries</A>, even although you may be referring to their
+<A HREF="node4.html#secthypertextdocuments">documents</A>.  For example, you may have an established set of
+documentation in one or more libraries and be developing a new
+document that will eventually form part of that set. Your new document
+will probably need to refer to the others while you are working on it,
+but you may not want to (or have permission to) modify any of the
+existing documents.
+<P>
+In this case, you can specify a search path, on which <A HREF="node3.html#sectHTX">HTX</A>
+will look for other documents to which you may be referring, but it
+will not attempt to link (<em>i.e.</em> modify) those other
+documents. The search path is specified as a colon-separated list of
+directories via the <tt>HTX_PATH</tt> environment variable, for instance:
+<P>
+<blockquote> <PRE>setenv HTX_PATH $HOME/mydocs:/docman/newdocs:/docman/olddocs
+</PRE>
+</blockquote>
+<P>
+This search path is used by all HTX commands when they need to find
+documents for which no explicit location has been given.  Note that if
+two documents with the same name occur at different points on your
+<tt>HTX_PATH</tt>, only the <b> first</b> one will be used.
+<P>
+You can set <tt>HTX_PATH</tt> to search anywhere you like, but if you do not
+specify it yourself, it defaults to:
+<P>
+<blockquote> <PRE>$INSTALL/docs:$INSTALL/help:$STARLINK/docs:$STARLINK/help
+</PRE>
+</blockquote>
+<P>
+where <tt>INSTALL</tt> in turn defaults to <tt>$HOME/star</tt> and
+<tt>STARLINK</tt> defaults to <tt>/star</tt>. The values of these environment
+variables are evaluated <b> when the HTX software is installed</b> (not
+when you later make use of it). By default, therefore, HTX will search
+for the standard set of Starlink documents and on-line hypertext help,
+plus any others you may have installed locally under your own user
+name (in the location identified by the <tt>INSTALL</tt> environment
+variable).
+<P>
+<BR> <HR><A NAME=tex2html231 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html229 HREF="node7.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html225 HREF="node9.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html232 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B>Up:</B> <A NAME=tex2html230 HREF="node7.html"> DOCUMENT ORGANISATION</A><BR>
+<B> Previous:</B> <A NAME=tex2html226 HREF="node9.html"> Document Libraries</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Specifying a WWW Browser</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Specifying a WWW Browser">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html659 HREF="node52.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html657 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html651 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html660 HREF="node52.html"> Defining Your X Display</A><BR>
+<B>Up:</B> <A NAME=tex2html658 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B> Previous:</B> <A NAME=tex2html652 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000131000000000000000><A NAME=xref_specifying_a_WWW_browser>&#160;</A><A NAME=xref_HTX_BROWSER_browser_command>&#160;</A><A NAME=sectspecifyingabrowser>&#160;</A>Specifying a WWW Browser</A></H2>
+<P>
+<A HREF="node3.html#sectHTX">HTX</A> commands that need to display
+<A HREF="node4.html#secthypertextdocuments">documents</A> do so using a WWW browser
+and will try to make use of one that you already have running, if
+possible. Otherwise a new one will be started. By default, the
+<A NAME=tex2html55 HREF="http://home.netscape.com/ "><em>Netscape</em></A> browser will be used and will be invoked
+using the command:
+<P>
+<blockquote> <PRE>netscape
+</PRE>
+</blockquote>
+<P>
+You can change this command, or cause HTX to invoke the
+<A NAME=tex2html56 HREF="http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/NCSAMosaicHome.html "><em>Mosaic</em></A> browser instead if you prefer, by means of the
+HTX_BROWSER environment variable. Thus, if you normally use the
+command <tt>&quot;</tt>Mosaic<tt>&quot;</tt> to invoke your browser, you could put the
+following into your <tt>.login</tt> file:
+<P>
+<blockquote> <PRE>setenv HTX_BROWSER Mosaic
+</PRE>
+</blockquote>
+<P>
+Note that this command should not be an alias (<em>e.g.</em> if you
+normally use the C shell).
+<P>
+Currently, HTX can work only with <em>Mosaic</em> and <em>Netscape</em> -- and
+it has to know which one you are using. To determine this, it searches
+for either of the strings <tt>&quot;</tt>mosaic<tt>&quot;</tt> or <tt>&quot;</tt>netscape<tt>&quot;</tt> in the value
+you give for the HTX_BROWSER environment variable.<A NAME=tex2html57 HREF="footnode.html#1406"><IMG ALIGN=BOTTOM ALT="gif" SRC="./foot_motif.gif"></A> You should therefore ensure that the
+comand you use contains one of these strings.
+<P>
+<BR> <HR><A NAME=tex2html659 HREF="node52.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html657 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html651 HREF="node50.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html660 HREF="node52.html"> Defining Your X Display</A><BR>
+<B>Up:</B> <A NAME=tex2html658 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A><BR>
+<B> Previous:</B> <A NAME=tex2html652 HREF="node50.html"> USING WWW BROWSERS WITH HTX</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

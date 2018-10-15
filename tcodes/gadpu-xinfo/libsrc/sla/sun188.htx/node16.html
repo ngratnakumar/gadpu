@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Using Cross-References from LaTeX</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Using Cross-References from LaTeX">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html294 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html292 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html288 HREF="node15.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html295 HREF="node17.html"> HOW HTX LINKING WORKS</A><BR>
+<B>Up:</B> <A NAME=tex2html293 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html289 HREF="node15.html"> Linking your Hypertext Documents</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00045000000000000000><A NAME=sectconvertingfromlatex>&#160;</A><A NAME=xref_using_cross_references_from_latex>&#160;</A>Using Cross-References from LaTeX</A></H2>
+<P>
+It is quite straightforward to insert <A HREF="node3.html#sectHTX">HTX</A> cross-reference
+anchors in <A NAME=tex2html24 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> form directly into <A HREF="node4.html#secthypertextdocuments">documents</A> when
+writing them by hand. However, many substantial documents already
+exist in <A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun9.htx/sun9.html?xref_">LaTeX</A> format and can be converted relatively
+easily into hypertext by using the
+<A NAME=tex2html25 HREF="http://cbl.leeds.ac.uk/nikos/tex2html/doc/latex2html/latex2html.html "><b> LaTeX</b>2<tt>HTML</tt> </A> converter
+(<A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun201.htx/sun201.html?xref_">see SUN/201</A>). LaTeX is, in any case, a convenient
+format for the primary source of many documents.
+<P>
+A facility is therefore available for generating HTX cross-references
+from commands within LaTeX documents.  The LaTeX commands
+involved are normally ignored, but are detected by the
+<A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun199.htx/sun199.html?xref_the_star2html_command"><tt>star2html</tt></A> command that provides
+Starlink additions to the standard <b> LaTeX</b>2<tt>HTML</tt> . To allow these
+commands to work, the appropriate <A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun199.htx/sun199.html?xref_using_a_template">document
+preamble</A> must also be included. The procedure to
+follow is described in <A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun199.htx/sun199.html?xref_">SUN/199</A>, but an outline of the
+principles involved is also given here.
+<P>
+To export an HTX <A HREF="node12.html#secttargetlabels">cross-reference label</A> from a LaTeX
+document that is to be converted into hypertext, the following would
+be used:
+<P>
+<blockquote> <PRE>\xlabel{label}
+</PRE>
+</blockquote>
+<P>
+which results in the HTML anchor:
+<P>
+<blockquote> <PRE>&lt;A NAME=xref_label&gt;?&lt;/A&gt;
+</PRE>
+</blockquote>
+<P>
+where <tt>&quot;</tt>?<tt>&quot;</tt> is some invisible character that simply serves to mark
+the position to which links should point. Note that the name of the
+label chosen should be unique within a LaTeX document and must
+only contain alphanumeric characters (or be <A HREF="node14.html#sectentiredocuments">blank</A>).
+<P>
+To insert a cross-reference to the target above into another document,
+you would use:
+<P>
+<blockquote> <PRE>\xref{any text}{docname}{label}
+</PRE>
+</blockquote>
+<P>
+which results in the HTML anchor:
+<P>
+<blockquote> <PRE>&lt;A HREF=&quot;/star/docs/docname.htx/docname.html#xref_label&quot;&gt;any text&lt;/A&gt;
+</PRE>
+</blockquote>
+<P>
+This contains an initial guess at the required URL, which will be
+recognised and <A HREF="node13.html#sectreferringtotargets">modified as necessary</A> when the document is linked.
+<P>
+<BR> <HR><A NAME=tex2html294 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html292 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html288 HREF="node15.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html295 HREF="node17.html"> HOW HTX LINKING WORKS</A><BR>
+<B>Up:</B> <A NAME=tex2html293 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html289 HREF="node15.html"> Linking your Hypertext Documents</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

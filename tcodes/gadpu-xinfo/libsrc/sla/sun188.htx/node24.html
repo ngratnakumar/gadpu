@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Forcing a Re-Link</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Forcing a Re-Link">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html379 HREF="node25.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html377 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html371 HREF="node23.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html380 HREF="node25.html"> Suppressing Re-Linking</A><BR>
+<B>Up:</B> <A NAME=tex2html378 HREF="node22.html"> WHEN TO RE-LINK</A><BR>
+<B> Previous:</B> <A NAME=tex2html372 HREF="node23.html"> Accommodating Normal Document Changes</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00062000000000000000><A NAME=xref_forcing_a_relink>&#160;</A>Forcing a Re-Link</A></H2>
+<P>
+There are several ways to force a re-link of a <A HREF="node4.html#secthypertextdocuments">document</A> or
+<A HREF="node9.html#sectdocumentlibraries">library</A>.
+<P>
+To re-link a particular document, or set of documents, from scratch,
+their <A HREF="node18.html#sectindexfiles">index files</A> may simply be removed, using a command
+such as:
+<P>
+<blockquote> <PRE>rm *.htx/htx.index
+</PRE>
+</blockquote>
+<P>
+The <A HREF="node48.html#hlink">linker</A> will then re-generate these indices and
+consider the affected documents to have changed. They, and all other
+documents that refer to them, will then be re-linked as
+necessary. Alternatively, to re-link <b> all</b> documents from scratch
+in this way, the <tt>-a</tt> flag may be given on the <tt>hlink</tt> command
+line.
+<P>
+Removing the <A HREF="node19.html#sectlinkediting"><tt>&quot;</tt>htx.log<tt>&quot;</tt> date-stamp file</A>
+from a document library will also force the documents in that library
+to be re-linked but without unnecessarily re-generating any of its
+index files.  This can be somewhat faster if the index files are known
+to be up to date.
+<P>
+<BR> <HR><A NAME=tex2html379 HREF="node25.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html377 HREF="node22.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html371 HREF="node23.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html380 HREF="node25.html"> Suppressing Re-Linking</A><BR>
+<B>Up:</B> <A NAME=tex2html378 HREF="node22.html"> WHEN TO RE-LINK</A><BR>
+<B> Previous:</B> <A NAME=tex2html372 HREF="node23.html"> Accommodating Normal Document Changes</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

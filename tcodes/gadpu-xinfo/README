@@ -1,0 +1,9 @@
+This directory cotains the code for lute software, which will work
+for data taken from GHB/GSB/GWB correlators. This is tested for working
+on 64bit machines.
+
+How to compile :
+>make
+
+                                      Sanjay, Jayaram (2nd May, 2016)
+-----------------------------------------------------------------------

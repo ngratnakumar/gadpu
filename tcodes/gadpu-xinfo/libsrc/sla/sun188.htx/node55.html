@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Netscape Behaviour</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Netscape Behaviour">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html699 HREF="node56.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html697 HREF="node53.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html693 HREF="node54.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html700 HREF="node56.html"> Inter-Machine Browser Communication</A><BR>
+<B>Up:</B> <A NAME=tex2html698 HREF="node53.html"> WWW Browser Communication</A><BR>
+<B> Previous:</B> <A NAME=tex2html694 HREF="node54.html"> Mosaic Behaviour</A>
+<BR> <HR> <P>
+<H3><A NAME=SECTION000133200000000000000>Netscape Behaviour</A></H3>
+<P>
+<A HREF="node3.html#sectHTX">HTX</A> communicates with <A NAME=tex2html62 HREF="http://home.netscape.com/ "><em>Netscape</em></A>
+by means of <em>X resources</em>, in essence looking for a window on your
+X display which was created by <em>Netscape</em>. If there is more than
+one of these, the first one will generally be used. If it cannot find
+such a window, HTX will start a new invocation of <em>Netscape</em> to
+create one.
+<P>
+One problem with this arrangement is that HTX may detect an invocation
+of <em>Netscape</em> running on a different machine but displaying on the
+same X display. In this case, attempts to communicate with it will
+succeed, but the browser may not necessarily be able to access the
+local files that HTX asks it to view (but
+see &#167;<A HREF="node56.html#sectintermachinecommunication"><IMG ALIGN=BOTTOM ALT="gif" SRC="./cross_ref_motif.gif"></A>). The best way around this
+problem is to ensure that the browser to be used by HTX is started
+first.
+<P>
+<BR> <HR><A NAME=tex2html699 HREF="node56.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html697 HREF="node53.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html693 HREF="node54.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html700 HREF="node56.html"> Inter-Machine Browser Communication</A><BR>
+<B>Up:</B> <A NAME=tex2html698 HREF="node53.html"> WWW Browser Communication</A><BR>
+<B> Previous:</B> <A NAME=tex2html694 HREF="node54.html"> Mosaic Behaviour</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

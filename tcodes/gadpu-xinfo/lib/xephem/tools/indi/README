@@ -1,0 +1,125 @@
+The code here demonstrates the use of INDI, an Instrument-Neutral Device
+Interface protocol. See http://www.clearskyinstitute.com/INDI/INDI.pdf.
+There are several INDI drivers that simulate typical observatory equipment.
+These can be used to see the code structure of a typical driver, and may
+provide initial ideas for writing real drivers.
+
+Architecture:
+
+    Typical INDI Client / Server / Driver / Device connectivity:
+
+
+    INDI Client 1 ----|                  |---- INDI Driver A  ---- Dev X
+                      |                  |
+    INDI Client 2 ----|                  |---- INDI Driver B  ---- Dev Y
+                      |                  |                     |
+     ...              |--- indiserver ---|                     |-- Dev Z
+                      |                  |
+                      |                  |
+    INDI Client n ----|                  |---- INDI Driver C  ---- Dev T
+
+
+     Client       INET       Server       UNIX     Driver          Hardware
+     processes    sockets    process      pipes    processes       devices
+
+
+
+    Indiserver is the public network access point where one or more INDI Clients
+    may contact one or more INDI Drivers. Indiserver launches each driver
+    process and arranges for it to receive the INDI protocol from Clients on
+    its stdin and expects to find commands destined for Clients on the
+    driver's stdout. Anything arriving from a driver process' stderr is copied
+    to indiserver's stderr.
+
+    Indiserver only provides convenient port, fork and data steering services.
+    In principle, a Client may run and connect to INDI Drivers directly.
+
+    XEphem can function as an INDI client. The standard INDI tcp port is 7624.
+
+Construction:
+
+    An INDI driver typically consists of one .c file, eg, mydriver.c, which
+    #includes indidevapi.h and makes calls to and is called by functions in the
+    INDI driver framework. The framework is implemented in indidrivermain.c,
+    with help from eventloop.c and the XML library liblilxml.a. These are linked
+    together to form one driver process. The supporting files in the framework
+    need not be changed in any way. Note that eventloop.[ch] provide a nice
+    callback facility and liblilxml is a general purpose DOM-oriented XML
+    parser, both of which are independent of INDI and may be used in other
+    projects if desired.
+    
+    The framework is divided into two sets of functions. One set are prefixed
+    with IS and must be implemented by the driver because they are called by
+    the framework. The other set are prefixed with ID, IE or IU. These are
+    implemented by the framework and may be called by the driver.
+
+    The framework implements an event-driven programming model. The main()
+    function is defined within the framework, not in the driver. The framework
+    calls the appropriate IS function as messages arrive from the Clients.
+    Within each ISxxx() function the driver performs the desired work then may
+    report back to the Client by calling the IDxxx() functions.
+
+    The IE functions allow the driver to add its own callback functions. The
+    driver can arrange for functions to be called when reading a file
+    descriptor will not block; when a time interval has expired; or when there
+    is no other client traffic in progress. The IU functions are just some
+    handy utility functions.
+
+    The sample indiserver provided is a stand alone process that may be used
+    to run one or more INDI-compliant drivers as one common INDI connection
+    point. (Note that an INDI Device may also be connected to directly, but
+    by using a server multiple devices to share one tcp port). Indiserver takes
+    the names of each driver process to run on its command line args.
+
+    To build everything type "make". To start indiserver with all sample
+    drivers type "make run", which runs the indiserver process in the
+    background and all stderr will go to x.err. Killing indiserver will also
+    kill all the drivers it started.
+
+Secure remote operation:
+
+    Suppose we want to run indiserver and its clients on a remote machine, r,
+    and connect them to our favorite INDI client, XEphem, running on the
+    local machine.
+
+    From the local machine log onto the remote machine by typing:
+
+	ssh2 -L 7624:s:7624 r
+
+    after logging in, run indiserver on the remote machine:
+    
+	make run
+	
+    Back on the local machine, start XEphem, then open Views -> Sky View ->
+    Telescope -> INDI panel. XEphem will connect to the remote INDI server
+    securely and automatically begin running. Sweet.
+
+Testing:
+
+    A low-level way to test the socket, forking and data steering abilities of
+    indiserver is to use the 'hose' command from the netpipes collection
+    (http://web.purplefrog.com/~thoth/netpipes/netpipes.html):
+
+    1. start indiserver using the UNIX cat program as the only INDI "device":
+
+	% indiserver cat &
+
+    2. use hose to connect to the "cat" device driver which just copies back:
+
+	% hose localhost 7624 --slave
+	hello world
+	hello world
+	more stuff
+	more stuff
+
+Scripting:
+
+    Included here are simple command line programs getINDIproperty and
+    setINDIproperty. "get" is an INDI client that connects to an INDI server,
+    retrieves all or any one INDI property elements and prints their values to
+    stdout. "set" can set one or more elements of a property. In addition to
+    being directly useful in writing scripts, they are simple programs that
+    demonstrates typical INDI client structure.
+
+! For RCS Only -- Do Not Edit
+! @(#) $RCSfile: README,v $ $Date: 2004/10/19 21:47:45 $ $Revision: 1.14 $ $Name:  $

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Exporting Cross-Reference Targets</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Exporting Cross-Reference Targets">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html256 HREF="node13.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html254 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html248 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html257 HREF="node13.html"> Referring to Cross-Reference Targets</A><BR>
+<B>Up:</B> <A NAME=tex2html255 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html249 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00041000000000000000><A NAME=xref_exporting_targets>&#160;</A><A NAME=secttargetlabels>&#160;</A>Exporting Cross-Reference Targets</A></H2>
+<P>
+If one <A HREF="node4.html#secthypertextdocuments">document</A> is to cross-reference another, the referenced
+document should export a label that the other one can refer to. The
+position of this label identifies the point in the referenced document
+to which a reader should be transferred when the cross-reference is
+followed.  If you understand <A NAME=tex2html14 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A>, you will be familiar with
+this idea, as it uses an HTML <em>destination anchor</em> for this
+purpose. For use with <A HREF="node3.html#sectHTX">HTX</A>, this should have a form such
+as:<A NAME=tex2html15 HREF="footnode.html#361"><IMG ALIGN=BOTTOM ALT="gif" SRC="./foot_motif.gif"></A>
+<P>
+<blockquote> <PRE>&lt;A NAME=&quot;xref_conclusions&quot;&gt;any text&lt;/A&gt;
+</PRE>
+</blockquote>
+<P>
+In plain HTML, this makes <tt>&quot;</tt>any text<tt>&quot;</tt> a potential destination for a
+hypertext link, to which any other piece of HTML may refer.
+<P>
+What makes this anchor special to HTX is the
+<tt>&quot;</tt>xref_<tt>&quot;</tt> prefix given to the value of
+the <tt>NAME</tt> parameter. HTX recognises anchors with this form as
+potential targets for document cross-references, and this
+distinguishes HTX targets from other HTML destination anchors. This is
+important, because it gives the document's author control over which
+points in the document other authors may reference.
+<P>
+Normally, many HTML destination anchors will be used for internal
+navigation within a document. When the document is revised, these may
+be subject to change, so they should not normally be referred to by
+other documents. However, destination anchors with the
+<tt>&quot;</tt>xref_<tt>&quot;</tt> prefix can be chosen carefully (and
+named appropriately) to identify stable components of a document, to
+which enduring references can be made from other documents. The author
+is, in effect, exporting a set of labels that tell other authors which
+parts of his document it is safe to refer to.
+<P>
+We will refer to an anchor with the form above as a
+<em>cross-reference target</em> and the characters that follow <tt>&quot;</tt>xref_<tt>&quot;</tt>
+as its <em>label</em> (<tt>&quot;</tt>conclusions<tt>&quot;</tt> in the example above). As in
+normal HTML, HTX labels are case sensitive. Unlike plain HTML,
+however, they must be unique within an entire hypertext document, not
+just within a single HTML file.
+<P>
+<BR> <HR><A NAME=tex2html256 HREF="node13.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html254 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html248 HREF="node11.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html257 HREF="node13.html"> Referring to Cross-Reference Targets</A><BR>
+<B>Up:</B> <A NAME=tex2html255 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A><BR>
+<B> Previous:</B> <A NAME=tex2html249 HREF="node11.html"> ESTABLISHING CROSS-REFERENCES</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

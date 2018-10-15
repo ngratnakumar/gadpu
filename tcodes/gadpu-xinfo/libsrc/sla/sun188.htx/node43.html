@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> A Catalogue File Example</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" A Catalogue File Example">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html574 HREF="node44.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html572 HREF="node41.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html566 HREF="node42.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html575 HREF="node44.html"> How Catalogue Files are Searched</A><BR>
+<B>Up:</B> <A NAME=tex2html573 HREF="node41.html"> CATALOGUE FILES</A><BR>
+<B> Previous:</B> <A NAME=tex2html567 HREF="node42.html"> Catalogue File Name and Format</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION000112000000000000000><A NAME=xref_a_catalogue_file_example>&#160;</A>A Catalogue File Example</A></H2>
+<P>
+Suppose, for example, that you are converting an existing
+documentation set into <A HREF="node4.html#secthypertextdocuments">hypertext
+form</A>, but still have some documents
+available only in <A HREF="http://star-www.rl.ac.uk/cgi-bin/htxserver/sun9.htx/sun9.html?xref_"><em>DVI</em></A> and <A NAME=tex2html48 HREF="http://www.cs.indiana.edu/docproject/programming/postscript/postscript.html "><em>postscript</em></A>
+format (with file extensions <tt>&quot;</tt>.dvi<tt>&quot;</tt> and <tt>&quot;</tt>.ps<tt>&quot;</tt>). The
+<A HREF="node47.html#findme"><tt>findme</tt></A> command will not be able to search these
+<tt>&quot;</tt>old<tt>&quot;</tt> documents because it doesn't know how to extract (for
+example) their titles from the files provided. To help overcome this,
+you would describe these documents in a <A HREF="node41.html#sectcataloguefiles">catalogue
+file</A>, perhaps along the following lines:
+<P>
+<blockquote> <PRE>review doc1.ps A Review of Documentation Systems
+intro doc2.dvi Introduction to Hypertext
+writing writing.ps How to Communicate Effectively
+...
+</PRE>
+</blockquote>
+<P>
+Note that the document name and file name need not match.  This file
+introduces the listed documents to the <tt>findme</tt> command, tells it
+where to find the corresponding document files and allows it to
+perform <A HREF="node32.html#sectsearchingfordocuments">searching</A> by document
+<A HREF="node34.html#sectdepthofsearch">name and/or title</A> (but not by page
+heading or lines of textual content, since it cannot know how to
+decode the document format to obtain these).
+<P>
+<BR> <HR><A NAME=tex2html574 HREF="node44.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html572 HREF="node41.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html566 HREF="node42.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html575 HREF="node44.html"> How Catalogue Files are Searched</A><BR>
+<B>Up:</B> <A NAME=tex2html573 HREF="node41.html"> CATALOGUE FILES</A><BR>
+<B> Previous:</B> <A NAME=tex2html567 HREF="node42.html"> Catalogue File Name and Format</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

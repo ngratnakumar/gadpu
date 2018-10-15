@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE>HTX Hypertext Cross-Reference Utilities</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value="HTX Hypertext Cross-Reference Utilities">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html68 HREF="node1.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif_gr.gif"> <IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif_gr.gif">   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html69 HREF="node1.html"> Abstract</A><BR>
+<BR> <HR> <P>
+<P>
+
+<P>
+
+<P>
+<A NAME=xref_>&#160;</A>
+    <H1>
+
+      HTX<BR>
+Hypertext Cross-Reference Utilities <BR> 
+      Version 1.2 <BR> 
+      User's Manual 
+    </H1>
+
+<P>
+
+<P>
+    <P> <I>
+
+   Starlink User Note  188.3  <BR> 
+   R.F. Warren-Smith  <BR> 
+   6th January 1998 
+    </I> </P> <H3>
+
+      <A NAME=tex2html1 HREF="http://www.cclrc.ac.uk">CCLRC</A> /
+      <A NAME=tex2html2 HREF="http://www.cclrc.ac.uk/ral">Rutherford Appleton Laboratory</A> <BR> 
+      <A NAME=tex2html3 HREF="http://www.pparc.ac.uk">Particle Physics &amp; Astronomy Research Council</A> <BR> 
+    </H3> <H2>
+
+      <A NAME=tex2html4 HREF="http://star-www.rl.ac.uk/">Starlink Project</A>
+    </H2>
+
+   <A NAME=tex2html5 HREF="http://star-www.rl.ac.uk/cgi-bin/hcserver?sun188.3 "><IMG  ALIGN=BOTTOM ALT="" SRC="source.gif"> Retrieve hardcopy</A><BR>
+<P>
+
+<P>
+  <A NAME=stardoccontents>&#160;</A>
+   
+    <HR>
+    <H2>Contents</H2>
+
+<P>
+
+  <BR> <HR>
+<UL> 
+<LI> <A NAME=tex2html70 HREF="node1.html#SECTION00010000000000000000"> Abstract</A>
+<LI> <A NAME=tex2html71 HREF="node2.html#SECTION00020000000000000000"> INTRODUCTION</A>
+<UL> 
+<LI> <A NAME=tex2html72 HREF="node3.html#SECTION00021000000000000000"> What Does HTX Do?</A>
+<LI> <A NAME=tex2html73 HREF="node4.html#SECTION00022000000000000000"> What is a Hypertext Document?</A>
+<LI> <A NAME=tex2html74 HREF="node5.html#SECTION00023000000000000000"> Why are Cross-References a Problem?</A>
+<LI> <A NAME=tex2html75 HREF="node6.html#SECTION00024000000000000000"> Mixing Local and Remote Documents</A>
+</UL> 
+<LI> <A NAME=tex2html76 HREF="node7.html#SECTION00030000000000000000"> DOCUMENT ORGANISATION</A>
+<UL> 
+<LI> <A NAME=tex2html77 HREF="node8.html#SECTION00031000000000000000"> Document Directories</A>
+<LI> <A NAME=tex2html78 HREF="node9.html#SECTION00032000000000000000"> Document Libraries</A>
+<LI> <A NAME=tex2html79 HREF="node10.html#SECTION00033000000000000000"> Multiple Libraries and the Library Search Path</A>
+</UL> 
+<LI> <A NAME=tex2html80 HREF="node11.html#SECTION00040000000000000000"> ESTABLISHING CROSS-REFERENCES</A>
+<UL> 
+<LI> <A NAME=tex2html81 HREF="node12.html#SECTION00041000000000000000"> Exporting Cross-Reference Targets</A>
+<LI> <A NAME=tex2html82 HREF="node13.html#SECTION00042000000000000000"> Referring to Cross-Reference Targets</A>
+<LI> <A NAME=tex2html83 HREF="node14.html#SECTION00043000000000000000"> Referring to an Entire Document</A>
+<LI> <A NAME=tex2html84 HREF="node15.html#SECTION00044000000000000000"> Linking your Hypertext Documents</A>
+<LI> <A NAME=tex2html85 HREF="node16.html#SECTION00045000000000000000"> Using Cross-References from LaTeX</A>
+</UL> 
+<LI> <A NAME=tex2html86 HREF="node17.html#SECTION00050000000000000000"> HOW HTX LINKING WORKS</A>
+<UL> 
+<LI> <A NAME=tex2html87 HREF="node18.html#SECTION00051000000000000000"> Index Files</A>
+<LI> <A NAME=tex2html88 HREF="node19.html#SECTION00052000000000000000"> Link-Editing</A>
+<LI> <A NAME=tex2html89 HREF="node20.html#SECTION00053000000000000000"> Absolute and Relative Links</A>
+<LI> <A NAME=tex2html90 HREF="node21.html#SECTION00054000000000000000"> References to Remote Documents</A>
+</UL> 
+<LI> <A NAME=tex2html91 HREF="node22.html#SECTION00060000000000000000"> WHEN TO RE-LINK</A>
+<UL> 
+<LI> <A NAME=tex2html92 HREF="node23.html#SECTION00061000000000000000"> Accommodating Normal Document Changes</A>
+<LI> <A NAME=tex2html93 HREF="node24.html#SECTION00062000000000000000"> Forcing a Re-Link</A>
+<LI> <A NAME=tex2html94 HREF="node25.html#SECTION00063000000000000000"> Suppressing Re-Linking</A>
+</UL> 
+<LI> <A NAME=tex2html95 HREF="node26.html#SECTION00070000000000000000"> REMOTE
+DOCUMENT SERVERS</A>
+<UL> 
+<LI> <A NAME=tex2html96 HREF="node27.html#SECTION00071000000000000000"> Specifying a Document Server</A>
+<LI> <A NAME=tex2html97 HREF="node28.html#SECTION00072000000000000000"> The Document Server's Role</A>
+</UL> 
+<LI> <A NAME=tex2html98 HREF="node29.html#SECTION00080000000000000000"> GAINING ACCESS TO DOCUMENTS</A>
+<UL> 
+<LI> <A NAME=tex2html99 HREF="node30.html#SECTION00081000000000000000"> Displaying Documents by Name</A>
+<LI> <A NAME=tex2html100 HREF="node31.html#SECTION00082000000000000000"> Displaying Parts of Documents by Label</A>
+</UL> 
+<LI> <A NAME=tex2html101 HREF="node32.html#SECTION00090000000000000000"> SEARCHING FOR INFORMATION IN DOCUMENTS</A>
+<UL> 
+<LI> <A NAME=tex2html102 HREF="node33.html#SECTION00091000000000000000"> Performing Keyword Searches</A>
+<LI> <A NAME=tex2html103 HREF="node34.html#SECTION00092000000000000000"> Controlling the Depth of Search</A>
+<LI> <A NAME=tex2html104 HREF="node35.html#SECTION00093000000000000000"> Searching Specific Documents</A>
+<LI> <A NAME=tex2html105 HREF="node36.html#SECTION00094000000000000000"> Other Search Options Available</A>
+</UL> 
+<LI> <A NAME=tex2html106 HREF="node37.html#SECTION000100000000000000000"> USING HTX FACILITIES FROM OTHER SOFTWARE</A>
+<UL> 
+<LI> <A NAME=tex2html107 HREF="node38.html#SECTION000101000000000000000"> Providing Hypertext Help</A>
+<LI> <A NAME=tex2html108 HREF="node39.html#SECTION000102000000000000000"> Using HTX to Control a WWW Browser</A>
+<LI> <A NAME=tex2html109 HREF="node40.html#SECTION000103000000000000000"> Performing Document Searches from Other Software</A>
+</UL> 
+<LI> <A NAME=tex2html110 HREF="node41.html#SECTION000110000000000000000"> CATALOGUE FILES</A>
+<UL> 
+<LI> <A NAME=tex2html111 HREF="node42.html#SECTION000111000000000000000"> Catalogue File Name and Format</A>
+<LI> <A NAME=tex2html112 HREF="node43.html#SECTION000112000000000000000"> A Catalogue File Example</A>
+<LI> <A NAME=tex2html113 HREF="node44.html#SECTION000113000000000000000"> How Catalogue Files are Searched</A>
+<LI> <A NAME=tex2html114 HREF="node45.html#SECTION000114000000000000000"> Providing a Local Catalogue of Remote Documents</A>
+</UL> 
+<LI> <A NAME=tex2html115 HREF="node46.html#SECTION000120000000000000000"> DESCRIPTIONS OF HTX COMMANDS</A>
+<UL> 
+<LI> <A NAME=tex2html116 HREF="node47.html#SECTION000121000000000000000"> 
+   findme
+-
+   Search for documents by keyword and display a list of those found
+</A>
+<LI> <A NAME=tex2html117 HREF="node48.html#SECTION000122000000000000000"> 
+   hlink
+-
+   Perform cross-linking of hypertext documents
+</A>
+<LI> <A NAME=tex2html118 HREF="node49.html#SECTION000123000000000000000"> 
+   showme
+-
+   Display a specified part of a document using a WWW browser
+</A>
+</UL> 
+<LI> <A NAME=tex2html119 HREF="node50.html#SECTION000130000000000000000"> USING WWW BROWSERS WITH HTX</A>
+<UL> 
+<LI> <A NAME=tex2html120 HREF="node51.html#SECTION000131000000000000000"> Specifying a WWW Browser</A>
+<LI> <A NAME=tex2html121 HREF="node52.html#SECTION000132000000000000000"> Defining Your X Display</A>
+<LI> <A NAME=tex2html122 HREF="node53.html#SECTION000133000000000000000"> WWW Browser Communication</A>
+<UL> 
+<LI> <A NAME=tex2html123 HREF="node54.html#SECTION000133100000000000000"> Mosaic Behaviour</A>
+<LI> <A NAME=tex2html124 HREF="node55.html#SECTION000133200000000000000"> Netscape Behaviour</A>
+</UL> 
+<LI> <A NAME=tex2html125 HREF="node56.html#SECTION000134000000000000000"> Inter-Machine Browser Communication</A>
+</UL> 
+<LI> <A NAME=tex2html126 HREF="node57.html#SECTION000140000000000000000"> CHANGES AND NEW FEATURES</A>
+<UL> 
+<LI> <A NAME=tex2html127 HREF="node58.html#SECTION000141000000000000000"> Changes and New Features in V1.1</A>
+<LI> <A NAME=tex2html128 HREF="node59.html#SECTION000142000000000000000"> Changes and New
+Features in V1.2</A>
+</UL> 
+<LI> <A NAME=tex2html129 HREF="node60.html#SECTION000150000000000000000">   About this document ... </A>
+</UL>
+<BR> <HR><A NAME=tex2html68 HREF="node1.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif_gr.gif"> <IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif_gr.gif">   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html69 HREF="node1.html"> Abstract</A><BR>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>

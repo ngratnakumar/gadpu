@@ -1,0 +1,258 @@
+Installation Instructions:
+Date: 26-Sep-1996
+-------------------------
+  Starlink Software Items are supplied via WWW in the form of a shell
+  archive containing a tar file which is unpacked when the archive is
+  executed by the Bourne shell.
+
+Unpacking the Shell Archive:
+----------------------------
+  Having obtained the required shell archive and saved it in a file,
+  type:
+
+           % sh {archive_name}
+
+  where {archive_name} is the name of the saved file.
+
+  The archive contains commands allowing you to define a "top-level 
+  Starlink source directory" into which the contents of the archive 
+  will be unpacked.  It is recommended that the same top-level 
+  directory is used for all Starlink Software Items.  Initially the
+  suggested directory is  $HOME/star/source  but the name of the
+  directory chosen will be written into $HOME/.star_config and used as
+  the suggested directory for unpacking any further Starlink Software
+  Items you obtain. The required directory will be created if it does
+  not exist.
+
+  In what follows, 'pkg' is the lower-case of the name of the primary 
+  Starlink Software Item which you have obtained (e.g. hds or kappa),
+  and 'PKG' is the name in upper case.
+
+  Having unpacked the shell archive, you should have the following
+  files in your top-level Starlink source directory.
+
+    README         This file
+    star_build     A procedure to check and, if necessary, build 
+                   and/or install a Starlink Software Item and all the
+                   items it depends upon.
+    pkg_needs      A list (possibly empty) of the items needed to build,
+                   install and use PKG
+    or
+    pkg_needs_run  A list (possibly empty) of the items needed to install
+                   and use PKG
+    Various subdirectories containing compressed tar files for the
+                   required Starlink Software Items. Each subdirectory 
+                   has the name of the item in lower case.
+
+Installing Starlink Software Items:
+-----------------------------------
+  Installation of Starlink software is a two-stage process. First the
+  item is built in its 'source' directory and then the built files are 
+  'installed' in subdirectories of a single top-level directory known
+  as the INSTALL directory.  Directory INSTALL and subdirectories (bin,
+  lib, include ...) of it will be created if necessary during the 
+  installation.
+
+  The shell archive will offer you the chance to continue with building
+  and installing the items you have obtained but this may be done as a
+  separate step - it is just required to type:
+
+          % cd {top-level Starlink source directory}
+          % ./star_build pkg
+
+  The star_build script will check and, if necessary, build and/or
+  install each of the items listed in the pkg_needs and pkg_needs_run
+  files and, finally, pkg itself. It does this after allowing you to 
+  specify the name of your chosen INSTALL directory.
+
+  For ease of everything, it is recommended that all Starlink Software
+  Items are installed under the same top-level directory. However, the
+  system does allow a single item to be installed in one place when all 
+  the items it depends upon are already installed somewhere else 
+  (beneath a top-level directory known as the STARLINK directory).
+
+  The names of the directories used as the INSTALL and STARLINK 
+  directories will be written into  $HOME/.star_config and used as 
+  suggested values when you are prompted in subsequent invocations of 
+  star_build.
+
+  As you may have guessed, INSTALL and STARLINK are actually the names
+  of macros used within the Starlink makefiles for each item, and may
+  be inherited from environment variables in the calling process.
+
+  If a suggested value for INSTALL is not already defined in the 
+  .star_config file, star_build will attempt to inherit it from the 
+  environment variable INSTALL and, if that fails, default it to 
+  $HOME/star.
+
+  If you elect to specify a value of STARLINK different from INSTALL,
+  a suggested value will be offered. If a suggested value for STARLINK
+  is not already defined in the .star_config file, star_build will 
+  attempt to inherit it from the environment variable STARLINK and, if
+  that fails, default it to be the same as INSTALL. Any value different
+  from INSTALL should only be used with extreme caution and only really
+  makes sense when a single item is being built using existing subsidiary
+  items.
+
+Starlink Standard Makefiles:
+----------------------------
+  The star_build procedure ultimately invokes 'make' using a makefile
+  written to a Starlink standard. There is a Starlink standard makefile
+  for each item and it may be run independently of star_build provided
+  that certain environment variables are set up as described below.
+
+  Standard Starlink makefiles are always run via a shell script (mk),
+  e.g.:
+          % cd {item_source_directory}
+          % ./mk {target}
+       
+  This sets up environment variables as required for various platforms 
+  according to the value of environment variable SYSTEM.  These are 
+  imported into the makefiles so that common makefiles may be used for
+  all platforms. 
+
+  Currently the following platforms are handled:
+
+      Platform             SYSTEM value
+      --------             ------------
+   1. Alpha_OSF/1          alpha_OSF1
+   2. Solaris              sun4_Solaris
+   3. PC Linux             ix86_Linux
+   4. SunOS/4              sun4    (No longer fully supported.)
+   5. Ultrix               mips    (No longer fully supported.)
+   6. unknown              unknown (Likely options for new platforms.)
+
+  If environment variable SYSTEM is not already set, star_build will 
+  attempt to find the right value of SYSTEM for your system. If the 
+  makefiles are used independently, SYSTEM must be set by the user.
+
+  The targets of a Starlink standard makefile are:
+
+     1. build       Build the libraries and executables etc.
+     2. install     Install items beneath a top-level directory
+                    defined by the macro INSTALL.
+     3. test        Run an installation test.
+     4. clean       Remove intermediate files used in the build.
+     5. deinstall   De-install the software from the INSTALL hierarchy.
+     6. unbuild     Remove built files.
+     7. check       Report on current installation status
+     8. export_source  Make a compressed tar file of the source files.
+     9. export      Make a compressed tar file of the 'built' system.
+    10. export_run  Make a compressed tar file of the 'built' system
+                    without the source.
+ 
+  As already mentioned, the makefiles also require macros
+  INSTALL and STARLINK set to define the top-level installation directory
+  and the top-level directory for subsidiary software respectively.
+  These will normally be inherited from environment variables but will default
+  to the user's HOME directory and /star respectively.
+
+  The installation process will automatically create subdirectories of 
+  INSTALL as required. The hierarchy beneath INSTALL is:
+
+  /bin     to hold executables - applications often have their own 
+           subdirectories.
+  /dates   to hold build date_stamp files
+  /etc     to hold miscellaneous files.
+  /help    to hold help files and error messages - applications often
+           have their own subdirectories.
+  /include to hold public Fortran INCLUDE files and C header files
+  /lib     to hold subroutine object libraries.
+  /share   to hold shareable subroutine libraries
+  /docs    to hold documentation on installed items.
+        
+Cleaning up etc.
+----------------
+  Once an item has been installed, the clean target of its makefile may
+  be used to save disk space without affecting the installation. In fact
+  the unbuild target may also be used or the whole source directory
+  removed.  However, these latter two methods may result in unnecessary
+  builds and other complications during future installations using 
+  star_build.
+
+  star_build may be used to 'make' certain targets of the makefile for an
+  item and all its subsidiary items provided that the pkg_needs and/or 
+  pkg_needs_run files are present.
+
+          % cd {top-level Starlink source directory}
+          % ./star_build pkg target
+
+  Where: pkg     is the name of the top-level item
+         target  is one of: clean
+                            unbuild
+                            check
+                            deinstall
+
+  The 'make' for subsidiary items will only occur if INSTALL and
+  STARLINK point to the same directory - the normal process for defining
+  them will occur.
+
+Documentation:
+--------------
+  The LaTeX Starlink User or System Note (SUN or SSN) for most items
+  will be in the source subdirectory and will be installed (in 
+  INSTALL/docs) during installation of the package. Where a hypertext
+  document is also available, it will be linked using Starlink's HTX
+  system. This will insert any required links to other documents, 
+  locally installed versions in preference but, failing that, via the
+  Starlink document server to versions held at RAL.
+
+Using the Software:
+-------------------
+  At Starlink sites, login and cshrc scripts are used to define aliases
+  and environment variables which may not be appropriate at all sites.
+  It is therefore difficult to give detailed instructions for setting up
+  packages so that their use is identical at Starlink and non-Starlink
+  sites.
+
+  However, the following general rules apply after installation:
+
+  Where INSTALL is the name of your INSTALL directory,
+        PKG is the name of the software item
+        pkg is the item prefix (usually the item name in lower case)
+
+  For libraries:
+
+    1. Add INSTALL/bin to your PATH.
+
+    2. Add INSTALL/lib to your library search path.
+
+    3. Most subroutine libraries provide a scripts, pkg_dev, pkg_link
+       and pkg_link_adam in INSTALL/bin.
+       pkg_dev will set up links in the current directory, to the Fortran 
+         INCLUDE files for the library in INSTALL/include.
+       pkg_link and pkg_link_adam produce a list of additional libraries 
+         required to link a program if it uses the pkg library. (Different
+         lists may be required for standalone or ADAM programs.)
+         E.g. to compile and link a program which uses the CHR library:
+               % chr_dev
+               % f77 -o prog prog.f -L$INSTALL/lib `chr_link`
+
+  For applications:
+
+    1. If the INIT software item is listed as one of the needs, install it
+       then 'source' the files INSTALL/etc/login and INSTALL/etc/cshrc. These 
+       will define the environment variables and aliases required to start up
+       any Starlink Software Items installed in your INSTALL directory. Other
+       items will be set as "not installed" so if you have items installed
+       elsewhere (including /star at Starlink sites), they will cease to work
+       and you will have to take special action if you want them.
+       
+    2. For most application packages an environment variable PKG_DIR is 
+       defined and there is a script in PKG_DIR which is 'sourced' by an
+       alias to start up the package i.e. to set required aliases etc. for 
+       individual applications in the package.
+
+    3. A few applications still require the /star hierarchy to contain files
+       giving information about available devices. If you are at a non-Starlink
+       site you will need to make /star a soft link to your INSTALL directory
+       which should contain the necessary files, although they may need
+       altering for your particular installation. Applications which are
+       known to require this are: TPOINT, POLMAP and PHOTOM which require
+       graphics (GKS and GNS) files, and any applications which use the MAG
+       package for handling magnetic tapes.
+
+
+   The item documentation will give further instructions on how to use Starlink 
+   software items.
+end_of_README

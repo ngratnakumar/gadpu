@@ -1,0 +1,543 @@
+\batchmode
+\documentstyle[11pt]{article}
+\makeatletter
+\input{/tmp_mnt/mount_nfs/users/rfws/software/htx/dev/sun188.htx/star2html.sty} 
+\input{/tmp_mnt/mount_nfs/users/rfws/software/htx/dev/sun188.htx/html.sty}
+\pagestyle{myheadings}
+
+%
+
+
+
+
+
+
+
+
+
+
+%
+
+
+
+\markright{SUN  /188.3}
+\setlength{\textwidth}{160mm}
+\setlength{\textheight}{230mm}
+\setlength{\topmargin}{-2mm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{\medskipamount}
+\setlength{\unitlength}{1mm}
+
+%
+
+
+
+
+%
+
+
+
+
+
+
+
+
+
+
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%
+
+
+
+%
+
+
+%
+
+
+
+
+\renewcommand  {\_}{{\tt\symbol{95}}} 
+
+%
+
+
+
+
+%
+
+
+
+
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{htmlonly}
+   
+%
+\end{htmlonly}
+
+%
+
+
+
+
+
+\newcommand {\stardoccategory}  {Starlink User Note}
+
+\newcommand {\stardocinitials}  {SUN}
+
+\newcommand {\stardocnumber}    {188.3}
+
+\newcommand {\stardocsource}    {sun188.3}
+
+\newcommand {\stardocauthors}   {R.F.~Warren-Smith}
+
+\newcommand {\stardocdate}      {6th January 1998}
+
+\newcommand {\stardoctitle}     {HTX\\ [1ex]
+                                Hypertext Cross-Reference Utilities}
+
+\newcommand {\stardocversion}   {Version 1.2}
+
+\newcommand {\stardocmanual}    {User's Manual}
+
+\newcommand {\stardocname}{\stardocinitials /\stardocnumber}
+
+\newcommand {\htmladdnormallinkfoot}[2]{#1\footnote{#2}}
+
+\newcommand {\htmladdnormallink}[2]{#1}
+
+\newcommand {\htmladdimg}[1]{}
+
+\newenvironment {latexonly}{}{}
+
+\newcommand {\hyperref}[4]{#2\ref{#4}#3}
+
+\newcommand {\htmlref}[2]{#1}
+
+\newcommand {\htmlimage}[1]{}
+
+\newcommand {\htmladdtonavigation}[1]{}
+
+\newcommand {\xref}[3]{#1}
+
+\newcommand {\xlabel}[1]{}
+
+\newcommand {\latextohtml}{{\bf LaTeX}{2}{\tt{HTML}}}
+
+\newcommand {\latex}[1]{#1}
+
+\newcommand {\setunderscore}{\renewcommand  {\_}{{\tt\symbol{95}}}}
+
+\newcommand {\latexonlytoc}[0]{\tableofcontents}
+
+\newcommand {\cgiurl}{http://hoohoo.ncsa.uiuc.edu/cgi/overview.html}
+
+\newcommand {\formsurl}{http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/Docs/fill-out-forms/overview.html}
+
+\newcommand {\HTMLurl}{http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html}
+
+\newcommand {\latextohtmlurl}{http://cbl.leeds.ac.uk/nikos/tex2html/doc/latex2html/latex2html.html}
+
+\newcommand {\mosaicurl}{http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/NCSAMosaicHome.html}
+
+\newcommand {\netscapeurl}{http://home.netscape.com/}
+
+\newcommand {\psurl}{http://www.cs.indiana.edu/docproject/programming/postscript/postscript.html}
+
+\newcommand {\urlurl}{http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html}
+
+\newcommand {\wwwurl}{http://www.w3.org/hypertext/WWW/}
+
+\newcommand {\cgiref}[1]{\htmladdnormallink{#1}{\cgiurl}}
+
+\newcommand {\HTMLref}[1]{\htmladdnormallink{#1}{\HTMLurl}}
+
+\newcommand {\formsref}[1]{\htmladdnormallink{#1}{\formsurl}}
+
+\newcommand {\latextohtmlref}[1]{\htmladdnormallink{#1}{\latextohtmlurl}}
+
+\newcommand {\mosaicref}[1]{\htmladdnormallink{#1}{\mosaicurl}}
+
+\newcommand {\netscaperef}[1]{\htmladdnormallink{#1}{\netscapeurl}}
+
+\newcommand {\psref}[1]{\htmladdnormallink{#1}{\psurl}}
+
+\newcommand {\urlref}[1]{\htmladdnormallink{#1}{\urlurl}}
+
+\newcommand {\wwwref}[1]{\htmladdnormallink{#1}{\wwwurl}}
+
+\newcommand {\HTXref}[1]{\htmlref{#1}{sect:HTX}}
+
+\newcommand {\latexref}[1]{\xref{#1}{sun9}{}}
+
+\newcommand {\linkerref}[1]{\htmlref{#1}{hlink}}
+
+\newcommand {\indexref}[1]{\htmlref{#1}{sect:indexfiles}}
+
+\newcommand {\docref}[1]{\htmlref{#1}{sect:hypertextdocuments}}
+
+\newcommand {\dirref}[1]{\htmlref{#1}{sect:documentdirectories}}
+
+\newcommand {\libref}[1]{\htmlref{#1}{sect:documentlibraries}}
+
+\newcommand {\labref}[1]{\htmlref{#1}{sect:targetlabels}}
+
+\newcommand {\remref}[1]{\htmlref{#1}{sect:remotedocuments}}
+
+\newcommand {\servref}[1]{\htmlref{#1}{sect:remoteservers}}
+
+\newcommand {\findmeref}[1]{\htmlref{#1}{findme}}
+
+\newcommand {\showmeref}[1]{\htmlref{#1}{showme}}
+
+\newcommand {\hi}[1]{{\tt{#1}}}
+
+\newcommand {\qt}[1]{``#1''}
+
+\newcommand {\st}[1]{{\em{#1}}}
+
+\renewcommand {\qt}[1]{{\tt{"}}#1{\tt{"}}}
+
+\renewcommand {\thepage}{\roman{page}}
+
+\renewcommand {\latexonlytoc}[0]{}
+
+\renewcommand {\thepage}{\arabic{page}}
+
+\newcommand {\sstroutine}[3]{
+   \goodbreak
+   \rule{\textwidth}{0.5mm}
+   \vspace{-7ex}
+   \newline
+   \settowidth{\sstbannerlength}{{\Large {\bf #1}}}
+   \setlength{\sstcaptionlength}{\textwidth}
+   \setlength{\sstexampleslength}{\textwidth}
+   \addtolength{\sstbannerlength}{0.5em}
+   \addtolength{\sstcaptionlength}{-2.0\sstbannerlength}
+   \addtolength{\sstcaptionlength}{-5.0pt}
+   \settowidth{\sstexampleswidth}{{\bf Examples:}}
+   \addtolength{\sstexampleslength}{-\sstexampleswidth}
+   \parbox[t]{\sstbannerlength}{\flushleft{\Large {\bf #1}}}
+   \parbox[t]{\sstcaptionlength}{\center{\Large #2}}
+   \parbox[t]{\sstbannerlength}{\flushright{\Large {\bf #1}}}
+   \begin{description}
+      #3
+   \end{description}
+}
+
+\newcommand {\sstdescription}[1]{\item[Description:] #1}
+
+\newcommand {\sstusage}[1]{\item[Usage:] \mbox{} \\ [1.3ex] {\ssttt #1}}
+
+\newcommand {\sstinvocation}[1]{\item[Invocation:]\hspace{0.4em}{\tt #1}}
+
+\newcommand {\sstarguments}[1]{
+   \item[Arguments:] \mbox{} \\ 
+   \vspace{-3.5ex}
+   \begin{description}
+      #1
+   \end{description}
+}
+
+\newcommand {\sstreturnedvalue}[1]{
+   \item[Returned Value:] \mbox{} \\ 
+   \vspace{-3.5ex}
+   \begin{description}
+      #1
+   \end{description}
+}
+
+\newcommand {\sstparameters}[1]{
+   \item[Parameters:] \mbox{} \\ 
+   \vspace{-3.5ex}
+   \begin{description}
+      #1
+   \end{description}
+}
+
+\newcommand {\sstexamples}[1]{
+   \item[Examples:] \mbox{} \\ 
+   \vspace{-3.5ex}
+   \begin{description}
+      #1
+   \end{description}
+}
+
+\newcommand {\sstsubsection}[1]{ \item[{#1}] \mbox{} \\ }
+
+\newcommand {\sstexamplesubsection}[2]{\sloppy
+\item[\parbox{\sstexampleslength}{\ssttt #1}] \mbox{} \\  #2 }
+
+\newcommand {\sstnotes}[1]{\item[Notes:] \mbox{} \\ [1.3ex] #1}
+
+\newcommand {\sstdiytopic}[2]{\item[{\hspace{-0.35em}#1\hspace{-0.35em}:}] \mbox{} \\ [1.3ex] #2}
+
+\newcommand {\sstimplementationstatus}[1]{
+   \item[{Implementation Status:}] \mbox{} \\ [1.3ex] #1}
+
+\newcommand {\sstbugs}[1]{\item[Bugs:] #1}
+
+\newcommand {\sstitemlist}[1]{
+  \mbox{} \\ 
+  \vspace{-3.5ex}
+  \begin{itemize}
+     #1
+  \end{itemize}
+}
+
+\newcommand {\sstitem}{\item}
+
+\newcommand {\ssttt}{\tt}
+
+\renewcommand {\sstroutine}[3]{
+      \subsection{#1\xlabel{#1}-\label{#1}#2}
+      \begin{description}
+         #3
+      \end{description}
+   }
+
+\renewcommand {\sstdescription}[1]{\item[Description:]
+      \begin{description}
+         #1
+      \end{description}
+   }
+
+\renewcommand {\sstusage}[1]{\item[Usage:]
+      \begin{description}
+         {\ssttt #1}
+      \end{description}
+   }
+
+\renewcommand {\sstinvocation}[1]{\item[Invocation:]
+      \begin{description}
+         {\ssttt #1}
+      \end{description}
+   }
+
+\renewcommand {\sstarguments}[1]{
+      \item[Arguments:]
+      \begin{description}
+         #1
+      \end{description}
+   }
+
+\renewcommand {\sstreturnedvalue}[1]{
+      \item[Returned Value:]
+      \begin{description}
+         #1
+      \end{description}
+   }
+
+\renewcommand {\sstparameters}[1]{
+      \item[Parameters:]
+      \begin{description}
+         #1
+      \end{description}
+   }
+
+\renewcommand {\sstexamples}[1]{
+      \item[Examples:]
+      \begin{description}
+         #1
+      \end{description}
+   }
+
+\renewcommand {\sstsubsection}[1]{\item[{#1}]}
+
+\renewcommand {\sstexamplesubsection}[2]{\item[{\ssttt #1}] \\  #2}
+
+\renewcommand {\sstnotes}[1]{\item[Notes:]
+      \begin{description}
+         #1
+      \end{description}
+   }
+
+\renewcommand {\sstdiytopic}[2]{\item[{#1}]
+      \begin{description}
+         #2
+      \end{description}
+   }
+
+\renewcommand {\sstimplementationstatus}[1]{\item[Implementation Status:] 
+      \begin{description}
+         #1
+      \end{description}
+   }
+\input{/tmp_mnt/mount_nfs/users/rfws/software/htx/dev/sun188.htx/star2html.sty}
+
+
+\makeatother
+\newenvironment{tex2html_wrap}{}{}
+\newwrite\lthtmlwrite
+\def\lthtmltypeout#1{{\let\protect\string\immediate\write\lthtmlwrite{#1}}}%
+\newbox\sizebox
+\begin{document}
+\pagestyle{empty}
+\stepcounter{section}
+\setcounter{page}{1}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\appendix
+\stepcounter{section}
+\stepcounter{subsection}
+{\newpage
+\clearpage
+\samepage \setbox\sizebox=\hbox{$*$}\lthtmltypeout{latex2htmlSize :tex2html_wrap_inline4150: \the\ht\sizebox::\the\dp\sizebox.}\box\sizebox
+}
+
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+
+\end{document}

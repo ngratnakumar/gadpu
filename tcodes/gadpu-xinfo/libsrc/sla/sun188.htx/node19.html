@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<!Converted with LaTeX2HTML 95.1 (Fri Jan 20 1995) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds >
+<HEAD>
+<TITLE> Link-Editing</TITLE>
+</HEAD>
+<BODY>
+<meta name="description" value=" Link-Editing">
+<meta name="keywords" value="sun188">
+<meta name="resource-type" value="document">
+<meta name="distribution" value="global">
+<P>
+ <BR> <HR><A NAME=tex2html328 HREF="node20.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html326 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html320 HREF="node18.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html329 HREF="node20.html"> Absolute and Relative Links</A><BR>
+<B>Up:</B> <A NAME=tex2html327 HREF="node17.html"> HOW HTX LINKING WORKS</A><BR>
+<B> Previous:</B> <A NAME=tex2html321 HREF="node18.html"> Index Files</A>
+<BR> <HR> <P>
+<H2><A NAME=SECTION00052000000000000000><A NAME=sectlinkediting>&#160;</A><A NAME=xref_link_editing>&#160;</A>Link-Editing</A></H2>
+<P>
+The <A HREF="node48.html#hlink">linker</A> identifies those <A HREF="node4.html#secthypertextdocuments">documents</A> that have
+changed since the <A HREF="node9.html#sectdocumentlibraries">library</A> they reside in was last linked by
+looking for a file called <tt>&quot;</tt>htx.log<tt>&quot;</tt> which serves as a date-stamp in
+each document library (if this file is absent, all documents in the
+library are considered changed). The contents of the <tt>&quot;</tt>htx.log<tt>&quot;</tt> file
+also list the location of each local document when the library was
+last re-linked. Any that have moved to a different location are also
+regarded as <tt>&quot;</tt>changed<tt>&quot;</tt>.
+<P>
+The linker identifies all other documents which refer to any of the
+changed documents. Since all of these are potentially involved in
+cross-references that may no longer be valid, they will all need to be
+re-linked.
+<P>
+A further search is then made of the libraries that appear on the
+<A HREF="node10.html#sectsearchpath"><tt>HTX_PATH</tt> search path</A>. If any of the documents that needs re-linking
+refers to a document on this path, then the latter document's
+<A HREF="node18.html#sectindexfiles">index file</A> is searched to identify the <A NAME=tex2html27 HREF="http://www.w3.org/hypertext/WWW/MarkUp/MarkUp.html ">HTML</A> file
+that is being referenced.
+<P>
+Finally, the affected HTML files are edited to insert the new, correct
+<A NAME=tex2html28 HREF="http://www.w3.org/hypertext/WWW/Addressing/URL/Overview.html ">URLs</A>. After this, any <A NAME=tex2html29 HREF="http://www.w3.org/hypertext/WWW/ ">WWW</A> browser should be able to
+follow any of the links between the documents and arrive at the
+correct location.
+<P>
+A document set will need linking again whenever a document is added or
+removed, or whenever one of its documents changes. However, because
+the linker can quickly identify which files are affected and can
+utilise existing index file information, subsequent linking operations
+are much faster.
+<P>
+<BR> <HR><A NAME=tex2html328 HREF="node20.html"><IMG ALIGN=BOTTOM ALT="next" SRC="./next_motif.gif"></A> <A NAME=tex2html326 HREF="node17.html"><IMG ALIGN=BOTTOM ALT="up" SRC="./up_motif.gif"></A> <A NAME=tex2html320 HREF="node18.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="./previous_motif.gif"></A>   <A HREF="sun188.html#stardoccontents"><IMG  ALIGN=BOTTOM ALT="" SRC="contents_motif.gif"></A><BR>
+<B> Next:</B> <A NAME=tex2html329 HREF="node20.html"> Absolute and Relative Links</A><BR>
+<B>Up:</B> <A NAME=tex2html327 HREF="node17.html"> HOW HTX LINKING WORKS</A><BR>
+<B> Previous:</B> <A NAME=tex2html321 HREF="node18.html"> Index Files</A>
+<BR> <HR> <P>
+<BR> <HR>
+<P><ADDRESS>
+<I>HTX Hypertext Cross-Reference Utilities<BR>Starlink User Note 188<BR>R.F. Warren-Smith<BR>6th January 1998<BR>E-mail:<A HREF="mailto:rfws@star.rl.ac.uk">rfws@star.rl.ac.uk</A></I>
+</ADDRESS>
+</BODY>
