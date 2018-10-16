@@ -243,9 +243,10 @@ def __main__():
                     imaging_data = {
                         "project_id": project_id,
                         "calibration_id": calibration_id,
-                        "calibrated_fits_file": each_uvfits,
+                        "calibrated_fits_file": os.path.basename(each_uvfits),
                         "status": "unprocessed",
-                        "comments": "c17"
+                        "comments": "c17",
+                        "file_size": fileutils.calculalate_file_sizse_in_MB(each_uvfits)
                     }
                     dbutils.insert_into_table("imaginginput", imaging_data, "imaging_id")
 
