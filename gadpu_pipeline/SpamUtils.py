@@ -36,7 +36,7 @@ class SpamUtils:
         base_path = os.path.dirname(filename)
         lta_file = os.path.basename(filename)
         uvfits_file = os.path.basename(destination)
-	print("Running GVFITS")
+        print("Running GVFITS")
         fileutils = FileUtils()
         fileutils.copy_files(filename, 'fits/')
         status = "gvfits processing for "+filename
