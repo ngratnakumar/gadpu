@@ -215,17 +215,19 @@ class Pipeline:
         current_time_in_sec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
 
-        check_status_file = glob.glob(base_path + "/failed_log.txt")
-
+        check_status_file = glob.glob(base_path + "/PRECALIB/failed_log.txt")
+        comments = "failed"
         if check_status_file:
             status = "failed"
+            comments = str(open(check_status_file[0], 'r').read())
         else:
             status = "success"
+            comments = "precalibrate_target done, calibration_id = " + str(calibration_id)
 
         projectobsno_update_data = {
             "set": {
                 "status": status,
-                "comments": "precalibrate_target done, calibration_id = " + str(calibration_id),
+                "comments": comments
             },
             "where": {
                 "project_id": project_id
@@ -235,7 +237,8 @@ class Pipeline:
         calibration_update_data = {
             "set": {
                 "status": status,
-                "end_time": current_date_timestamp
+                "end_time": current_date_timestamp,
+                "comments": comments
             },
             "where": {
                 "calibration_id": calibration_id

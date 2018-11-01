@@ -236,6 +236,7 @@ class FileUtils:
                     failed_log = open('failed_log.txt', 'a+')
                     failed_log.write("Failed Error: " + str(e))
                     failed_log.flush()
+            self.delete_file_dir(UVFITS_FILE_NAME)
             PROCCEED_FILE_LIST = glob.glob(DIR + "/*")
             sys.stdout = original_stdout
             sys.stderr = original_stderr
