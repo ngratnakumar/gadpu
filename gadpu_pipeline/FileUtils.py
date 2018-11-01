@@ -171,6 +171,39 @@ class FileUtils:
             return any(project in string for string in obs_list)
 
 
+    def run_spam_combine_usb_lsb(self, data):
+        (usb,lsb), comb_name = data
+        print("================> "+str(os.getcwd())+" <==============")
+        usb_cp = os.system('cp '+usb+' '+"fits/")
+        print('cp '+usb+' '+'fits/')
+        lsb_cp = os.system('cp '+lsb+' '+"fits/")
+        print('cp '+lsb+' '+'fits/')
+        status = "failed"
+        comments = "something went wrong!"
+        base_path = os.path.dirname(usb)+"/PRECALIB/"
+        usb = "fits/"+os.path.basename(usb)
+        lsb = "fits/"+os.path.basename(lsb)
+        comb_name = "fits/"+os.path.basename(comb_name)
+        original_stdout = sys.stdout
+        original_stderr = sys.stderr
+        combine_usb_lsb_log = open('combusblsb_stdout.log', 'a+')
+        combine_usb_lsb_log.write('\n\n******COMB USB LSB STARTED******\n\n')
+        sys.stdout = combine_usb_lsb_log
+        sys.stderr = combine_usb_lsb_log
+        try:
+            print(usb, lsb, comb_name)
+            spam.combine_usb_lsb(usb, lsb, comb_name)
+            status = "success"
+            comments = "done combining usb lsb"
+        except Exception as ex:
+            comments = str(ex)
+        sys.stdout = original_stdout
+        sys.stderr = original_stderr
+        # os.system('rm '+usb+' '+lsb)
+        # os.system('cp datfil/* '+base_path)
+        # os.system('cp fits/* '+base_path)
+        return status, comments
+
     def run_spam_precalibration_stage(self, UVFITS_BASE_DIR, DIR, UVFITS_FILE_NAME, OBSNO):
         print "Running SPAM pre_calibrate_targets on " + DIR
         os.chdir(DIR)
@@ -198,7 +231,7 @@ class FileUtils:
             else:
                 print(PROJECT_CODE + " Flagging apply_tsys=True")
                 try:
-                    spam.pre_calibrate_targets(UVFITS_FILE_NAME)
+                    spam.pre_calibrate_targets(UVFITS_FILE_NAME, keep_channel_one=True)
                 except Exception as e:
                     failed_log = open('failed_log.txt', 'a+')
                     failed_log.write("Failed Error: " + str(e))

@@ -5,19 +5,14 @@ import time
 import datetime
 import glob
 import os
+import random
 # import spam
 
 
 class Pipeline:
 
     def stage1(self, gdata):
-        """
-        RUN LTACOMB
-        1) Identify the GSB and GHB observations
-        2) Do LTACOMB if required
-        :param gadpu-data observation_no from napsgoadb:
-        :return: None, does the LTACOMB
-        """
+
 
         print("Started Stage1: ")
 
@@ -29,17 +24,17 @@ class Pipeline:
 
         for each_obs in data:
             proposal_id = data[each_obs]['proposal_id']
-            file_path = data[each_obs]['file_path']
+            file_path = data[each_obs]['base_path']
             backend_type = data[each_obs]['backend_type']
             cycle_id = data[each_obs]['cycle_id']
 
-            project_path = path+"/".join(file_path.split('/')[-3:])
+            project_path = path + "/".join(file_path.split('/')[-3:])
 
             lta, ltb, gsb = None, None, None
             isghb = False
             status = "cycle17"
 
-            files_list = glob.glob(file_path+'*.lt*')
+            files_list = glob.glob(file_path + '*.lt*')
             files_list.sort()
 
             if len(files_list) == 1:
@@ -79,11 +74,7 @@ class Pipeline:
                     fileutils.insert_details(lta, project_path, isghb, cycle_id, status)
 
     def stage2(self):
-        """
-        Generating Uncalibrated UVFITS using GVFITS
-        :param gsb_observations, ghb_observations, observations_list:
-        :return None, generates uncalibrated UVFITS:
-        """
+
 
         dbutils = DBUtils()
         spamutils = SpamUtils()
@@ -102,21 +93,21 @@ class Pipeline:
         for each_lta in lta_details:
             print(each_lta)
             project_id = each_lta["project_id"]
-            #project_id = each_lta[0]
+            # project_id = each_lta[0]
             lta_file = each_lta["ltacomb_file"]
-            #lta_file = each_lta[1]
-            #lta_id = each_lta[2]
+            # lta_file = each_lta[1]
+            # lta_id = each_lta[2]
             lta_id = each_lta["lta_id"]
-            columnKeys = {"file_path"}
+            columnKeys = {"base_path"}
             whereKeys = {"project_id": project_id}
             lta_path_details = dbutils.select_test_table("projectobsno", columnKeys, whereKeys, 0)
             print(lta_path_details)
             base_path = lta_path_details[0]
             print(base_path)
-            uvfits_file = lta_file+'.UVFITS'
-            base_lta = base_path+'/'+lta_file
+            uvfits_file = lta_file + '.UVFITS'
+            base_lta = base_path + '/' + lta_file
             if os.path.exists(base_lta):
-                base_uvfits = base_path+'/'+uvfits_file
+                base_uvfits = base_path + '/' + uvfits_file
                 gvfits_status = spamutils.run_gvfits(base_lta, base_uvfits)
                 if os.path.exists(base_uvfits):
                     status = "success"
@@ -124,7 +115,7 @@ class Pipeline:
                     status = "failed"
 
                 calibration_data = {
-                   "project_id": project_id,
+                    "project_id": project_id,
                     "lta_id": lta_id,
                     "uvfits_file": uvfits_file,
                     "status": status,
@@ -158,48 +149,35 @@ class Pipeline:
                 dbutils.update_table(lta_details_update_data, "ltadetails")
 
     def stage3(self):
+
         dbutils = DBUtils()
         fileutils = FileUtils()
 
         columnKeys = {"calibration_id", "project_id", "uvfits_file"}
-        whereData = {"comments": "c17", "status": "success"}
+        whereData = {"comments": "c17", "status": "unprocessed"}
         uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
 
         calibration_id = uncalibrated_uvfits[0]
         project_id = uncalibrated_uvfits[1]
         uvfits_file = uncalibrated_uvfits[2]
 
-        columnKeys = {"file_path", "observation_no"}
+        columnKeys = {"base_path", "observation_no"}
         whereData = {"project_id": project_id, "cycle_id": 17}
         project_details = dbutils.select_from_table("projectobsno", columnKeys, whereData, 0)
 
         base_path = project_details[1]
         observation_no = project_details[0]
-        
-        """
-        TODO: 
-        
-            1 Update the projectobsno's project_id status to 'processing'
-            and comments to 'running precalibrate_target'
-            
-            2 Update the calibrationinput's calibration_id status to 'processing'
-            
-            3 Start precalibrate_target
-            
-            4 depending on the process status, update projectobsno and calibrationinput
-               
-        """
+
         current_time_in_sec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
 
         projectobsno_update_data = {
             "set": {
                 "status": "processing",
-                "comments": "running precalibrate_target, calibration_id = "+str(calibration_id),
+                "comments": "running precalibrate_target, calibration_id = " + str(calibration_id),
             },
             "where": {
-                "project_id": project_id,
-                "status": "unprocessed"
+                "project_id": project_id
             }
         }
 
@@ -209,8 +187,7 @@ class Pipeline:
                 "start_time": current_date_timestamp
             },
             "where": {
-                "calibration_id": calibration_id,
-                "status": "success"
+                "calibration_id": calibration_id
             }
         }
 
@@ -228,7 +205,7 @@ class Pipeline:
             SPAM_THREAD_DIR = os.getcwd()
             SPAM_WORKING_DIR = os.getcwd() + "/fits/"
         print(SPAM_WORKING_DIR, SPAM_THREAD_DIR, UVFITS_BASE_DIR, UVFITS_FILE_NAME)
-        UVFITS_FILE_PATH = UVFITS_BASE_DIR+"/"+UVFITS_FILE_NAME
+        UVFITS_FILE_PATH = UVFITS_BASE_DIR + "/" + UVFITS_FILE_NAME
         print(UVFITS_FILE_PATH)
         print(SPAM_WORKING_DIR)
         fileutils.copy_files(UVFITS_FILE_PATH, SPAM_WORKING_DIR)
@@ -238,7 +215,7 @@ class Pipeline:
         current_time_in_sec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
 
-        check_status_file = glob.glob(base_path+"/failed_log.txt")
+        check_status_file = glob.glob(base_path + "/failed_log.txt")
 
         if check_status_file:
             status = "failed"
@@ -248,7 +225,7 @@ class Pipeline:
         projectobsno_update_data = {
             "set": {
                 "status": status,
-                "comments": "precalibrate_target done, calibration_id = "+str(calibration_id),
+                "comments": "precalibrate_target done, calibration_id = " + str(calibration_id),
             },
             "where": {
                 "project_id": project_id
@@ -269,12 +246,141 @@ class Pipeline:
         dbutils.update_table(calibration_update_data, "calibrationinput")
 
     def stage4(self):
-        pass
+        dbutils = DBUtils()
+        status = "failed"
+        comments = "combine usb lsb failed"
+        # fileutils = FileUtils()
+
+        # query conditions for projectobsno
+        columnKeys = {"project_id", "base_path", "observation_no"}
+        whereKeys = {"isghb": True, "cycle_id": 17, "status": "combinelsbusb"}
+
+        project_data = dbutils.select_from_table("projectobsno", columnKeys, whereKeys, 0)
+        print(project_data)
+
+        project_id = project_data[1]
+        base_path = project_data[2]
+        obsno = project_data[0]
+
+        print(project_id, base_path, obsno)
+
+        # query conditions for calibrationinput
+        columnKeys = {"calibration_id", "uvfits_file"}
+        whereKeys = {"project_id": project_id, "status": "ready"}
+        calibration_data = dbutils.select_from_table("calibrationinput", columnKeys, whereKeys, None)
+        print(calibration_data)
+        if len(calibration_data) < 2:
+            status = "failed"
+            comments = "LSB or USB or both failed"
+            projectobsno_update_data = {
+                "set": {
+                    "status": status,
+                    "comments": comments
+                },
+                "where": {
+                    "project_id": project_id
+                }
+            }
+            print("Updating the projectobsno/calibration status ... ")
+            dbutils.update_table(projectobsno_update_data, "projectobsno")
+            if calibration_data:
+                calibration_update_data = {
+                    "set": {
+                        "status": status,
+                        "comments": comments
+                    },
+                    "where": {
+                        "calibration_id": calibration_data[0]["calibration_id"]
+                    }
+                }
+                dbutils.update_table(calibration_update_data, "calibrationinput")
+        else:
+            print("Values > 2")
+            print("*************"+str(os.getcwd()))
+            for each_uvfits in calibration_data:
+                precalib_files = glob.glob(base_path+"/PRECALIB/*")
+                lsb_list = glob.glob(base_path+"/PRECALIB/*LSB*.UVFITS")
+                usb_list = glob.glob(base_path+"/PRECALIB/*USB*.UVFITS")
+                projectobsno_update_data = {
+                    "set": {
+                        "status": "processing",
+                        "comments": "combining_lsb_usb"
+                    },
+                    "where": {
+                        "project_id": project_id
+                     }
+                }
+                dbutils.update_table(projectobsno_update_data, "projectobsno")
+                calibration_id = each_uvfits["calibration_id"]
+                uvfits_file = each_uvfits["uvfits_file"]
+                calibration_update_data = {
+                    "set": {
+                        "status": "processing",
+                        "comments": "combining_lsb_usb"
+                    },
+                    "where": {
+                        "calibration_id": calibration_id
+                    }
+                }
+                dbutils.update_table(calibration_update_data, "calibrationinput")
+                if len(lsb_list) == len(usb_list):
+                    print(">>>>>>COMBINE_LSB_USB<<<<<<<")
+                    usb_list.sort()
+                    lsb_list.sort()
+                    print(usb_list)
+                    print(lsb_list)
+                    to_spam = list(zip(usb_list, lsb_list))
+                    print(to_spam)
+                    for each_pair in to_spam:
+                        fileutils = FileUtils()
+                        print("-------------------------")
+                        comb = each_pair[0].replace('USB', 'COMB')
+                        data = each_pair, comb
+
+                        currentTimeInSec = time.time()
+                        start_time = datetime.datetime.fromtimestamp(currentTimeInSec).strftime(
+                            '%Y-%m-%d %H:%M:%S')
+                        status, comments = fileutils.run_spam_combine_usb_lsb(data)
+                        currentTimeInSec = time.time()
+                        end_time = datetime.datetime.fromtimestamp(currentTimeInSec).strftime(
+                            '%Y-%m-%d %H:%M:%S')
+                        if not comments:
+                            comments = "done combining usb lsb"
+                        imagininput_data = {
+                            "project_id": project_id,
+                            "calibration_id": calibration_id,
+                            "calibrate_fits": os.path.basename(comb),
+                            "file_size": fileutils.calculalate_file_sizse_in_MB(comb),
+                            "start_time": start_time,
+                            "end_time": end_time,
+                            "comments": comments
+                        }
+                        dbutils.insert_into_table("imaginginput", imagininput_data, "imaging_id")
+                        print("-------------------------")
+                projectobsno_update_data = {
+                    "set": {
+                        "status": status,
+                        "comments": comments
+                    },
+                    "where": {
+                        "project_id": project_id
+                     }
+                }
+                dbutils.update_table(projectobsno_update_data, "projectobsno")
+                calibration_update_data = {
+                    "set": {
+                        "status": status,
+                        "comments": comments
+                    },
+                    "where": {
+                        "calibration_id": calibration_id
+                    }
+                }
+                dbutils.update_table(calibration_update_data, "calibrationinput")
 
 
     def stage5(self):
         pass
-
 
     def __prerequisites(self):
         CYCLE_ID = 17
@@ -287,17 +393,17 @@ class Pipeline:
                     "inner join das.scans s on s.scangroup_id = g.scangroup_id " \
                     "inner join gmrt.sourceobservationtype so on p.proposal_id = so.proposal_id " \
                     "where p.cycle_id ='" + CYCLE_ID + "' " \
-                    "and so.obs_type not like 'pulsar%' " \
-                    "and so.obs_type not like 'phased array'" \
-                    "and s.sky_freq1=s.sky_freq2 " \
-                    "and s.sky_freq1 < 900000000 " \
-                    "and s.chan_width >= 62500 " \
-                    "and o.proj_code not like '16_279' " \
-                    "and o.proj_code not like '17_072' " \
-                    "and o.proj_code not like '18_031' " \
-                    "and o.proj_code not like '19_043' " \
-                    "and o.proj_code not like '20_083' " \
-                    "and o.proj_code not like '21_057';"
+                                                       "and so.obs_type not like 'pulsar%' " \
+                                                       "and so.obs_type not like 'phased array'" \
+                                                       "and s.sky_freq1=s.sky_freq2 " \
+                                                       "and s.sky_freq1 < 900000000 " \
+                                                       "and s.chan_width >= 62500 " \
+                                                       "and o.proj_code not like '16_279' " \
+                                                       "and o.proj_code not like '17_072' " \
+                                                       "and o.proj_code not like '18_031' " \
+                                                       "and o.proj_code not like '19_043' " \
+                                                       "and o.proj_code not like '20_083' " \
+                                                       "and o.proj_code not like '21_057';"
 
         dbutils = DBUtils()
 
@@ -313,7 +419,12 @@ class Pipeline:
         return (gadpudata, CYCLE_PATH)
 
     def __init__(self):
-        #self.stage1(self.__prerequisites())
+        sleep_time = int(random.random()*100)
+        print(sleep_time)
+        time.sleep(sleep_time)
+        # self.stage1(self.__prerequisites())
         self.stage3()
+        # self.stage4()
+
 
 Pipeline()

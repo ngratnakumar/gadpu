@@ -6,7 +6,10 @@ import datetime
 
 class Config:
 
-    def config(self, filename='/home/ratnakumar/gadpu/gadpu_pipeline/database.ini', section='postgresql'):
+    def config(self, filename='/GARUDATA/gadpu_pipeline/database.ini', section='postgresql'):
+    #def config(self, filename='/home/ratnakumar/gadpu/gadpu_pipeline/database.ini', section='postgresql'):
+    #def config(self, filename='/CODE/database.ini', section='postgresql'):
+    #def config(self, filename='/GARUDATA/database.ini', section='postgresql'):
         # create a parser
         parser = ConfigParser.ConfigParser()
         # read config file
@@ -23,7 +26,10 @@ class Config:
 
         return db
 
-    def naps_config(self, filename='/home/ratnakumar/gadpu/gadpu_pipeline/database.ini', section='napsgoadb'):
+    def naps_config(self, filename='/GARUDATA/gadpu_pipeline/database.ini', section='postgresql'):
+    #def naps_config(self, filename='/home/ratnakumar/gadpu/gadpu_pipeline/database.ini', section='napsgoadb'):
+    #def naps_config(self, filename='/CODE/database.ini', section='napsgoadb'):
+    #def naps_config(self, filename='/GARUDATA/database.ini', section='napsgoadb'):
         # create a parser
         print("Inside the naps_config")
         parser = ConfigParser.ConfigParser()

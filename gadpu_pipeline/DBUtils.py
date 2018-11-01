@@ -74,6 +74,41 @@ class DBUtils:
                 conn.close()
         return updated_rows
 
+    def update_naps_table(self, updateData, tableName):
+        setData = updateData['set']
+        whereData = updateData['where']
+        sql = 'UPDATE '+tableName+' SET {}'.format(', '.join('{}=%s'.format(k) for k in setData)) + ' WHERE {}'.format(
+            ' AND '.join('{}=%s'.format(x) for x in whereData))
+        refData = []
+        for setFieldValue in setData.values():
+            refData.append(setFieldValue)
+        for whereFieldValue in whereData.values():
+            refData.append(whereFieldValue)
+
+        conn = None
+        updated_rows = ""
+        try:
+            # read database configuration
+            params = Config().naps_config()
+            # connect to the PostgreSQL database
+            conn = psycopg2.connect(**params)
+            # create a new cursor
+            cur = conn.cursor()
+            # execute the UPDATE statement
+            cur.execute(sql, refData)
+            # get the updated row counts
+            updated_rows = cur.rowcount
+            # commit the changes to the database
+            conn.commit()
+            # close communication with the database
+            cur.close()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
+        return updated_rows
+
     def select_test_table(self, tableName, columnKeys, whereData, returnFieldsCount):
         valList =[]
         whrVal =[]
@@ -202,6 +237,35 @@ class DBUtils:
                 conn.close()
         return 0
 
+    def select_gadpu_query(self, sql):
+        print("def gadpu select_query")
+
+        nconfig = config.Config()
+        conn = None
+        selected_rows = None
+        result = []
+        try:
+            # read database configuration
+            params = nconfig.config()
+            # connect to the PostgreSQL database
+            conn = psycopg2.connect(**params)
+            # create a new cursor
+            cur = conn.cursor()
+            # execute the UPDATE statement
+            cur.execute(sql)
+            # get the updated row counts
+            result = cur.fetchall()
+            # commit the changes to the database
+            conn.commit()
+            # close communication with the database
+            cur.close()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+            result = error
+        finally:
+            if conn is not None:
+                conn.close()
+        return result
 
     def select_query(self, sql):
         print("def select_query")
