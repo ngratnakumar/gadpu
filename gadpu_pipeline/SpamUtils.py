@@ -6,23 +6,25 @@ from FileUtils import FileUtils
 
 
 class SpamUtils:
-    
 
     def run_ltacomb(self, files_list, destination):
         fileutils = FileUtils()
         lta_list = []
-        self.status = "cycle17"
-        for each_file in files_list:
-            print("Copying "+each_file+" "+destination)
-            fileutils.copy_files(each_file, destination)
-            lta_list.append(destination+'/'+os.path.basename(each_file))
-
-        lta_list.sort()
-        to_comb = ",".join(lta_list)
+        self.status = "cycle16"
+        print(files_list)
+        if len(files_list) > 1:
+            for each_file in files_list:
+                print("Copying "+each_file+" "+destination)
+                fileutils.copy_files(each_file, destination)
+                lta_list.append(destination+'/'+os.path.basename(each_file))
+            lta_list.sort()
+            to_comb = ",".join(lta_list)
+        else:
+            to_comb = files_list[0]
         os.chdir(destination)
         try:
-            print("ltacomb -i "+to_comb)
-            os.system("ltacomb -i "+to_comb)
+            print("/home/gadpu/gadpu_pipeline/ltacomb -i "+to_comb)
+            os.system("/home/gadpu/gadpu_pipeline/ltacomb -i "+to_comb)
         except Exception as ex:
             print(ex)
             self.status = ex
@@ -72,19 +74,3 @@ class SpamUtils:
                 os.mkdir(precalib_dir)
             os.popen('mv datfil/* fits/')
             os.popen('mv fits/* '+precalib_dir+'/')
-
-
-    def run_process_target(self, filename):
-        print("spam.process_traget()")
-
-
-    def run_spam_summary(self, filename):
-        pass
-
-
-    def run_combine_usb_lsb(self, filelist):
-        pass
-
-
-    def run_haslam_correction(self, obslog_file):
-        pass

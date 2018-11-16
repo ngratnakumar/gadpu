@@ -86,7 +86,7 @@ projectobsnoId = "project_id"
 projectobsnoData = {
     'pipeline_id': 1,
     'proposal_dir': '25_076_23MAY2013',
-    'file_path': '/GARUDATA/IMAGING25/CYCLE25/',
+    'base_path': '/GARUDATA/IMAGING25/CYCLE25/',
     'observation_no': 3466,
     'status': 'processing',
     'isghb': False,

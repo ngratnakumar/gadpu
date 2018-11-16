@@ -151,13 +151,26 @@ class Pipeline:
                 dbutils.update_table(lta_details_update_data, "ltadetails")
 
     def stage3(self):
-        spam.set_aips_userid(11)
+        spam.set_aips_userid(33)
         dbutils = DBUtils()
         fileutils = FileUtils()
+
+        while True:
+            columnKeys = {"calibration_id"}
+            whereData = {"comments": "c16", "status": "copying"}
+            uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
+            if not uncalibrated_uvfits:
+                break
+            print("Waiting for bandwidth ... ")
+            time.sleep(50)
 
         columnKeys = {"calibration_id", "project_id", "uvfits_file"}
         whereData = {"comments": "c16", "status": "unprocessed"}
         uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
+
+        if not uncalibrated_uvfits:
+            print("All for the data is processed ... please check the DB for pre_calib")
+            spam.exit()
 
         calibration_id = uncalibrated_uvfits[0]
         project_id = uncalibrated_uvfits[1]
@@ -167,11 +180,12 @@ class Pipeline:
         whereData = {"project_id": project_id, "cycle_id": 16}
         project_details = dbutils.select_from_table("projectobsno", columnKeys, whereData, 0)
 
+
+
         base_path = project_details[1]
         observation_no = project_details[0]
 
-        current_time_in_sec = time.time()
-        current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
+        current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
         projectobsno_update_data = {
             "set": {
@@ -185,7 +199,7 @@ class Pipeline:
 
         calibration_update_data = {
             "set": {
-                "status": "processing",
+                "status": "copying",
                 "start_time": current_date_timestamp
             },
             "where": {
@@ -213,6 +227,18 @@ class Pipeline:
         print(SPAM_WORKING_DIR)
         fileutils.copy_files(UVFITS_FILE_PATH, SPAM_WORKING_DIR)
         print("Copying done ==> Moving to pre_cal_target")
+        current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+        calibration_update_data = {
+            "set": {
+                "status": "processing",
+                "start_time": current_date_timestamp
+            },
+            "where": {
+                "calibration_id": calibration_id
+            }
+        }
+        dbutils.update_table(calibration_update_data, "calibrationinput")
+
         fileutils.run_spam_precalibration_stage(UVFITS_BASE_DIR, SPAM_WORKING_DIR, UVFITS_FILE_NAME, observation_no)
         current_time_in_sec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
@@ -593,9 +619,9 @@ class Pipeline:
         return (gadpudata, CYCLE_PATH)
 
     def __init__(self):
-        self.stage1(self.__prerequisites()) # LTACOMB
+        # self.stage1(self.__prerequisites()) # LTACOMB
         # self.stage2() # GVFITS
-        # self.stage3() # PRE_CALIB
+        self.stage3() # PRE_CALIB
         # self.stage4() # PROCESS_TARGET
         # self.stage5() # POST_PROC
 

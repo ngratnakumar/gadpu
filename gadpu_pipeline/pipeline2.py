@@ -593,8 +593,8 @@ class Pipeline:
         return (gadpudata, CYCLE_PATH)
 
     def __init__(self):
-        self.stage1(self.__prerequisites()) # LTACOMB
-        # self.stage2() # GVFITS
+        # self.stage1(self.__prerequisites()) # LTACOMB
+        self.stage2() # GVFITS
         # self.stage3() # PRE_CALIB
         # self.stage4() # PROCESS_TARGET
         # self.stage5() # POST_PROC

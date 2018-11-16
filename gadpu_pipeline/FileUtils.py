@@ -90,13 +90,15 @@ class FileUtils:
         dbutils = DBUtils()
         for each_rec in data:
             lta_file = os.path.basename(each_rec)
+            if len(lta_file) == 1:
+                lta_file = lta_file[0]
             try:
                 current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
                 lta_details = gS.get_naps_scangroup_details(lta_file)
                 utils = self
                 lta_details["ltacomb_size"] = int(utils.calculalate_file_sizse_in_MB(each_rec))
                 lta_details["status"] = "unprocessed"
-                lta_details["file_path"] = project_path
+                lta_details["base_path"] = project_path
                 lta_details["start_time"] = current_date_timestamp
                 lta_details["proposal_dir"] = project_path.split('/')[-2]
                 lta_details["pipeline_id"] = 1
@@ -180,13 +182,13 @@ class FileUtils:
         print('cp '+lsb+' '+'fits/')
         status = "failed"
         comments = "something went wrong!"
-        base_path = os.path.dirname(usb)+"/PRECALIB/"
+        base_path = os.path.dirname(usb)
         usb = "fits/"+os.path.basename(usb)
         lsb = "fits/"+os.path.basename(lsb)
-        comb_name = "fits/"+os.path.basename(comb_name)
+        comb_name = "fits/"+str(comb_name).split('/')[-1]
         original_stdout = sys.stdout
         original_stderr = sys.stderr
-        combine_usb_lsb_log = open('combusblsb_stdout.log', 'a+')
+        combine_usb_lsb_log = open('fits/combusblsb_stdout.log', 'a+')
         combine_usb_lsb_log.write('\n\n******COMB USB LSB STARTED******\n\n')
         sys.stdout = combine_usb_lsb_log
         sys.stderr = combine_usb_lsb_log
@@ -199,9 +201,9 @@ class FileUtils:
             comments = str(ex)
         sys.stdout = original_stdout
         sys.stderr = original_stderr
-        # os.system('rm '+usb+' '+lsb)
-        # os.system('cp datfil/* '+base_path)
-        # os.system('cp fits/* '+base_path)
+        os.system('rm '+usb+' '+lsb)
+        os.system('cp datfil/* '+base_path)
+        os.system('cp fits/* '+base_path)
         return status, comments
 
     def run_spam_precalibration_stage(self, UVFITS_BASE_DIR, DIR, UVFITS_FILE_NAME, OBSNO):
@@ -236,7 +238,6 @@ class FileUtils:
                     failed_log = open('failed_log.txt', 'a+')
                     failed_log.write("Failed Error: " + str(e))
                     failed_log.flush()
-            self.delete_file_dir(UVFITS_FILE_NAME)
             PROCCEED_FILE_LIST = glob.glob(DIR + "/*")
             sys.stdout = original_stdout
             sys.stderr = original_stderr
