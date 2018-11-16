@@ -18,6 +18,11 @@ import random
 class Pipeline:
 
     def stage1(self, gdata):
+        """
+        Identifying elegible proposals and run LTACOMB if required
+        :param gdata:
+        :return:
+        """
         print("Started Stage1: ")
         spamutils = SpamUtils()
         fileutils = FileUtils()
@@ -83,6 +88,10 @@ class Pipeline:
                     fileutils.insert_details(lta, project_path, isghb, cycle_id, status)
 
     def stage2(self):
+        """
+        Convert LTA to UVFITS using SPAM
+        :return:
+        """
         dbutils = DBUtils()
         spamutils = SpamUtils()
         fileutils = FileUtils()
@@ -156,6 +165,10 @@ class Pipeline:
                 dbutils.update_table(lta_details_update_data, "ltadetails")
 
     def stage3(self):
+        """
+        Run pre_calibrate_targets
+        :return:
+        """
         spam.set_aips_userid(33)
         dbutils = DBUtils()
         fileutils = FileUtils()
@@ -282,6 +295,10 @@ class Pipeline:
         dbutils.update_table(calibration_update_data, "calibrationinput")
 
     def stage4(self):
+        """
+        Combining LSB and USB if GHB proposals
+        :return:
+        """
         spam.set_aips_userid(11)
         dbutils = DBUtils()
         fileutils = FileUtils()
@@ -456,6 +473,10 @@ class Pipeline:
                 dbutils.update_table(projectobsno_update_data, "projectobsno")
 
     def stage5(self):
+        """
+        SPAM's process_target
+        :return:
+        """
         fileutils = FileUtils()
         aips_id = int(random.random()*100)
         while aips_id < 11 or aips_id > 90:
@@ -671,6 +692,13 @@ class Pipeline:
 
 
     def update_datproducts(curr_dir, project_id, imaging_id, db_model):
+        """
+        Used by stage5 process_target functionality
+        :param project_id:
+        :param imaging_id:
+        :param db_model:
+        :return:
+        """
         fileutils = FileUtils()
         products_list = glob.glob(curr_dir + '/*')
         for each_product in products_list:
@@ -688,6 +716,12 @@ class Pipeline:
 
 
     def stage6(self):
+        """
+        Post processing, extract RMS from the summary file for corresponding PBCOR_IFTS file
+        extract BMIN, BMAJ, BPA from the HISTORY keyword from the PBCOR FITS header and put
+        KEY Value pairs in the same PBCOR FITS header using astropy.io
+        :return:
+        """
         dbutils = DBUtils.DBUtils()
         fits_images_list = glob.glob('/GARUDATA/IMAGING16/CYCLE16/*/*/FITS_IMAGE/*PBCOR*.FITS')
         # fits_images_list = ['/GARUDATA/IMAGING19/CYCLE19/5164/19_085_27DEC10/FITS_IMAGE/1445+099.GMRT325.SP2B.PBCOR.FITS']
@@ -817,6 +851,11 @@ class Pipeline:
                 print(counter)
 
     def __prerequisites(self):
+        """
+        Fetch the basic proposal data depending on the CYCLE_ID
+        This is basically stage0
+        :return:
+        """
         CYCLE_ID = 16
         CYCLE_PATH = '/GARUDATA/IMAGING16/CYCLE16/'
         CYCLE_ID = str(CYCLE_ID)
