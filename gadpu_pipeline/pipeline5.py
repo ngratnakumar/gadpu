@@ -479,9 +479,7 @@ class Pipeline:
         """
         fileutils = FileUtils()
         aips_id = int(random.random()*100)
-        while aips_id < 11 or aips_id > 90:
-            aips_id = int(random.random() * 100)
-        spam.set_aips_userid(aips_id)
+        spam.set_aips_userid(11)
         # Setting the Process Start Date Time
         start_time = str(datetime.datetime.now())
         # Taking system's in/out to backup variable
@@ -505,7 +503,7 @@ class Pipeline:
         column_keys = [tableSchema.imaginginputId, tableSchema.projectobsnoId, "calibrated_fits_file"]
         where_con = {
             "status": "unprocessed",
-            "comments": "c16 done combining usb lsb"
+            "comments": "c16 waiting for process_target"
         }
         to_be_processed = db_model.select_from_table("imaginginput", column_keys, where_con, None)
         imaginginput_details = random.choice(to_be_processed)
@@ -675,10 +673,13 @@ class Pipeline:
         # Removing the current THREAD directory
         removethread = os.system('rm -rf ' + thread_dir)
         current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-
+        if process_status:
+            status = "success"
+        else:
+            status = "failed"
         done_update_data = {
             "set": {
-                "status": "success",
+                "status": status,
                 "end_time": current_date_timestamp,
                 "comments": "processed - files generated"
             },
@@ -690,8 +691,7 @@ class Pipeline:
         # exiting the SPAM process and cleaning the cache memory
         spam.exit()
 
-
-    def update_datproducts(curr_dir, project_id, imaging_id, db_model):
+    def update_datproducts(self, curr_dir, project_id, imaging_id, db_model):
         """
         Used by stage5 process_target functionality
         :param project_id:
@@ -713,7 +713,6 @@ class Pipeline:
                 "status": "success"
             }
             print db_model.insert_into_table("dataproducts", product_data, tableSchema.dataproductsId)
-
 
     def stage6(self):
         """
