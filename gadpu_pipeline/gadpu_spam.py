@@ -1,18 +1,36 @@
 from FileUtils import FileUtils
 from DBUtils import DBUtils
 from SpamUtils import SpamUtils
-import time
-import datetime
-import glob
-import os
-from astropy.io import fits
-import random
-import spam
+import tableSch as tableSchema
 
+from astropy.io import fits
+from time import sleep
+
+import os
+import spam
+import time
+import glob
+import datetime
+import sys
+import random
+import ConfigParser
 
 class Pipeline:
 
-    def stage1(self, gdata):
+    def pipeline_configuration(self, filename='/home/gadpu/gadpu_pipeline/database.ini', section='pipeline'):
+        print("Fetching Pipeline Configuration ... ")
+        parser = ConfigParser.ConfigParser()
+        parser.read(filename)
+        pconf = {}
+        if parser.has_section(section):
+            params = parser.items(section)
+            for param in params:
+                pconf[param[0]] = param[1]
+        else:
+            raise Exception('Section {0} not found in the {1} file'.format(section, filename))
+        return pconf
+
+    def copying_and_ltacomb(self, gdata):
         print("Started Stage1: ")
         spamutils = SpamUtils()
         fileutils = FileUtils()
@@ -33,7 +51,7 @@ class Pipeline:
             print("---------"+project_path)
             lta, ltb, gsb = None, None, None
             isghb = False
-            status = "cycle15"
+            status = str(cycle_id)
 
             files_list = glob.glob(file_path + '*.lt*')
             files_list.sort()
@@ -76,16 +94,21 @@ class Pipeline:
                     fileutils.copy_files(lta, project_path)
                     fileutils.insert_details(lta, project_path, isghb, cycle_id, status)
 
-    def stage2(self):
+    def running_gvfits(self):
+        print("Started Stage2: ")
+
+        cycle_id = self.pipeline_configuration()["cycle_id"]
+
         dbutils = DBUtils()
         spamutils = SpamUtils()
         fileutils = FileUtils()
+
 
         currentTimeInSec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
 
         columnKeys = {"project_id", "ltacomb_file", "lta_id"}
-        whereKeys = {"comments": "cycle16"}
+        whereKeys = {"comments": str(cycle_id)}
 
         lta_details = dbutils.select_from_table("ltadetails", columnKeys, whereKeys, None)
 
@@ -111,7 +134,7 @@ class Pipeline:
                 base_uvfits = base_path + '/' + uvfits_file
                 gvfits_status = spamutils.run_gvfits(base_lta, base_uvfits)
                 if os.path.exists(base_uvfits):
-                    status = "success"
+                    status = str(cycle_id)
                 else:
                     status = "failed"
 
@@ -149,28 +172,44 @@ class Pipeline:
                 dbutils.update_table(project_update_data, "projectobsno")
                 dbutils.update_table(lta_details_update_data, "ltadetails")
 
-    def stage3(self):
-        spam.set_aips_userid(11)
+    def pre_calibration_targets(self):
+        print("Started Stage3: ")
+        spam.set_aips_userid(33)
         dbutils = DBUtils()
         fileutils = FileUtils()
 
+        cycle_id = self.pipeline_configuration()["cycle_id"]
+
+        # while True:
+        #     columnKeys = {"calibration_id"}
+        #     whereData = {"comments": "c15", "status": "copying"}
+        #     uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
+        #     if not uncalibrated_uvfits:
+        #         break
+        #     print("Waiting for bandwidth ... ")
+        #     time.sleep(50)
+
         columnKeys = {"calibration_id", "project_id", "uvfits_file"}
-        whereData = {"comments": "c16", "status": "unprocessed"}
+        whereData = {"status": str(cycle_id)}
         uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
+
+        if not uncalibrated_uvfits:
+            print("All for the data is processed ... please check the DB for pre_calib")
+            spam.exit()
 
         calibration_id = uncalibrated_uvfits[0]
         project_id = uncalibrated_uvfits[1]
         uvfits_file = uncalibrated_uvfits[2]
 
         columnKeys = {"base_path", "observation_no"}
-        whereData = {"project_id": project_id, "cycle_id": 16}
+        whereData = {"project_id": project_id, "cycle_id": int(cycle_id)}
         project_details = dbutils.select_from_table("projectobsno", columnKeys, whereData, 0)
+
 
         base_path = project_details[1]
         observation_no = project_details[0]
 
-        current_time_in_sec = time.time()
-        current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
+        current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
         projectobsno_update_data = {
             "set": {
@@ -184,7 +223,7 @@ class Pipeline:
 
         calibration_update_data = {
             "set": {
-                "status": "processing",
+                "status": "copying",
                 "start_time": current_date_timestamp
             },
             "where": {
@@ -212,6 +251,18 @@ class Pipeline:
         print(SPAM_WORKING_DIR)
         fileutils.copy_files(UVFITS_FILE_PATH, SPAM_WORKING_DIR)
         print("Copying done ==> Moving to pre_cal_target")
+        current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+        calibration_update_data = {
+            "set": {
+                "status": "processing",
+                "start_time": current_date_timestamp
+            },
+            "where": {
+                "calibration_id": calibration_id
+            }
+        }
+        dbutils.update_table(calibration_update_data, "calibrationinput")
+
         fileutils.run_spam_precalibration_stage(UVFITS_BASE_DIR, SPAM_WORKING_DIR, UVFITS_FILE_NAME, observation_no)
         current_time_in_sec = time.time()
         current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
@@ -249,7 +300,10 @@ class Pipeline:
         dbutils.update_table(projectobsno_update_data, "projectobsno")
         dbutils.update_table(calibration_update_data, "calibrationinput")
 
-    def stage4(self):
+    def combining_lsb_usb(self):
+        print("Started Stage4: ")
+        cycle_id = self.pipeline_configuration()["cycle_id"]
+
         spam.set_aips_userid(11)
         dbutils = DBUtils()
         fileutils = FileUtils()
@@ -258,7 +312,7 @@ class Pipeline:
         # fileutils = FileUtils()
         # query conditions for projectobsno
         columnKeys = {"project_id", "base_path", "observation_no"}
-        whereKeys = {"isghb": True, "cycle_id": 16, "status": "combinelsbusb"}
+        whereKeys = {"isghb": True, "cycle_id": 16, "status": "now"}
 
         project_data = dbutils.select_from_table("projectobsno", columnKeys, whereKeys, 0)
         print(project_data)
@@ -272,26 +326,19 @@ class Pipeline:
 
         # query conditions for calibrationinput
         columnKeys = {"calibration_id", "uvfits_file"}
-        whereKeys = {"project_id": project_id, "status": "combinelsbusb"}
+        whereKeys = {"project_id": project_id, "status": "now"}
         calibration_data = dbutils.select_from_table("calibrationinput", columnKeys, whereKeys, None)
         print(calibration_data)
+
+        if not calibration_data:
+            print("All the data is processed ... OR \n ==> please check the DB for combinelsbusb")
+            spam.exit()
 
         print(len(calibration_data))
         if len(calibration_data) < 2:
             status = "success"
             comments = "single file combinelsbusb not required"
             usb_lsb_file = glob.glob(base_path+"/PRECALIB/*GMRT*.UVFITS")
-            # if usb_lsb_file:
-            #     imagininput_data = {
-            #         "project_id": project_id,
-            #         "calibration_id": calibration_data[0]['calibration_id'],
-            #         "calibrated_fits_file": os.path.basename(usb_lsb_file[0]),
-            #         "file_size": fileutils.calculalate_file_sizse_in_MB(usb_lsb_file[0]),
-            #         "start_time": start_time,
-            #         "end_time": datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'),
-            #         "comments": "c16 " + comments,
-            #     }
-            #     dbutils.insert_into_table("imaginginput", imagininput_data, "imaging_id")
             if calibration_data:
                 projectobsno_update_data = {
                     "set": {
@@ -319,7 +366,7 @@ class Pipeline:
                 projectobsno_update_data = {
                     "set": {
                         "status": "failed",
-                        "comments": "No calibrated uvfits file"
+                        "comments": "Failed Error: Something went wrong"
                     },
                     "where": {
                         "project_id": project_id
@@ -363,6 +410,8 @@ class Pipeline:
                     }
                 }
                 dbutils.update_table(calibration_update_data, "calibrationinput")
+                print("lsb_list : "+str(len(lsb_list)))
+                print("usb_list : "+str(len(usb_list)))
                 status = "failed"
                 comments ="combining lsb usb"
                 if len(lsb_list) == len(usb_list):
@@ -384,6 +433,11 @@ class Pipeline:
                         check_comb_file = glob.glob("fits/"+fits_comb)
                         if not check_comb_file:
                             status, comments = fileutils.run_spam_combine_usb_lsb(data)
+                            if status == 'success':
+                                status = str(cycle_id)
+                            print("__________________________________________")
+                            print(glob.glob("fits/*"))
+                            print("__________________________________________")
                             end_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
                             if not comments:
                                 comments = "done combining usb lsb"
@@ -425,10 +479,266 @@ class Pipeline:
                 }
                 dbutils.update_table(projectobsno_update_data, "projectobsno")
 
+    def process_targets(self):
+        print("Started Stage5: ")
+        """
+        SPAM's process_target
+        :return:
+        """
+        cycle_id = self.pipeline_configuration()["cycle_id"]
 
-    def stage5(self):
+        fileutils = FileUtils()
+        aips_id = int(random.random()*100)
+        spam.set_aips_userid(11)
+        # Setting the Process Start Date Time
+        start_time = str(datetime.datetime.now())
+        # Taking system's in/out to backup variable
+        original_stdout = sys.stdout
+        original_stderr = sys.stderr
+        thread_dir = os.getcwd()
+        # Changing directory to fits/
+        os.chdir("fits/")
+        datfil_dir = thread_dir + "/datfil/"
+        fits_dir = thread_dir + "/fits/"
+        curr_dir = thread_dir + "/fits/"
+        process_status = False
+        db_model = DBUtils()
+        # Get random imaging_id & project_id
+        column_keys = [tableSchema.imaginginputId, tableSchema.projectobsnoId, "calibrated_fits_file"]
+        where_con = {
+            "status": str(cycle_id)
+        }
+        to_be_processed = db_model.select_from_table("imaginginput", column_keys, where_con, None)
+        imaginginput_details = random.choice(to_be_processed)
+        print(imaginginput_details)
+        imaging_id = imaginginput_details["imaging_id"]
+
+        # Update status for imaginginput for selected imaging_id
+        current_time_in_sec = time.time()
+        current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
+        update_data = {
+            "set": {
+                "status": "processing",
+                "start_time": current_date_timestamp,
+                "comments": "",
+                "end_time": current_date_timestamp
+            },
+
+            "where": {
+                "imaging_id": imaging_id,
+            }
+        }
+        db_model.update_table(update_data, "imaginginput")
+
+        project_id = imaginginput_details["project_id"]
+        calibrated_fits_file = imaginginput_details["calibrated_fits_file"]
+
+        # Using the above project_id, fetch base_path
+        column_keys = ["base_path"]
+        where_con = {
+            "project_id": project_id
+        }
+        process_target_log = open('process_target.log', 'a+')
+        process_target_log.write('\n\n\n******PROCESS TARGET STARTED******\n\n\n')
+        process_target_log.write("--->  Start Time " + start_time)
+        # Logging all Standard In/Output
+        sys.stdout = process_target_log
+        sys.stderr = process_target_log
+        base_path = db_model.select_from_table("projectobsno", column_keys, where_con, 0)
+        base_path = base_path[0]
+        uvfits_full_path = base_path + "/PRECALIB/" + calibrated_fits_file
+        # uvfits_full_path = base_path+"/PRECALIB/"+calibrated_fits_file
+        print "Copying " + uvfits_full_path + " to " + fits_dir
+        copying_fits = os.system("cp " + uvfits_full_path + " " + fits_dir)
+        uvfits_file = calibrated_fits_file
+        # Starting spam.process_target(SPLIT_FITS_FILE)
+        try:
+            spam.process_target(uvfits_file, allow_selfcal_skip=True, add_freq_to_name=True)
+            # If this process_target is success call
+            # GADPU API setSuccessStatus for the current fits_id
+            current_time_in_sec = time.time()
+            current_date_timestamp = datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S')
+            success_update_data = {
+                "set": {
+                    "status": "checking",
+                    "end_time": current_date_timestamp,
+                    "comments": "processing done, checking"
+                },
+                "where": {
+                    "imaging_id": imaging_id
+                }
+            }
+            db_model.update_table(success_update_data, "imaginginput")
+        except Exception, e:
+            process_target_log.write("Error: " + str(e))
+            # If this process_target is a failure call
+            # GADPU API setFailedStatus for the current fits_id
+            current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+            success_update_data = {
+                "set": {
+                    "status": "failed",
+                    "end_time": current_date_timestamp,
+                },
+                "where": {
+                    "imaging_id": imaging_id
+                }
+            }
+            db_model.update_table(success_update_data, "imaginginput")
+            print("Error: spam.process_tagret Failed " + uvfits_file)
+            # Even the process is Success/Failed we remove
+            # the Initially copied SPLIT_FITS_file, to save
+            # disk space
+        os.system('rm ' + uvfits_file)
+        # recording the process end time to Log
+        end_time = str(datetime.datetime.now())
+        image_base_dir = base_path + "/FITS_IMAGE/"
+        # Creating a new dir at BASE_DIR - FITS_IMAGES
+        print "Make dir at " + image_base_dir
+        os.system("mkdir -p " + image_base_dir)
+        # STDIN/OUT controls are reverted.
+        process_target_log.write("End Time " + end_time)
+        # Flushing the all processed out log to the log_file
+        process_target_log.flush()
+        # reverting stdin/out controls
+        sys.stdout = original_stdout
+        sys.stderr = original_stderr
+        # Getting the list of datfil/spam_logs for summarize the process
+        spam_log = glob.glob(datfil_dir + "spam*.log")
+        # if spam_log is non-empty list, proceed
+        print spam_log
+        failed_msg = "something went wrong"
+        try:
+            if spam_log:
+                # for every spam*.log file in the datfile file
+                for each_spam_log in spam_log:
+                    original_stdout = sys.stdout
+                    original_stderr = sys.stderr
+                    failed = os.popen('grep "processing of field" ' + each_spam_log + ' | grep "failed" | wc -l').read()
+                    if int(failed.strip()) > 0:
+                        failed_msg = os.popen('fgrep "Error:" ' + each_spam_log + '').read()
+                        current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime(
+                            '%Y-%m-%d %H:%M:%S')
+                        failed_update_data = {
+                            "set": {
+                                "status": "failed",
+                                "end_time": current_date_timestamp,
+                                "comments": failed_msg
+                            },
+                            "where": {
+                                "imaging_id": imaging_id
+                            }
+                        }
+                        db_model.update_table(failed_update_data, "imaginginput")
+                    else:
+                        process_status = True
+                    print each_spam_log
+                    # getting summary of the log file
+                    summ_file = each_spam_log.replace(".log", ".summary")
+                    print summ_file
+                    summary_filename = open(summ_file, 'a+')
+                    # making the spam*.summary file and write the
+                    # summarize_spam_log output
+                    summary_filename.write('\n\n******SUMMARY LOG******\n\n')
+                    sys.stdout = summary_filename
+                    sys.stderr = summary_filename
+                    spam.summarize_spam_log(each_spam_log)
+                    sys.stdout = original_stdout
+                    sys.stderr = original_stderr
+                    summary_filename.flush()
+        except Exception as ex:
+            print(ex)
+        # Once the summary file is created inside the fits/
+        # Moving all the files from datfil/ to fits/
+        # Moving all the processed files from fits/ to FITS_IMAGE@BASE_DIR
+        print "moving back the processed files from " + fits_dir + " to " + image_base_dir
+        # The below print statement is only for recording purpose,
+        # actual removing the THREAD directory is done after the
+        # Move all the fits/ to FITS_IMAGE@BASE_DIR
+        print "Moving datfil/ to fits/"
+        current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+
+        moving_update_data = {
+            "set": {
+                "status": "moving",
+                "end_time": current_date_timestamp,
+                "comments": "Moving to NAS"
+            },
+            "where": {
+                "imaging_id": imaging_id
+            }
+        }
+
+        db_model.update_table(moving_update_data, "imaginginput")
+        movedata = os.system('mv ' + datfil_dir + '* ' + fits_dir)
+        if process_status:
+            self.update_datproducts(curr_dir, project_id, imaging_id, db_model)
+            sleep(5)
+        movefits = os.system("mv " + fits_dir + "* " + image_base_dir)
+        sleep(5)
+        # current THREAD dir
+        # Changing the directory to /home/gadpu, inorder to delete the
+        os.chdir('../../')
+        print "Changed to " + os.getcwd()
+
+        # Removing the current THREAD directory
+        removethread = os.system('rm -rf ' + thread_dir)
+        current_date_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+        if process_status:
+            status = "success"
+        else:
+            status = "failed"
+        done_update_data = {
+            "set": {
+                "status": status,
+                "end_time": current_date_timestamp,
+                "comments": failed_msg
+            },
+            "where": {
+                "imaging_id": imaging_id
+            }
+        }
+        db_model.update_table(done_update_data, "imaginginput")
+        # exiting the SPAM process and cleaning the cache memory
+        spam.exit()
+
+    def update_datproducts(self, curr_dir, project_id, imaging_id, db_model):
+        """
+        Used by stage5 process_target functionality
+        :param project_id:
+        :param imaging_id:
+        :param db_model:
+        :return:
+        """
+
+        fileutils = FileUtils()
+        products_list = glob.glob(curr_dir + '/*')
+        for each_product in products_list:
+            current_time_in_sec = time.time()
+            product_data = {
+                'project_id': project_id,
+                'imaging_id': imaging_id,
+                "file_size": fileutils.calculalate_file_sizse_in_MB(each_product),
+                "file_type": each_product.split('.')[-1],
+                "file_name": each_product.split('/')[-1],
+                "generated": datetime.datetime.fromtimestamp(current_time_in_sec).strftime('%Y-%m-%d %H:%M:%S'),
+                "status": "processed"
+            }
+            print db_model.insert_into_table("dataproducts", product_data, tableSchema.dataproductsId)
+
+    def updating_fits_header(self):
+        """
+        Post processing, extract RMS from the summary file for corresponding PBCOR_IFTS file
+        extract BMIN, BMAJ, BPA from the HISTORY keyword from the PBCOR FITS header and put
+        KEY Value pairs in the same PBCOR FITS header using astropy.io
+        :return:
+        """
+        print("Started Stage6: ")
+        cycle_id = self.pipeline_configuration()["cycle_id"]
+        fits_images_list_cfg = self.pipeline_configuration()["fits_images_list"]
+
         dbutils = DBUtils.DBUtils()
-        fits_images_list = glob.glob('/GARUDATA/IMAGING17/CYCLE17/*/*/FITS_IMAGE/*PBCOR*.FITS')
+        fits_images_list = glob.glob(fits_images_list_cfg)
+        # fits_images_list = glob.glob('/GARUDATA/IMAGING16/CYCLE16/*/*/FITS_IMAGE/*PBCOR*.FITS')
         # fits_images_list = ['/GARUDATA/IMAGING19/CYCLE19/5164/19_085_27DEC10/FITS_IMAGE/1445+099.GMRT325.SP2B.PBCOR.FITS']
         counter = 1
         for fits_file in fits_images_list:
@@ -556,50 +866,7 @@ class Pipeline:
                 print(counter)
 
 
-    def __prerequisites(self):
-        CYCLE_ID = 15
-        CYCLE_PATH = '/GARUDATA/IMAGING15/CYCLE15/'
-        CYCLE_ID = str(CYCLE_ID)
+    def generate_jpeg_images(self):
+        pass
 
-        sql_query = "select distinct o.observation_no, p.proposal_id, g.file_path, p.backend_type from " \
-                    "gmrt.proposal p inner join das.observation o on p.proposal_id = o.proj_code " \
-                    "inner join das.scangroup g on g.observation_no = o.observation_no " \
-                    "inner join das.scans s on s.scangroup_id = g.scangroup_id " \
-                    "inner join gmrt.sourceobservationtype so on p.proposal_id = so.proposal_id " \
-                    "where p.cycle_id ='" + CYCLE_ID + "' " \
-                                                       "and so.obs_type not like 'pulsar%' " \
-                                                       "and so.obs_type not like 'phased array'" \
-                                                       "and s.sky_freq1=s.sky_freq2 " \
-                                                       "and s.sky_freq1 < 900000000 " \
-                                                       "and s.chan_width >= 62500 " \
-                                                       "and o.proj_code not like '16_279' " \
-                                                       "and o.proj_code not like '17_072' " \
-                                                       "and o.proj_code not like '18_031' " \
-                                                       "and o.proj_code not like '19_043' " \
-                                                       "and o.proj_code not like '20_083' " \
-                                                       "and o.proj_code not like '23_066' " \
-                                                       "and o.proj_code not like '26_063' " \
-                                                       "and o.proj_code not like 'ddtB014' " \
-                                                       "and o.proj_code not like 'ddtB015' " \
-                                                       "and o.proj_code not like 'ddtB028' " \
-                                                       "and o.proj_code not like '21_057';"
-        dbutils = DBUtils()
-        data = dbutils.select_query(sql_query)
-        gadpudata = {}
-        for each_row in data:
-            gadpudata[each_row[0]] = {
-                "proposal_id": each_row[1],
-                "file_path": each_row[2],
-                "backend_type": each_row[3],
-                "cycle_id": CYCLE_ID
-            }
-        return (gadpudata, CYCLE_PATH)
 
-    def __init__(self):
-        self.stage1(self.__prerequisites()) # LTACOMB
-        # self.stage2() # GVFITS
-        # self.stage3() # PRE_CALIB
-        # self.stage4() # PROCESS_TARGET
-        # self.stage5() # POST_PROC
-
-Pipeline()

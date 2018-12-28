@@ -8,6 +8,7 @@ import os
 from astropy.io import fits
 import random
 import spam
+from time import sleep
 
 
 class Pipeline:
@@ -155,17 +156,17 @@ class Pipeline:
         dbutils = DBUtils()
         fileutils = FileUtils()
 
-        while True:
-            columnKeys = {"calibration_id"}
-            whereData = {"comments": "c16", "status": "copying"}
-            uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
-            if not uncalibrated_uvfits:
-                break
-            print("Waiting for bandwidth ... ")
-            time.sleep(50)
+        # while True:
+        #     columnKeys = {"calibration_id"}
+        #     whereData = {"comments": "c15", "status": "copying"}
+        #     uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
+        #     if not uncalibrated_uvfits:
+        #         break
+        #     print("Waiting for bandwidth ... ")
+        #     time.sleep(50)
 
         columnKeys = {"calibration_id", "project_id", "uvfits_file"}
-        whereData = {"comments": "c16", "status": "unprocessed"}
+        whereData = {"comments": "c16s2", "status": "failed"}
         uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
 
         if not uncalibrated_uvfits:
@@ -179,7 +180,6 @@ class Pipeline:
         columnKeys = {"base_path", "observation_no"}
         whereData = {"project_id": project_id, "cycle_id": 16}
         project_details = dbutils.select_from_table("projectobsno", columnKeys, whereData, 0)
-
 
 
         base_path = project_details[1]
@@ -619,6 +619,10 @@ class Pipeline:
         return (gadpudata, CYCLE_PATH)
 
     def __init__(self):
+        rand_sec = int(random.random()*100)
+        print("Waiting for "+str(rand_sec)+" seconds ... ")
+        sleep(rand_sec)
+        print("Starting process ... ")
         # self.stage1(self.__prerequisites()) # LTACOMB
         # self.stage2() # GVFITS
         self.stage3() # PRE_CALIB

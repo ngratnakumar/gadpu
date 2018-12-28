@@ -282,10 +282,9 @@ class Pipeline:
         fileutils = FileUtils()
         status = "failed"
         comments = "combine usb lsb failed"
-        # fileutils = FileUtils()
         # query conditions for projectobsno
         columnKeys = {"project_id", "base_path", "observation_no"}
-        whereKeys = {"isghb": True, "cycle_id": 16, "status": "success"}
+        whereKeys = {"isghb": True, "cycle_id": 16, "status": "failed"}
 
         project_data = dbutils.select_from_table("projectobsno", columnKeys, whereKeys, 0)
         print(project_data)
@@ -426,6 +425,10 @@ class Pipeline:
                             dbutils.insert_into_table("imaginginput", imagininput_data, "imaging_id")
                             print("-------------------------")
                 end_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+
+                if status == 'success':
+                    comments = 'done'
+
                 calibration_update_data = {
                     "set": {
                         "status": status,
@@ -438,6 +441,7 @@ class Pipeline:
                     }
                 }
                 dbutils.update_table(calibration_update_data, "calibrationinput")
+
 
                 projectobsno_update_data = {
                     "set": {

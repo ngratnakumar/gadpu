@@ -86,7 +86,7 @@ class Pipeline:
         current_date_timestamp = datetime.datetime.fromtimestamp(currentTimeInSec).strftime('%Y-%m-%d %H:%M:%S')
 
         columnKeys = {"project_id", "ltacomb_file", "lta_id"}
-        whereKeys = {"comments": "cycle16"}
+        whereKeys = {"comments": "c15"}
 
         lta_details = dbutils.select_from_table("ltadetails", columnKeys, whereKeys, None)
 

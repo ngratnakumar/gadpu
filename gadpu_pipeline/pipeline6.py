@@ -496,8 +496,8 @@ class Pipeline:
         # Get random imaging_id & project_id
         column_keys = [tableSchema.imaginginputId, tableSchema.projectobsnoId, "calibrated_fits_file"]
         where_con = {
-            "status": "retry"
-            # "comments": "c16"
+            "status": "c15"
+            # "comments": "reprocessing failed"
         }
         to_be_processed = db_model.select_from_table("imaginginput", column_keys, where_con, None)
         imaginginput_details = random.choice(to_be_processed)
@@ -722,9 +722,10 @@ class Pipeline:
         KEY Value pairs in the same PBCOR FITS header using astropy.io
         :return:
         """
-        dbutils = DBUtils.DBUtils()
+        dbutils = DBUtils()
         fits_images_list = glob.glob('/GARUDATA/IMAGING16/CYCLE16/*/*/FITS_IMAGE/*PBCOR*.FITS')
-        # fits_images_list = ['/GARUDATA/IMAGING19/CYCLE19/5164/19_085_27DEC10/FITS_IMAGE/1445+099.GMRT325.SP2B.PBCOR.FITS']
+        # fits_images_list = ['/GARUDATA/IMAGING17/CYCLE17/4575/17_024_04NOV09/FITS_IMAGE/A3376-W.GMRT325.SP2B.PBCOR.FITS']
+        # fits_images_list = ['/GARUDATA/IMAGING17/CYCLE17/4572/17_024_03NOV09/FITS_IMAGE/A3376-E.GMRT325.SP2B.PBCOR.FITS']
         counter = 1
         for fits_file in fits_images_list:
             counter += 1
@@ -738,7 +739,9 @@ class Pipeline:
             data_keys = {}
 
             object = os.path.basename(fits_file).split('.')[0]
+            # object = "A3376_E"
 
+            # summary_file = glob.glob(fits_dir + '/spam_A3376-E*.summary')
             summary_file = glob.glob(fits_dir + '/spam_' + object + '*.summary')
             rms = "NA"
             for each_summary in summary_file:
@@ -761,6 +764,13 @@ class Pipeline:
             columnKeys = {
                 "project_id"
             }
+
+            if observation_no == 'MIXCYCLE':
+                mix_path = fits_file.split('/')[4]+'/'+fits_file.split('/')[5]
+                mix_sql = "select observation_no from projectobsno where base_path like '%"+mix_path+"%'"
+                mix_cycle_data = dbutils.select_gadpu_query(mix_sql)
+                observation_no = mix_cycle_data[0][0]
+
             whereKeys = {
                 "observation_no": observation_no
             }
@@ -896,7 +906,7 @@ class Pipeline:
         # self.stage2() # GVFITS
         # self.stage3() # PRE_CALIB
         # self.stage4() # COMBINE_LSB_USB
-        self.stage5() # PROCESS_TARGET
-        # self.stage6() # POST_PROC
+        # self.stage5() # PROCESS_TARGET
+        self.stage6() # POST_PROC
 
 Pipeline()

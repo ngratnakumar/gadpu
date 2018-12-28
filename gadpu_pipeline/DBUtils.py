@@ -269,7 +269,7 @@ class DBUtils:
 
     def select_query(self, sql):
         print("def select_query")
-	nconfig=config.Config()
+        nconfig=config.Config()
         conn = None
         selected_rows = None
         result = []
