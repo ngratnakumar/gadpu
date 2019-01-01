@@ -334,10 +334,25 @@ def cycle23():
         copying(cycle_area + each_dir, new_fits_path)
         # print('----------------' + each_dir + '---------------')
 
-
+def cycle24():
+    cycle_area = '/GARUDATA/IMAGING24/CYCLE24/'
+    # images_path = cycle_area+'*/FITS_IMAGE/*PBCOR*FITS'
+    pbcors = glob.glob(images_path)
+    for each_pbcor in pbcors:
+        dir_path = os.path.dirname(each_pbcor)
+        pbcor_file = os.path.basename(each_pbcor)
+        source = each_pbcor.split('/')[-1].split('.')[0]
+        summary_file = glob.glob(dir_path+'/spam_'+source+'*.summary')
+        freq = summary_file[0].split('/')[-1].split('_')[2]
+        new_pbcor_file = pbcor_file.replace(source, source+'.'+freq)
+        # print(dir_path, summary_file[0].split('/')[-1], source, freq)
+        print(dir_path+'/'+pbcor_file, dir_path+'/'+new_pbcor_file)
+        # os.system('mv '+dir_path+'/'+pbcor_file+' '+dir_path+'/'+new_pbcor_file)
+        print('mv ' + dir_path + '/' + pbcor_file + ' ' + dir_path + '/' + new_pbcor_file)
 
 if __name__ == '__main__':
     # cycle20()
     # cycle21()
-    #cycle22()
-    cycle23()
+    # cycle22()
+    # cycle23()
+    cycle24()

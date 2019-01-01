@@ -10,7 +10,7 @@ class SpamUtils:
     def run_ltacomb(self, files_list, destination):
         fileutils = FileUtils()
         lta_list = []
-        self.status = "cycle16"
+        self.status = "failed"
         print(files_list)
         if len(files_list) > 1:
             for each_file in files_list:
@@ -25,6 +25,7 @@ class SpamUtils:
         try:
             print("/home/gadpu/gadpu_pipeline/ltacomb -i "+to_comb)
             os.system("/home/gadpu/gadpu_pipeline/ltacomb -i "+to_comb)
+            self.status = "success"
         except Exception as ex:
             print(ex)
             self.status = ex
