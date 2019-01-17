@@ -50,11 +50,13 @@ class FileUtils:
         try:
             print("Copying "+src+"* to "+dest)
             if not os.path.exists(dest):
+                print('mkdir -p '+dest)
                 os.system('mkdir -p '+dest)
-
             if os.path.isfile(src):
+                print('cp '+src+' '+dest)
                 os.system('cp '+src+' '+dest)
             else:
+                print('cp -r '+src+'* '+dest)
                 os.system('cp -r '+src+'* '+dest)
         except Exception as ex:
             print(ex)
@@ -85,10 +87,13 @@ class FileUtils:
         if len(files_list) > 1:
             return files_list
 
-    def insert_details(self, data, project_path, isghb, cycle_id, status):
+    def insert_details(self, data, project_path, isghb, cycle_id, status, obs_no):
+        print("------------------==insert_details==----------------------")
         print(data)
+        print(project_path)
         dbutils = DBUtils()
         for each_rec in data:
+            print("==each_rec==", each_rec)
             lta_file = os.path.basename(each_rec)
             if len(lta_file) == 1:
                 lta_file = lta_file[0]
@@ -100,13 +105,15 @@ class FileUtils:
                 lta_details["status"] = "unprocessed"
                 lta_details["base_path"] = project_path
                 lta_details["start_time"] = current_date_timestamp
-                lta_details["proposal_dir"] = project_path.split('/')[-2]
+                lta_details["proposal_dir"] = project_path.split('/')[-1]
                 lta_details["pipeline_id"] = 1
                 lta_details["comments"] = status
                 lta_details["counter"] = 0
                 lta_details["ltacomb_file"] = lta_file
                 lta_details["isghb"] = isghb
                 lta_details["cycle_id"] = cycle_id
+                if obs_no:
+                    lta_details["observation_no"] = int(obs_no)
 
 
                 projectobsno_data = {}

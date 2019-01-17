@@ -1,18 +1,124 @@
-from FileUtils import FileUtils
+# from FileUtils import FileUtils
 from DBUtils import DBUtils
-from SpamUtils import SpamUtils
+# from SpamUtils import SpamUtils
 import time
 import datetime
 import glob
 import os
 from astropy.io import fits
 import random
-import spam
-
+# import spam
 
 class Pipeline:
 
     def stage1(self, gdata):
+        print("Started Stage1: ")
+        # spamutils = SpamUtils()
+        # fileutils = FileUtils()
+
+        data = gdata[0]
+        path = gdata[1]
+        obs_no = []
+
+        print(len(data))
+        co=0
+        for each_obs in data:
+            co+=1
+            file_path = data[each_obs]['file_path']
+            dest_path = path+str(int(each_obs))+'/'+file_path.split('/')[-2]
+
+            lta_list = glob.glob(file_path + '/*.lta*')
+            lta_list.sort()
+
+            if lta_list:
+                if len(lta_list) > 1:
+                    checked = []
+                    for each_lta in lta_list:
+                        if each_lta not in checked:
+                            to_comb_lta = glob.glob(each_lta+'*')
+                            for x in to_comb_lta:
+                                checked.append(x)
+                            if len(to_comb_lta) > 1:
+                                to_comb_lta.sort()
+                                print(dest_path, to_comb_lta)
+                            else:
+                                print(each_lta, dest_path)
+                else:
+                    print("---------------------------", lta_list)
+                if co == 955:
+                    break
+
+                # lta_file_16s = (s for s in lta_list if "_16s" in s)
+                # lta_file_8s = (s for s in lta_list if "_8s" in s)
+                # lta_file_4s = (s for s in lta_list if "_4s" in s)
+                # lta_file_2s = (s for s in lta_list if "_2s" in s)
+                # if lta_file_8s.__sizeof__():
+                #     print("8s")
+                # elif lta_file_16s.__sizeof__():
+                #     print("16s")
+                # elif lta_file_4s.__sizeof__():
+                #     print("4s")
+                # elif lta_file_2s.__sizeof__():
+                #     print("4s")
+                # else:
+                #     print("copying only NORMAL", lta_list)
+
+
+
+            #
+            # try:
+            #     # fileutils.copy_files(file_path, dest_path)
+            #     print("copying", file_path, dest_path)
+            # except Exception as ex:
+            #     print(ex)
+            #
+            #
+            # # lta_list = glob.glob(dest_path+'/*.lta*')
+            #
+            # if len(lta_list) > 1:
+            #     print(lta_list)
+            # else:
+            #     if lta_list:
+            #         print(glob.glob(file_path+'/*'))
+
+        """
+
+            obs_no.append(each_obs)
+            print(data[each_obs])
+            file_path = data[each_obs]['file_path']
+            print(file_path)
+            dir_path = file_path.split('/')[-2]
+            project_path = path+str(int(each_obs))+'/'+dir_path
+            print("********"+file_path+";;;;;;;;;"+dir_path+"------"+project_path)
+            lta_list = glob.glob(file_path+'/*lta*')
+            status = "processing"
+            if len(lta_list) > 1:
+                print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                lta_list.sort()
+                lta_tracker = []
+                for each_lta in lta_list:
+                    split_lta = each_lta.split('.')[0]
+                    if each_obs not in lta_tracker:
+                        lta_tracker.append(each_obs)
+                        this_lta_list = glob.glob(split_lta+'.lta*')
+                        this_lta_list.sort()
+                        if not os.path.exists(project_path):
+                            os.makedirs(project_path)
+                        status = spamutils.run_ltacomb(this_lta_list, project_path)
+                        print(this_lta_list[0], project_path, 'false', data[each_obs]['cycle_id'],status, each_obs)
+                        fileutils.insert_details([this_lta_list[0]], project_path, 'false', data[each_obs]['cycle_id'], status, each_obs)
+            elif lta_list:
+                print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+                print(lta_list[0], project_path)
+                # fileutils.copy_files(lta_list[0], project_path)
+                if not os.path.exists(project_path):
+                    print([lta_list[0]], project_path, 'false', data[each_obs]['cycle_id'], status, each_obs)
+                    fileutils.insert_details([lta_list[0]], project_path, 'false', data[each_obs]['cycle_id'], status,
+                                              each_obs)
+        """
+
+
+    def stage1_ghb(self, gdata):
         print("Started Stage1: ")
         spamutils = SpamUtils()
         fileutils = FileUtils()
@@ -555,8 +661,47 @@ class Pipeline:
                 hdulist.flush()
                 print(counter)
 
-
     def __prerequisites(self):
+        CYCLE_ID = str(26)
+        CYCLE_PATH = '/GARUDATA/IMAGING'+CYCLE_ID+'/CYCLE'+CYCLE_ID+'/'
+        print(CYCLE_PATH)
+
+        sql_query = "select distinct o.observation_no, p.proposal_id, g.file_path, p.backend_type from " \
+                    "gmrt.proposal p inner join das.observation o on p.proposal_id = o.proj_code " \
+                    "inner join das.scangroup g on g.observation_no = o.observation_no " \
+                    "inner join das.scans s on s.scangroup_id = g.scangroup_id " \
+                    "inner join gmrt.sourceobservationtype so on p.proposal_id = so.proposal_id " \
+                    "where p.cycle_id ='" + CYCLE_ID + "' " \
+                                                       "and so.obs_type not like 'pulsar%' " \
+                                                       "and so.obs_type not like 'phased array'" \
+                                                       "and s.sky_freq1=s.sky_freq2 " \
+                                                       "and s.sky_freq1 < 900000000 " \
+                                                       "and s.chan_width >= 62500 " \
+                                                       "and o.proj_code not like '16_279' " \
+                                                       "and o.proj_code not like '17_072' " \
+                                                       "and o.proj_code not like '18_031' " \
+                                                       "and o.proj_code not like '19_043' " \
+                                                       "and o.proj_code not like '20_083' " \
+                                                       "and o.proj_code not like '23_066' " \
+                                                       "and o.proj_code not like '26_063' " \
+                                                       "and o.proj_code not like 'ddtB014' " \
+                                                       "and o.proj_code not like 'ddtB015' " \
+                                                       "and o.proj_code not like 'ddtB028' " \
+                                                       "and o.proj_code not like '21_057';"
+        dbutils = DBUtils()
+        data = dbutils.select_query(sql_query)
+        gadpudata = {}
+        for each_row in data:
+            gadpudata[each_row[0]] = {
+                "proposal_id": each_row[1],
+                "file_path": each_row[2],
+                "backend_type": each_row[3],
+                "cycle_id": CYCLE_ID
+            }
+        return (gadpudata, CYCLE_PATH)
+
+
+    def __prerequisites_ghb(self):
         CYCLE_ID = 15
         CYCLE_PATH = '/GARUDATA/IMAGING15/CYCLE15/'
         CYCLE_ID = str(CYCLE_ID)

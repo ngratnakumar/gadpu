@@ -1,6 +1,6 @@
-from FileUtils import FileUtils
+# from FileUtils import FileUtils
 from DBUtils import DBUtils
-from SpamUtils import SpamUtils
+# from SpamUtils import SpamUtils
 import time
 import datetime
 import glob
@@ -8,13 +8,12 @@ import os
 from astropy.io import fits
 import random
 
-
 class Pipeline:
 
     def stage1(self, gdata):
         print("Started Stage1: ")
         # spamutils = SpamUtils()
-        fileutils = FileUtils()
+        # fileutils = FileUtils()
 
         data = gdata[0]
         path = gdata[1]
@@ -27,7 +26,7 @@ class Pipeline:
         for each_obs in data:
             obs_no.append(each_obs)
             project_path = path
-            lta_list = glob.glob(project_path+'/*lta*')
+            lta_list = glob.glob(data[each_obs]['file_path']+'/*lta*')
             if len(lta_list) >1:
                 lta_list.sort()
                 lta_tracker = []
@@ -38,14 +37,12 @@ class Pipeline:
                         this_lta_list = glob.glob(split_lta+'.lta*')
                         this_lta_list.sort()
                         cnt+=1
-                        status = spamutils.run_ltacomb(this_lta_list, project_path)
-                        fileutils.insert_details(this_lta_list[0], project_path, 'false', data[
-                            each_obs]['cycle_id'], status)
+                        # status = spamutils.run_ltacomb(this_lta_list, project_path)
+                        # fileutils.insert_details(this_lta_list[0], project_path, 'false', data[each_obs]['cycle_id'], status)
             if lta_list:
                 print(str(each_obs)+' -- '+lta_list[0])
                 cnt+=1
-                # fileutils.copy_files(ltb, project_path)
-                # fileutils.insert_details([lta, ltb], project_path, isghb, cycle_id, status)
+                # fileutils.insert_details(lta_list[0], project_path, 'false', data[each_obs]['cycle_id'], status)
         print(cnt)
 
         '''
