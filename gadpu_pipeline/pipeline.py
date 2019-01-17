@@ -1,32 +1,32 @@
-# from FileUtils import FileUtils
+from FileUtils import FileUtils
 from DBUtils import DBUtils
-# from SpamUtils import SpamUtils
+from SpamUtils import SpamUtils
 import time
 import datetime
 import glob
 import os
 from astropy.io import fits
 import random
-# import spam
+import spam
 
 class Pipeline:
 
     def stage1(self, gdata):
         print("Started Stage1: ")
-        # spamutils = SpamUtils()
-        # fileutils = FileUtils()
+        spamutils = SpamUtils()
+        fileutils = FileUtils()
 
         data = gdata[0]
         path = gdata[1]
         obs_no = []
 
-        print(len(data))
+        # print(len(data))
         co=0
         for each_obs in data:
             co+=1
             file_path = data[each_obs]['file_path']
             dest_path = path+str(int(each_obs))+'/'+file_path.split('/')[-2]
-
+            lta_file = ""
             lta_list = glob.glob(file_path + '/*.lta*')
             lta_list.sort()
 
@@ -40,14 +40,20 @@ class Pipeline:
                                 checked.append(x)
                             if len(to_comb_lta) > 1:
                                 to_comb_lta.sort()
-                                print(dest_path, to_comb_lta)
+                                # print(dest_path, to_comb_lta)
+                                status = spamutils.run_ltacomb(to_comb_lta, dest_path)
+                                lta_file = to_comb_lta[0]
                             else:
+                                lta_file = each_lta
+                                fileutils.copy_files(each_lta, dest_path)
                                 print(each_lta, dest_path)
                 else:
-                    print("---------------------------", lta_list)
+                    lta_file = lta_list[0]
+                    fileutils.copy_files(each_lta, dest_path)
+                    # print("---------------------------", lta_list)
                 if co == 955:
                     break
-
+            fileutils.insert_details([lta_file], dest_path, 'false', data[each_obs]['cycle_id'], status, each_obs)
                 # lta_file_16s = (s for s in lta_list if "_16s" in s)
                 # lta_file_8s = (s for s in lta_list if "_8s" in s)
                 # lta_file_4s = (s for s in lta_list if "_4s" in s)
@@ -80,6 +86,7 @@ class Pipeline:
             # else:
             #     if lta_list:
             #         print(glob.glob(file_path+'/*'))
+
 
         """
 
