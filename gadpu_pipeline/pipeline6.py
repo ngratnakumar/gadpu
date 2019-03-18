@@ -25,7 +25,7 @@ class Pipeline:
         :return:
         """
         dbutils = DBUtils()
-        fits_images_list = glob.glob('/GARUDATA/IMAGING16/CYCLE16/*/*/FITS_IMAGE/*PBCOR*.FITS')
+        fits_images_list = glob.glob('/GARUDATA/IMAGING24/CYCLE24/*/FITS_IMAGE/*PBCOR*.FITS')
         # fits_images_list = ['/GARUDATA/IMAGING17/CYCLE17/4575/17_024_04NOV09/FITS_IMAGE/A3376-W.GMRT325.SP2B.PBCOR.FITS']
         # fits_images_list = ['/GARUDATA/IMAGING17/CYCLE17/4572/17_024_03NOV09/FITS_IMAGE/A3376-E.GMRT325.SP2B.PBCOR.FITS']
         counter = 1
@@ -61,7 +61,14 @@ class Pipeline:
             if rms == "NA":
                 rms = 2.11
 
-            observation_no = fits_file.split('/')[4]
+            print(fits_file)
+
+            if "CYCLE24" in fits_file:
+                dir_path = os.path.dirname(os.path.dirname(fits_file))
+                observation_no = glob.glob(dir_path+"/*.obslog")[0].split('/')[-1].split('.')[0]
+                print(observation_no)
+            else:
+                observation_no = fits_file.split('/')[4]
 
             columnKeys = {
                 "project_id"
@@ -69,98 +76,129 @@ class Pipeline:
 
             if observation_no == 'MIXCYCLE':
                 mix_path = fits_file.split('/')[4]+'/'+fits_file.split('/')[5]
-                mix_sql = "select observation_no from projectobsno where base_path like '%"+mix_path+"%'"
+                mix_sql = "select observation_no from projectobsno where file_path like '%"+mix_path+"%'"
                 mix_cycle_data = dbutils.select_gadpu_query(mix_sql)
                 observation_no = mix_cycle_data[0][0]
 
             whereKeys = {
                 "observation_no": observation_no
             }
-
+            print(columnKeys, whereKeys)
             project_id = dbutils.select_from_table("projectobsno", columnKeys, whereKeys, 0)
-
-            columnKeys = {
-                "das_scangroup_id",
-                "ltacomb_file"
-            }
-            whereKeys = {
-                "project_id": project_id,
-            }
-            result = dbutils.select_from_table("ltadetails", columnKeys, whereKeys, 0)
-
-            sql = "select ant_mask, band_mask, calcode, chan_width, corr_version, g.observation_no, " \
-                  "date_obs, ddec, dec_2000, dec_date, dra, lsr_vel1, lsr_vel2, lta_time, " \
-                  "net_sign1, net_sign2, net_sign3, net_sign4, num_chans, num_pols, onsrc_time, " \
-                  "proj_code, qual, ra_2000, ra_date, rest_freq1, rest_freq2, sky_freq1, " \
-                  "sky_freq2, source, sta_time from das.scangroup g inner join " \
-                  "das.scans s on s.scangroup_id = g.scangroup_id " \
-                  "where s.scangroup_id = " + str(result[1]) + " AND source like '" + object + "'"
-            scangroup_data = dbutils.select_scangroup_query(sql)
-
-            if scangroup_data:
-                data_keys = {
-                    "ANTMASK": scangroup_data[0],
-                    "BANDMASK": scangroup_data[1],
-                    "CALCODE": scangroup_data[2],
-                    "CHANWIDT": scangroup_data[3],
-                    "CORRVERS": scangroup_data[4],
-                    "OBSNUM": scangroup_data[5],
-                    "DATEOBS": str(scangroup_data[6]),
-                    "DDEC": scangroup_data[7],
-                    "DEC2000": scangroup_data[8],
-                    "DECDATE": scangroup_data[9],
-                    "DRA": scangroup_data[10],
-                    "LSRVEL1": scangroup_data[11],
-                    "LSRVEL2": scangroup_data[12],
-                    "LTATIME": scangroup_data[13],
-                    "NETSIGN1": scangroup_data[14],
-                    "NETSIGN2": scangroup_data[15],
-                    "NETSIGN3": scangroup_data[16],
-                    "NETSIGN4": scangroup_data[17],
-                    "NUMCHANS": scangroup_data[18],
-                    "NUMPOLS": scangroup_data[19],
-                    "ONSRCTIM": scangroup_data[20],
-                    "PROJCODE": scangroup_data[21],
-                    "QUAL": scangroup_data[22],
-                    "RA2000": scangroup_data[23],
-                    "RADATE": scangroup_data[24],
-                    "RESTFRE1": scangroup_data[25],
-                    "RESTFRE2": scangroup_data[26],
-                    "SKYFREQ1": scangroup_data[27],
-                    "SKYFREQ2": scangroup_data[28],
-                    "STATIME": scangroup_data[30],
-                    "RMS": float(rms)
+            print(project_id)
+            if project_id:
+                columnKeys = {
+                    "das_scangroup_id",
+                    "ltacomb_file"
                 }
+                whereKeys = {
+                    "project_id": project_id,
+                }
+                result = dbutils.select_from_table("ltadetails", columnKeys, whereKeys, 0)
 
-                # print(data_keys)
-                filename = fits_file
-                hdulist = fits.open(filename, mode='update')
-                header = hdulist[0].header
+                print(result)
+                print(result[1])
 
-                try:
-                    histroy = str(fits_header["HISTORY"]).strip().split(' ')
-                    nh = [x for x in histroy if x]
-                    data_keys["BMAJ"] = float(nh[3])
-                    data_keys["BMIN"] = float(nh[5])
-                    data_keys["BPA"] = float(nh[7])
+                sql = "select ant_mask, band_mask, calcode, chan_width, corr_version, g.observation_no, " \
+                      "date_obs, ddec, dec_2000, dec_date, dra, lsr_vel1, lsr_vel2, lta_time, " \
+                      "net_sign1, net_sign2, net_sign3, net_sign4, num_chans, num_pols, onsrc_time, " \
+                      "proj_code, qual, ra_2000, ra_date, rest_freq1, rest_freq2, sky_freq1, " \
+                      "sky_freq2, source, sta_time from das.scangroup g inner join " \
+                      "das.scans s on s.scangroup_id = g.scangroup_id " \
+                      "where s.scangroup_id = " + str(result[1]) + " AND source like '" + object + "'"
+                scangroup_data = dbutils.select_scangroup_query(sql)
+
+                # print(scangroup_data)
+
+                if scangroup_data:
+                    data_keys = {
+                        "ANTMASK": scangroup_data[0],
+                        "BANDMASK": scangroup_data[1],
+                        "CALCODE": scangroup_data[2],
+                        "CHANWIDT": scangroup_data[3],
+                        "CORRVERS": scangroup_data[4],
+                        "OBSNUM": scangroup_data[5],
+                        "DATEOBS": str(scangroup_data[6]),
+                        "DDEC": scangroup_data[7],
+                        "DEC2000": scangroup_data[8],
+                        "DECDATE": scangroup_data[9],
+                        "DRA": scangroup_data[10],
+                        "LSRVEL1": scangroup_data[11],
+                        "LSRVEL2": scangroup_data[12],
+                        "LTATIME": scangroup_data[13],
+                        "NETSIGN1": scangroup_data[14],
+                        "NETSIGN2": scangroup_data[15],
+                        "NETSIGN3": scangroup_data[16],
+                        "NETSIGN4": scangroup_data[17],
+                        "NUMCHANS": scangroup_data[18],
+                        "NUMPOLS": scangroup_data[19],
+                        "ONSRCTIM": scangroup_data[20],
+                        "PROJCODE": scangroup_data[21],
+                        "QUAL": scangroup_data[22],
+                        "RA2000": scangroup_data[23],
+                        "RADATE": scangroup_data[24],
+                        "RESTFRE1": scangroup_data[25],
+                        "RESTFRE2": scangroup_data[26],
+                        "SKYFREQ1": scangroup_data[27],
+                        "SKYFREQ2": scangroup_data[28],
+                        "STATIME": scangroup_data[30],
+                        "RMS": float(rms)
+                    }
+
+                    # print(data_keys)
+                    filename = fits_file
+                    hdulist = fits.open(filename, mode='update')
+                    header = hdulist[0].header
 
                     try:
-                        del header['HISTORY']
-                    except Exception as exh:
-                        print(exh)
-                except Exception as ex:
-                    print(ex)
+                        histroy = str(fits_header["HISTORY"]).strip().split(' ')
+                        nh = [x for x in histroy if x]
+                        data_keys["BMAJ"] = float(nh[3])
+                        data_keys["BMIN"] = float(nh[5])
+                        data_keys["BPA"] = float(nh[7])
+                        print(histroy)
+                        try:
+                            del header['HISTORY']
+                        except Exception as exh:
+                            print(exh)
+                    except Exception as ex:
+                        print(ex)
+                    try:
+                        if fits_header["BMAJ"]:
+                            data_keys["BMAJ"] = float(fits_header["BMAJ"])
+                            data_keys["BMIN"] = float(fits_header["BMIN "])
+                            data_keys["BPA"] = float(fits_header["BPA"])
+                    except Exception as ex:
+                        print(ex)
 
-                if fits_header["BMAJ"]:
-                    data_keys["BMAJ"] = float(fits_header["BMAJ"])
-                    data_keys["BMIN"] = float(fits_header["BMIN "])
-                    data_keys["BPA"] = float(fits_header["BPA"])
-
-                for key, value in data_keys.iteritems():
-                    print key, value
-                    header.set(key, value)
-                hdulist.flush()
-                print(counter)
+                    pbcor_file = os.path.basename(fits_file).split('.')[0]
+                    spam_log = glob.glob(os.path.dirname(fits_file) + "/spam_" + pbcor_file + "*.log")
+                    spam_log.sort()
+                    spam_log = spam_log[0]
+                    reading_spam_log = open(spam_log).readlines()
+                    bmaj_bmin = []
+                    if len(reading_spam_log) > 0:
+                        for each_line in reading_spam_log:
+                            if "BMAJ" in each_line:
+                                bmaj_bmin.append(each_line)
+                        bmaj_bmin_data = bmaj_bmin[0].replace('   ',' ').replace("  "," ").replace("= ","=").split((
+                            ' '))
+                        print(bmaj_bmin_data)
+                        for each_key in bmaj_bmin_data:
+                            if "BMAJ" in each_key:
+                                data_keys["BMAJ"] = float(each_key.split('=')[1])
+                            if "BMIN" in each_key:
+                                data_keys["BMIN"] = float(each_key.split('=')[1])
+                            if "BPA" in each_key:
+                                data_keys["BPA"] = float(each_key.split('/')[0].split('=')[1])
+                        print( data_keys["BMAJ"], data_keys["BMIN"], data_keys["BPA"])
+                        try:
+                            for key, value in data_keys.iteritems():
+                                print key, value
+                                header.set(key, value)
+                            hdulist.flush()
+                        except Exception as ex:
+                            print(ex)
 
     def __init__(self):
         self.stage6() # POST_PROC

@@ -12,6 +12,9 @@ from time import sleep
 
 
 class Pipeline:
+    """
+    Stage3: Check for Haslam correction and populates clibrationinput table
+    """
 
     def stage3(self):
         spam.set_aips_userid(33)
@@ -28,7 +31,7 @@ class Pipeline:
         #     time.sleep(50)
 
         columnKeys = {"calibration_id", "project_id", "uvfits_file"}
-        whereData = {"comments": "c16s2", "status": "failed"}
+        whereData = {"status": "cycle226"}
         uncalibrated_uvfits = dbutils.select_from_table("calibrationinput", columnKeys, whereData, 0)
 
         if not uncalibrated_uvfits:
@@ -39,8 +42,8 @@ class Pipeline:
         project_id = uncalibrated_uvfits[1]
         uvfits_file = uncalibrated_uvfits[2]
 
-        columnKeys = {"base_path", "observation_no"}
-        whereData = {"project_id": project_id, "cycle_id": 16}
+        columnKeys = {"file_path", "observation_no"}
+        whereData = {"project_id": project_id}
         project_details = dbutils.select_from_table("projectobsno", columnKeys, whereData, 0)
 
 
@@ -137,6 +140,22 @@ class Pipeline:
 
         dbutils.update_table(projectobsno_update_data, "projectobsno")
         dbutils.update_table(calibration_update_data, "calibrationinput")
+
+        if not check_status_file:
+            split_files = glob.glob(base_path +"/PRECALIB/*GMRT*.UVFITS")
+
+            for each_split_file in split_files:
+                current_time_in_sec = time.time()
+                calibrated_uvfits = {
+                    'start_time': datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'),
+                    'end_time': datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'),
+                    'project_id': project_id,
+                    'calibration_id': calibration_id,
+                    "file_size": fileutils.calculalate_file_sizse_in_MB(each_split_file),
+                    "calibrated_fits_file": each_split_file.split('/')[-1],
+                    "status": "success"
+                }
+                print dbutils.insert_into_table("imaginginput", calibrated_uvfits, "project_id")
 
 
     def __init__(self):

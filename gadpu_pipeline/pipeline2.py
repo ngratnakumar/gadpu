@@ -11,6 +11,9 @@ import spam
 
 
 class Pipeline:
+    """
+    Stage2: Applies GVFITS generates Uncalibrated UVFITS files
+    """
 
     def stage2(self):
         dbutils = DBUtils()
@@ -39,7 +42,7 @@ class Pipeline:
             # lta_file = each_lta[1]
             # lta_id = each_lta[2]
             lta_id = each_lta["lta_id"]
-            columnKeys = {"base_path"}
+            columnKeys = {"file_path"}
             whereKeys = {"project_id": project_id}
             lta_path_details = dbutils.select_test_table("projectobsno", columnKeys, whereKeys, 0)
             print(lta_path_details)
@@ -113,7 +116,7 @@ class Pipeline:
             # lta_file = each_lta[1]
             # lta_id = each_lta[2]
             lta_id = each_lta["lta_id"]
-            columnKeys = {"base_path"}
+            columnKeys = {"file_path"}
             whereKeys = {"project_id": project_id}
             lta_path_details = dbutils.select_test_table("projectobsno", columnKeys, whereKeys, 0)
             print(lta_path_details)

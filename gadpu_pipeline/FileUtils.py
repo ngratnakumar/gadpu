@@ -19,7 +19,10 @@ class FileUtils:
 
 
     def calculalate_file_sizse_in_MB(self, filename):
-        return ((os.path.getsize(filename))/1024)/1024
+        if os.path.exists(filename):
+            return ((os.path.getsize(filename))/1024)/1024
+        else:
+            return 0
 
 
     def tail(f, lines=1, _buffer=4098):
@@ -152,7 +155,7 @@ class FileUtils:
         pass
 
 
-    def check_haslam_flag(self, project, obsno):
+    def check_haslam_flag(self, obsno):
         '''
         # Definition: check_haslam_flag() - takes PROPOSAL_CODE_DATE
         # Returns: Boolean
@@ -168,16 +171,25 @@ class FileUtils:
 
         '''
 
-        UVFITS_DATA = "/data1/CYCLE17/"
+        alc_list = glob.glob("/GARUDATA/ALC_HASLAM/*.alc")
 
+        for each_alc_file in alc_list:
+            print(each_alc_file)
+            data = open(each_alc_file).readlines()
+            this_file = [y for y in [x for x in data if str(obsno) in x] if "ON" in y]
+            print("*************", this_file)
+            if this_file:
+                return True
+            else:
+                return False
         # cmd = "fgrep '13.' " + UVFITS_DATA + "*/*.obslog | grep 'OFF' | cut -d ':' -f 1"
         # cmd = "fgrep '14.' " + UVFITS_DATA + "*/*/"+str(obsno)+".obslog | grep 'OFF' | cut -d ':' -f 1"
-        cmd = "cat /GARUDATA/C17_ACL.list"
-        output = subprocess.check_output(cmd, shell=True)
-        obs_list = output.split('\n')
-        obs_list.remove('')
-        for is_haslam_flagged in obs_list:
-            return any(project in string for string in obs_list)
+
+        # output = subprocess.check_output(cmd, shell=True)
+        # obs_list = output.split('\n')
+        # obs_list.remove('')
+        # for is_haslam_flagged in obs_list:
+        #     return any(project in string for string in obs_list)
 
 
     def run_spam_combine_usb_lsb(self, data):
@@ -229,7 +241,8 @@ class FileUtils:
             PROJECT_CODE = UVFITS_BASE_DIR.split('/')[-1]
             print(PROJECT_CODE, OBSNO)
             print(UVFITS_FILE_NAME)
-            if self.check_haslam_flag(PROJECT_CODE, OBSNO):
+            print("*-*-*-*-*-*-*-*-*-*-*---------", self.check_haslam_flag(int(OBSNO)))
+            if self.check_haslam_flag(int(OBSNO)):
                 print(PROJECT_CODE + " Flagging apply_tsys=False")
                 try:
                     spam.pre_calibrate_targets(UVFITS_FILE_NAME, apply_tsys=False, keep_channel_one=True)

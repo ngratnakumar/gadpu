@@ -2,7 +2,7 @@ import glob
 import os
 from SpamUtils import SpamUtils
 
-CYCLE_PATH = "/GARUDATA/IMAGING25/CYCLE25/*/*/FITS_IMAGE/spam_*.log"
+CYCLE_PATH = "/GARUDATA/IMAGING21/CYCLE21/*/*/FITS_IMAGE/spam_*.log"
 
 spam_logs = glob.glob(CYCLE_PATH)
 # print(spam_logs)
@@ -28,8 +28,9 @@ for each_log in spam_logs:
                 time_resolution = spamutils.get_uvfits_integration_time(uvfits[0])
                 if time_resolution > 0:
                     print("++ Writing to the log file: ",each_log)
-                    with open(each_log, "a") as log_file:
-                        log_file.write("time resolution = "+str(time_resolution))
+                    # with open(each_log, "a") as log_file:
+                    #     log_file.write("time resolution = "+str(time_resolution))
+                    print(time_resolution)
                     print("++++++ appended time_resolution value +++++++")
                 success_log_counter+=1
             if success_log_counter == 1000:
@@ -37,3 +38,11 @@ for each_log in spam_logs:
 print(success_log_counter)
 
 
+def das_headers(table_name, data):
+# observation_no | scangroup_id | lta_file | corr_version | sta_time
+# num_pols | num_chans | lta_time | ltb_file | lta_file_size | ltb_file_size
+# file_path | lta_gsb_file_size | lta_gsb_file
+    das_observation_header = [ "observation_no" ,"scangroup_id" ,"lta_file" ,"corr_version" ,
+                               "sta_time", "num_pols", "num_chans", "lta_time", "ltb_file",
+                               "lta_file_size", "ltb_file_size", "file_path",
+                               "lta_gsb_file_size", "lta_gsb_file"]

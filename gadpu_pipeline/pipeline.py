@@ -10,6 +10,10 @@ import random
 import spam
 
 class Pipeline:
+    """
+    Stage1: Identifies the observations and if LTACOMB is required, it applies
+    Populates projectobsno table and populates ltadetails table
+    """
 
     def stage1(self, gdata):
         print("Started Stage1: ")
@@ -20,15 +24,16 @@ class Pipeline:
         path = gdata[1]
         obs_no = []
 
-        # print(len(data))
         co=0
         for each_obs in data:
             co+=1
             file_path = data[each_obs]['file_path']
             dest_path = path+str(int(each_obs))+'/'+file_path.split('/')[-2]
+            print(file_path, dest_path)
             lta_file = ""
             lta_list = glob.glob(file_path + '/*.lta*')
             lta_list.sort()
+            print(lta_list)
             status = "unprocessed"
             if lta_list:
                 if len(lta_list) > 1:
@@ -51,78 +56,9 @@ class Pipeline:
                     lta_file = lta_list[0]
                     fileutils.copy_files(lta_file, dest_path)
                     # print("---------------------------", lta_list)
-                if co == 955:
+                if co == 3000:
                     break
             fileutils.insert_details([lta_file], dest_path, 'false', data[each_obs]['cycle_id'], status, each_obs)
-                # lta_file_16s = (s for s in lta_list if "_16s" in s)
-                # lta_file_8s = (s for s in lta_list if "_8s" in s)
-                # lta_file_4s = (s for s in lta_list if "_4s" in s)
-                # lta_file_2s = (s for s in lta_list if "_2s" in s)
-                # if lta_file_8s.__sizeof__():
-                #     print("8s")
-                # elif lta_file_16s.__sizeof__():
-                #     print("16s")
-                # elif lta_file_4s.__sizeof__():
-                #     print("4s")
-                # elif lta_file_2s.__sizeof__():
-                #     print("4s")
-                # else:
-                #     print("copying only NORMAL", lta_list)
-
-
-
-            #
-            # try:
-            #     # fileutils.copy_files(file_path, dest_path)
-            #     print("copying", file_path, dest_path)
-            # except Exception as ex:
-            #     print(ex)
-            #
-            #
-            # # lta_list = glob.glob(dest_path+'/*.lta*')
-            #
-            # if len(lta_list) > 1:
-            #     print(lta_list)
-            # else:
-            #     if lta_list:
-            #         print(glob.glob(file_path+'/*'))
-
-
-        """
-
-            obs_no.append(each_obs)
-            print(data[each_obs])
-            file_path = data[each_obs]['file_path']
-            print(file_path)
-            dir_path = file_path.split('/')[-2]
-            project_path = path+str(int(each_obs))+'/'+dir_path
-            print("********"+file_path+";;;;;;;;;"+dir_path+"------"+project_path)
-            lta_list = glob.glob(file_path+'/*lta*')
-            status = "processing"
-            if len(lta_list) > 1:
-                print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-                lta_list.sort()
-                lta_tracker = []
-                for each_lta in lta_list:
-                    split_lta = each_lta.split('.')[0]
-                    if each_obs not in lta_tracker:
-                        lta_tracker.append(each_obs)
-                        this_lta_list = glob.glob(split_lta+'.lta*')
-                        this_lta_list.sort()
-                        if not os.path.exists(project_path):
-                            os.makedirs(project_path)
-                        status = spamutils.run_ltacomb(this_lta_list, project_path)
-                        print(this_lta_list[0], project_path, 'false', data[each_obs]['cycle_id'],status, each_obs)
-                        fileutils.insert_details([this_lta_list[0]], project_path, 'false', data[each_obs]['cycle_id'], status, each_obs)
-            elif lta_list:
-                print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                print(lta_list[0], project_path)
-                # fileutils.copy_files(lta_list[0], project_path)
-                if not os.path.exists(project_path):
-                    print([lta_list[0]], project_path, 'false', data[each_obs]['cycle_id'], status, each_obs)
-                    fileutils.insert_details([lta_list[0]], project_path, 'false', data[each_obs]['cycle_id'], status,
-                                              each_obs)
-        """
 
 
     def stage1_ghb(self, gdata):

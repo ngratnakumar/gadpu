@@ -1,7 +1,7 @@
 import os
 import glob
 from astropy.io import fits
-from gadpu_pipeline import DBUtils
+import DBUtils
 
 
 def cycle20_post_proc():
@@ -33,6 +33,23 @@ def cycle21_post_proc():
             source_name = os.path.basename(each_fits_files).split('.')[0]
             summary_path = glob.glob(os.path.dirname(each_fits_files)+'/spam_*'+source_name+'*.summary')
             post_proc(each_fits_files, lta_file, source_name)
+
+def cycle24_post_proc():
+    garudata = "/GARUDATA/IMAGING24/CYCLE24"
+    data_structure = glob.glob(garudata+'/*')
+    GMRT_C24 = '/data2/CYCLE24/'
+    print data_structure
+    for each_data in data_structure:
+        proposal_dir = each_data.split('/')[4]
+        if not proposal_dir.isdigit():
+            print(proposal_dir)
+            merge_dir = glob.glob(garudata+'/*/'+proposal_dir)
+            if merge_dir:
+                print(merge_dir)
+                if os.path.exists(merge_dir[0]):
+                    print("cp -r "+garudata+'/'+proposal_dir+'/* '+merge_dir[0]+'/')
+
+        # print(glob.glob(GMRT_C24+each_data.split('/')[-1]+'/*lta'))
 
 def post_proc(fits_file, lta, object):
     print(fits_file, lta, object)
@@ -131,4 +148,4 @@ def post_proc(fits_file, lta, object):
 
 
 if __name__ == '__main__':
-    cycle20_post_proc()
+    cycle24_post_proc()

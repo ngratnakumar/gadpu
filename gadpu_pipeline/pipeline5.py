@@ -19,11 +19,10 @@ class Pipeline:
 
     def stage5(self):
         """
-        SPAM's process_target
-        :return:
+        Stage5: Running SPAM's process_target and populates dataproducts table
         """
         fileutils = FileUtils()
-        aips_id = int(random.random()*100)
+        # aips_id = int(random.random()*100)
         spam.set_aips_userid(11)
         # Setting the Process Start Date Time
         start_time = str(datetime.datetime.now())
@@ -41,10 +40,11 @@ class Pipeline:
         # Get random imaging_id & project_id
         column_keys = [tableSchema.imaginginputId, tableSchema.projectobsnoId, "calibrated_fits_file"]
         where_con = {
-            "status": "retry"
-            # "comments": "c16"
+            "status": "cycle226"
         }
         to_be_processed = db_model.select_from_table("imaginginput", column_keys, where_con, None)
+        print(len(to_be_processed))
+        print(to_be_processed)
         imaginginput_details = random.choice(to_be_processed)
         print(imaginginput_details)
         imaging_id = imaginginput_details["imaging_id"]
@@ -56,7 +56,7 @@ class Pipeline:
             "set": {
                 "status": "processing",
                 "start_time": current_date_timestamp,
-                "comments": "",
+                "comments": "processing_cycle20_process_target ",
                 "end_time": current_date_timestamp
             },
 
@@ -70,7 +70,7 @@ class Pipeline:
         calibrated_fits_file = imaginginput_details["calibrated_fits_file"]
 
         # Using the above project_id, fetch base_path
-        column_keys = ["base_path"]
+        column_keys = ["file_path"]
         where_con = {
             "project_id": project_id
         }
@@ -261,6 +261,10 @@ class Pipeline:
             print db_model.insert_into_table("dataproducts", product_data, tableSchema.dataproductsId)
 
     def __init__(self):
+        rand_sec = int(random.random()*100)
+        print("Waiting for "+str(rand_sec)+" seconds ... ")
+        sleep(rand_sec)
+        print("Starting process ... ")
         self.stage5() # PROCESS_TARGET
 
 Pipeline()

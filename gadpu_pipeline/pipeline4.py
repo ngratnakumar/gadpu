@@ -11,6 +11,12 @@ import spam
 
 
 class Pipeline:
+    """
+    Stage4: This is only if the CYCLE is GHB,
+    After running pre_calibrate targets,
+    this will combine the LSB and USB calibrated UVFITS,
+    and populates teh imagainginoput tables
+    """
 
     def stage4(self):
         spam.set_aips_userid(11)
@@ -19,8 +25,8 @@ class Pipeline:
         status = "failed"
         comments = "combine usb lsb failed"
         # query conditions for projectobsno
-        columnKeys = {"project_id", "base_path", "observation_no"}
-        whereKeys = {"isghb": True, "cycle_id": 16, "status": "failed"}
+        columnKeys = {"project_id", "file_path", "observation_no"}
+        whereKeys = {"isghb": "false" , "cycle_id": 26, "status": "cycle26"}
 
         project_data = dbutils.select_from_table("projectobsno", columnKeys, whereKeys, 0)
         print(project_data)
@@ -34,7 +40,7 @@ class Pipeline:
 
         # query conditions for calibrationinput
         columnKeys = {"calibration_id", "uvfits_file"}
-        whereKeys = {"project_id": project_id, "status": "success"}
+        whereKeys = {"project_id": project_id}
         calibration_data = dbutils.select_from_table("calibrationinput", columnKeys, whereKeys, None)
         print(calibration_data)
 
